@@ -49,6 +49,29 @@ const getProductById = (req, res) => {
   const { product } = req
   res.status(200).json({ message: 'User:', content: product })
 }
+const getProductByTitle = (req, res) => {
+  const { title } = req.params
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ err: 'Connection refused' })
+    }
+    connection.query(
+      "SELECT * FROM products where PRODUCT_TITLE LIKE CONCAT(?,  '%') ",
+      [title],
+
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({ err: err })
+        } else {
+          console.log(response)
+          return res.status(200).json({ message: 'product', content: response })
+          pool.releaseConnection(connection)
+        }
+      }
+    )
+  })
+}
 const deleteProducts = (req, res) => {
   const { id } = req
   pool.getConnection((err, connection) => {
@@ -136,5 +159,6 @@ module.exports = {
   postProducts,
   deleteProducts,
   idExists,
-  getProductById
+  getProductById,
+  getProductByTitle
 }
