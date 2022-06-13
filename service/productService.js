@@ -3,6 +3,29 @@ const mysql = require('mysql2')
 const pool = require('../db/mySQL')
 const { v4: uuidv4 } = require('uuid')
 
+const idExists = (req, res, next) => {
+  const { id } = req.params
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ err: 'Connection refused' })
+    }
+    connection.query(
+      'SELECT * FROM products where id = ?',
+      [id],
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({ err: err })
+        } else {
+          if (response.length === 0) {
+            return res.status(404).json({ err: "Product id doesn't exist" })
+          }
+          next()
+        }
+      }
+    )
+  })
+}
+
 const getProducts = (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
@@ -18,6 +41,26 @@ const getProducts = (req, res) => {
         pool.releaseConnection(connection)
       }
     })
+  })
+}
+const deleteProducts = (req, res) => {
+  const { id } = req.params
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ err: 'Connection refused' })
+    }
+    connection.query(
+      'DELETE FROM products where id = ?',
+      [id],
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({ err: err })
+        } else {
+          return res.status(201).json({ message: `Product ${id} deleted` })
+          pool.releaseConnection(connection)
+        }
+      }
+    )
   })
 }
 const postProducts = (req, res) => {
@@ -81,7 +124,10 @@ const postProducts = (req, res) => {
     )
   })
 }
+
 module.exports = {
   getProducts,
-  postProducts
+  postProducts,
+  deleteProducts,
+  idExists
 }
