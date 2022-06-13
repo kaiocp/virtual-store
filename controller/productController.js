@@ -4,10 +4,12 @@ const {
   getProducts,
   postProducts,
   deleteProducts,
-  idExists
+  idExists,
+  getProductById
 } = require('../service/productService')
 router.get('/', getProducts)
 router.post('/', postProducts)
 router.delete('/:id', idExists, deleteProducts)
+router.get('/:id', idExists, getProductById)
 
 module.exports = router

@@ -19,6 +19,8 @@ const idExists = (req, res, next) => {
           if (response.length === 0) {
             return res.status(404).json({ err: "Product id doesn't exist" })
           }
+          req.id = id
+          req.product = response
           next()
         }
       }
@@ -43,8 +45,12 @@ const getProducts = (req, res) => {
     })
   })
 }
+const getProductById = (req, res) => {
+  const { product } = req
+  res.status(200).json({ message: 'User:', content: product })
+}
 const deleteProducts = (req, res) => {
-  const { id } = req.params
+  const { id } = req
   pool.getConnection((err, connection) => {
     if (err) {
       return res.status(500).json({ err: 'Connection refused' })
@@ -129,5 +135,6 @@ module.exports = {
   getProducts,
   postProducts,
   deleteProducts,
-  idExists
+  idExists,
+  getProductById
 }
