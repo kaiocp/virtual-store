@@ -10,6 +10,4 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT
 })
 
-module.exports = {
-  pool
-}
+module.exports = pool
