@@ -146,6 +146,10 @@ table {
     --footer-green-text-color: #275845;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 .footer {
     background-color: var(--footer-bg-color);
     font-family: var(--footer-poppins);

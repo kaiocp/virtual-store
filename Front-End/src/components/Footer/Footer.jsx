@@ -11,10 +11,10 @@ export default function Footer() {
         <div className='footer__main'>
             <div className='footer__links' id='b'>
                 <ul>
-                    <li><a>Início</a></li>
-                    <li><a>Produtos</a></li>
-                    <li><a>Anunciar</a></li>
-                    <li><a>Carrinho</a></li>
+                    <li><a href=''>Início</a></li>
+                    <li><a href=''>Produtos</a></li>
+                    <li><a href=''>Anunciar</a></li>
+                    <li><a href=''>Carrinho</a></li>
                 </ul>
             </div>
             <div className='footer__lojinha' id='a'>
@@ -23,9 +23,9 @@ export default function Footer() {
             </div>
             <div className='footer__social' id='c'>
                 <ul>
-                    <li><a href=""><img src={iconeFacebook} alt='Facebook'/></a></li>
-                    <li><a href=""><img src={iconeTwitter} alt='Twitter'/></a></li>
-                    <li><a href=""><img src={iconeInstagram} alt='Instagram'/></a></li>
+                    <li><a href="" target="_blank"><img src={iconeFacebook} alt='Facebook'/></a></li>
+                    <li><a href="" target="_blank"><img src={iconeTwitter} alt='Twitter'/></a></li>
+                    <li><a href="" target="_blank"><img src={iconeInstagram} alt='Instagram'/></a></li>
                 </ul>
             </div>
         </div>
