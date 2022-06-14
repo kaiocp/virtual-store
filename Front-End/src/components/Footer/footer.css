@@ -175,6 +175,11 @@ a:hover {
     font-weight: 500;
 }
 
+.footer__links>ul>li>a {
+    text-decoration: none;
+    color: var(--footer-black-text-color);
+}
+
 .footer__lojinha {
     display: flex;
     column-gap: .5rem;

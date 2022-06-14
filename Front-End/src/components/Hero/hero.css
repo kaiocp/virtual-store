@@ -205,3 +205,5 @@ table {
     cursor: pointer;
     transform: scale(1.1);
 }
+
+@media screen and(min-width: 1024px) {}
