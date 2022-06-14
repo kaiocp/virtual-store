@@ -150,6 +150,9 @@ table {
     font-family: var(--hero-poppins);
     background-color: var(--hero-bg);
     color: var(--hero-text-black);
+}
+
+.hero__main {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -206,4 +209,29 @@ table {
     transform: scale(1.1);
 }
 
-@media screen and(min-width: 1024px) {}
+@media screen and (min-width: 1024px) {
+    .hero__main {
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+    .hero img {
+        width: 550px;
+    }
+    .hero__info {
+        text-align: justify;
+        max-width: 30%;
+    }
+    .hero__info h1 {
+        font-size: 4.5rem;
+        line-height: 4.844rem;
+    }
+    .hero__info p {
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+    }
+    .hero__info button {
+        max-width: 350px;
+    }
+}
