@@ -7,7 +7,7 @@ const idExists = (req, res, next) => {
   const { id } = req.params
   pool.getConnection((err, connection) => {
     if (err) {
-      return res.status(500).json({ err: 'Connection refused' })
+      return res.status(500).json({ err: err })
     }
     connection.query(
       'SELECT * FROM products where id = ?',
@@ -31,7 +31,7 @@ const idExists = (req, res, next) => {
 const getProducts = (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
-      return res.status(500).json({ err: 'Connection refused' })
+      return res.status(500).json({ err: err })
     }
     connection.query('SELECT * FROM products', (err, response) => {
       if (err) {
@@ -75,7 +75,7 @@ const deleteProducts = (req, res) => {
   const { id } = req
   pool.getConnection((err, connection) => {
     if (err) {
-      return res.status(500).json({ err: 'Connection refused' })
+      return res.status(500).json({ err: err })
     }
     connection.query(
       'DELETE FROM products where id = ?',
@@ -104,7 +104,7 @@ const postProducts = (req, res) => {
   } = req.body
   pool.getConnection((err, connection) => {
     if (err) {
-      return res.status(500).json({ err: 'Connection refused' })
+      return res.status(500).json({ err: err })
     }
     const id = uuidv4()
     connection.query(
