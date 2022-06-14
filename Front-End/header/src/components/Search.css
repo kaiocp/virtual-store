@@ -1,0 +1,22 @@
+.inputSearch {
+    display: flex;
+    width: 35vw;
+    height: 5vh;
+    background: #FAFAFA;
+    border: 1px solid #A6A39F;
+    border-radius: 4px;
+    padding: 0.1px 0.5rem;
+}
+
+.searchImg {
+    position: absolute;
+    cursor: pointer;
+    margin: 0 auto;
+    padding-right: 1rem;
+}
+
+.inputDiv {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

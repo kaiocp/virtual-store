@@ -1,5 +1,6 @@
 import LogoLojinha from './imagens/LogoLojinha.png'
 import Navbar from './Navbar'
+import Search from './Search'
 import './Header.css'
 export default function Header() {
   return (
@@ -9,9 +10,9 @@ export default function Header() {
           <img src={LogoLojinha}/>
           <h1>Lojinha</h1>
         </div>
-        <input className='inputSearch' placeholder='Pesquise por um produto' type="text"></input>
+        <Search/>
       </div>
-          <Navbar/>
+      <Navbar/>
     </header>
   )
 }
