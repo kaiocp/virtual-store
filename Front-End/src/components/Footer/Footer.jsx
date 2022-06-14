@@ -30,7 +30,7 @@ export default function Footer() {
             </div>
         </div>
         <div className='footer__message'>
-            <p>Feito pela <a href='https://infojr.com.br/'>Infojr UFBA</a> com Figma, React e muito <span role="img" aria-label="green-heart">💚</span></p>
+            <p>Feito pela <a href='https://infojr.com.br/' target="_blank">Infojr UFBA</a> com Figma, React e muito <span role="img" aria-label="green-heart">💚</span></p>
         </div>
     </footer>
     )
