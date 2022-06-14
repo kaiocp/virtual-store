@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Poppins:wght@400;500;700&display=swap');
+:root {
+    --cadastro-poppins: "Poppins";
+    --cadastro-montserrat: "Montserrat";
+    --cadastro-green-text: #275845;
+    --cadastro-white-text: #FAFAFA;
+    --cadastro-black-text: #252822;
+    --cadastro-light-green: #53B38D;
+    --cadastro-border-field-grey: #9D9A95;
+}
+
+.caixa {
+    border: 2px dashed #9D9A95;
+    border-radius: 5px;
+    width: 286px;
+    height: 286px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
