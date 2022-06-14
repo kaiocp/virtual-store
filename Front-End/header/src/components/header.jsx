@@ -4,14 +4,14 @@ import './Header.css'
 export default function Header() {
   return (
     <header className='header'>
+      <div className='headerEsquerda'>
         <div className='logoLojinha'>
           <img src={LogoLojinha}/>
           <h1>Lojinha</h1>
-          <input type="text"></input>
         </div>
-        <div>
+        <input className='inputSearch' placeholder='Pesquise por um produto' type="text"></input>
+      </div>
           <Navbar/>
-        </div>
     </header>
   )
 }
