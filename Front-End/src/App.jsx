@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Footer from './components/Footer/Footer';
+import Hero from './components/Hero/Hero';
 
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
 
   return (
     <div className="App">
+      <Hero />
       <Footer />
     </div>
   )
