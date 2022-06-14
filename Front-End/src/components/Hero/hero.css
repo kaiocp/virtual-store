@@ -193,7 +193,7 @@ table {
     margin-top: 1rem;
     border: none;
     background-color: var(--hero-btn-bg);
-    padding: 1rem 4.75rem;
+    padding: 1rem 0;
     border-radius: 5px;
     color: var(--hero-text-white);
     font-size: 1.125rem;
@@ -209,13 +209,31 @@ table {
     transform: scale(1.1);
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
     .hero__main {
         flex-direction: row-reverse;
         justify-content: space-around;
         max-width: 1920px;
         margin: 0 auto;
     }
+    .hero__info {
+        text-align: justify;
+    }
+    .hero__info h1 {
+        font-size: 3rem;
+        line-height: 4.063rem;
+    }
+    .hero__info p {
+        font-size: 1.25rem;
+        line-height: 1.875rem;
+    }
+    .hero__info button {
+        max-width: 255px;
+        padding: .781rem 0;
+    }
+}
+
+@media screen and (min-width: 1024px) {
     .hero img {
         width: 550px;
     }
@@ -233,7 +251,6 @@ table {
         line-height: 2.5rem;
     }
     .hero__info button {
-        max-width: 350px;
         margin-top: 3rem;
     }
 }
