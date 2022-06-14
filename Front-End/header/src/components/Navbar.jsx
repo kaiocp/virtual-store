@@ -7,7 +7,7 @@ export default function Navbar() {
         <li><a href="#">Produtos</a></li>
         <li><a href="#">Anunciar</a></li>
         <li><a href="#"><button>Carrinho</button></a></li>
-        </ul>
+      </ul>
     </nav>
   )
 }

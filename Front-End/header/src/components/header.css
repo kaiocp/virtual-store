@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: inherit;
+    border: none;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logoLojinha {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.logoLojinha img {
+    width: auto;
+    height: auto;
+}
