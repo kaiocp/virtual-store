@@ -222,6 +222,7 @@ table {
     .hero__info {
         text-align: justify;
         max-width: 30%;
+        row-gap: 1.5rem;
     }
     .hero__info h1 {
         font-size: 4.5rem;
@@ -233,5 +234,6 @@ table {
     }
     .hero__info button {
         max-width: 350px;
+        margin-top: 3rem;
     }
 }
