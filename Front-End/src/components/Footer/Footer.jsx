@@ -9,7 +9,7 @@ export default function Footer() {
     return (
     <footer className='footer'>
         <div className='footer__main'>
-            <div className='footer__links'>
+            <div className='footer__links' id='b'>
                 <ul>
                     <li><a>Início</a></li>
                     <li><a>Produtos</a></li>
@@ -17,11 +17,11 @@ export default function Footer() {
                     <li><a>Carrinho</a></li>
                 </ul>
             </div>
-            <div className='footer__lojinha'>
+            <div className='footer__lojinha' id='a'>
                 <img src={iconeSacolaLojinha} alt="Lojinha" />
                 <p>Lojinha</p>
             </div>
-            <div className='footer__social'>
+            <div className='footer__social' id='c'>
                 <ul>
                     <li><a href=""><img src={iconeFacebook} alt='Facebook'/></a></li>
                     <li><a href=""><img src={iconeTwitter} alt='Twitter'/></a></li>

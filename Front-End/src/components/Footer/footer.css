@@ -153,6 +153,8 @@ table {
     padding-bottom: 1.875rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     row-gap: 2.2rem;
 }
 
@@ -197,4 +199,27 @@ table {
 
 .footer__message a {
     color: var(--footer-black-text-color);
+}
+
+@media screen and (min-width: 1024px) {
+    .footer {
+        row-gap: 6.25rem;
+    }
+    .footer__main {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        max-width: 1920px;
+    }
+    #a {
+        order: 1;
+    }
+    #b {
+        order: 2;
+    }
+    #c {
+        order: 3;
+    }
 }
