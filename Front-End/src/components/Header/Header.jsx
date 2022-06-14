@@ -11,13 +11,13 @@ export default function Header() {
           <img src={LogoLojinha}/>
           <h1>Lojinha</h1>
         </div>
-        <img src={MenuHamburguer}/>
+        <img id="menuHamburguer" src={MenuHamburguer}/>
+      <div className='navbarDiv' id="navbarDiv">
+        <Navbar/>
+      </div>
       </div>
       <div className="searchDiv">
         <Search/>
-      </div>
-      <div className='navbarDiv'>
-        <Navbar/>
       </div>
     </header>
   )

@@ -6,6 +6,32 @@
     border: none;
 }
 
+@media (min-width: 768px) {
+    #menuHamburguer {
+        display: none;
+    }
+    #headerDiv {
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    #navbarDiv {
+        display: flex;
+    }
+}
+
+@media (min-width: 768px) {
+    #menuHamburguer {
+        display: none;
+    }
+    #headerDiv {
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    #navbarDiv {
+        display: flex;
+    }
+}
+
 .headerDiv {
     display: flex;
     flex-direction: column;
@@ -20,7 +46,7 @@
     align-items: center;
     justify-content: space-around;
     gap: 0.5rem;
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     color: #275845;
     font-family: 'Josefin Sans', sans-serif;
 }
