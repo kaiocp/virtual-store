@@ -4,6 +4,8 @@
     text-decoration: none;
     color: inherit;
     font-family: 'Poppins', sans-serif;
+    border: none;
+    font-weight: 500;
 }
 
 .navbar ul {
@@ -12,5 +14,17 @@
     align-items: center;
     list-style: none;
     gap: 2rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    color: #252822;
+}
+
+.navbar button {
+    background: #53B38D;
+    color: #FAFAFA;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3rem 1.8rem;
+    font-size: 1.2rem;
 }

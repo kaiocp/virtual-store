@@ -6,7 +6,7 @@ export default function Navbar() {
         <li><a href="#">Início</a></li>
         <li><a href="#">Produtos</a></li>
         <li><a href="#">Anunciar</a></li>
-        <li><a href="#"><button>Contato</button></a></li>
+        <li><a href="#"><button>Carrinho</button></a></li>
         </ul>
     </nav>
   )
