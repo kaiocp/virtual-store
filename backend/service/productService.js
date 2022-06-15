@@ -47,7 +47,7 @@ const getProducts = (req, res) => {
 }
 const getProductById = (req, res) => {
   const { product } = req
-  res.status(200).json({ message: 'User:', content: product })
+  res.status(200).json({ message: 'Product:', content: product })
 }
 const getProductByTitle = (req, res) => {
   const { title } = req.params
@@ -109,15 +109,15 @@ const postProducts = (req, res) => {
     const id = uuidv4()
     connection.query(
       `INSERT INTO products
-    (ID,
-    PRODUCT_IMAGE_URL,
-    PRODUCT_TITLE,
-    PRODUCT_DISCRIPTION,
-    PRODUCT_BRAND,
-    PRODUCT_COLOR,
-    PRODUCT_CATEGORY,
-    PRODUCT_SUBCATEGORY,
-    PRODUCT_PRICE)
+    (id,
+    product_image_url,
+    product_title,
+    product_discription,
+    product_brand,
+    product_color,
+    product_category,
+    product_subcategory,
+    product_price)
     VALUES (?,
     ?,
     ?,
