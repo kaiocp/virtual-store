@@ -17,18 +17,20 @@ export default function Cadastro() {
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            let body = {
+                product_image_url: imgUrl,
+                product_title: titulo,
+                product_discription: descricao,
+                product_brand: marca,
+                product_color: cor,
+                product_category: categoria,
+                product_subcategory: subcategoria,
+                product_price: preco
+            }
             let res = await fetch("https://sleepy-cliffs-93443.herokuapp.com/products", {
                 method: "POST",
-                body: JSON.stringify({
-                    product_image_url: imgUrl,
-                    product_title: titulo,
-                    product_discription: descricao,
-                    product_brand: marca,
-                    product_color: cor,
-                    product_category: categoria,
-                    product_subcategory: subcategoria,
-                    product_price: preco
-                    })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
                 }
             );
             if (res.ok) {
@@ -42,6 +44,8 @@ export default function Cadastro() {
                 setPreco("");
                 setMessage("Produto cadastrado com sucesso!");
                 setMessageClass("sucesso");
+                console.log(body);
+                console.log(res.status);
             } else {
                 setMessage("Houve um erro ao cadastrar seu produto.");
                 setMessageClass("erro");
@@ -133,9 +137,9 @@ export default function Cadastro() {
                                         onChange={(e) => setCategoria(e.target.value)}                                  
                                     >
                                         <option disabled />
-                                        <option value="Camisa">Camisa</option>
+                                        <option value="Bolsa">Bolsa</option>  
                                         <option value="Calça">Calça</option>
-                                        <option value="Bolsa">Bolsa</option>                                
+                                        <option value="Camisa">Camisa</option>
                                     </select>
                                 </div>
                                 <div className='field'>
