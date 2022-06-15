@@ -14,10 +14,10 @@ export default function Cadastro() {
                 <form action="" className='cadastro__form'>
                     <div className='cadastro__form--img'>
                         <label htmlFor="imagemProduto">Preview da imagem</label>
-                        <div className='caixa'>
-                            <input type="image" src={iconeUploadImagem} alt="" id="imagemProduto" onClick={(ev) => {
+                        <div className='caixa' onClick={(ev) => {
                                 ev.preventDefault();
-                                document.getElementById('img').focus()}} />
+                                document.getElementById('img').focus()}} >
+                            <img src={iconeUploadImagem} alt="" id="imagemProduto" />
                         </div>                
                     </div>
 
@@ -31,24 +31,24 @@ export default function Cadastro() {
                             <input className="field--input" type="text" name="" id="" />
                         </div>
                         <div className='field'>
-                            <label className='label' htmlFor="">Descrição do produto</label>
-                            <textarea className="field--input" type="text" name="" id="" />
-                            <p className="field--maxchar">(max. 300 caracteres)</p>
+                            <label className='label' htmlFor="" id="d">Descrição do produto</label>
+                            <textarea className="field--input" type="text" name="" id="f" />
+                            <p className="field--maxchar" id="e">(max. 300 caracteres)</p>
                         </div>
 
                         <div className='field--marca-cor'>
-                            <div className='field'>
+                            <div className='field field-2'>
                                 <label className='label' htmlFor="">Marca</label>
                                 <input className="field--input" type="text" name="" id="" />
                             </div>
-                            <div className='field'>
+                            <div className='field field-3'>
                                 <label className='label' htmlFor="">Cor</label>
                                 <input className="field--input" type="text" name="" id="" />
                             </div>
                         </div>
 
                         <div className='cadastro__form--fields'>
-                            <div className="field--categorias">
+                            <div className="field--categorias field-2">
                                 <div className='field'>
                                     <label className='label' htmlFor="category">Categoria</label>
                                     <select className="field--input field--dropwdown" list="category" name="Categoria" for="category">
@@ -68,16 +68,16 @@ export default function Cadastro() {
                                     </select>
                                 </div>  
                             </div>
-                            <div className='field'>
+                            <div className='field field-2'>
                                 <label className='label' htmlFor="">Preço</label>
-                                <input className="field--input"  type="text" name="" id="" />
+                                <input className="field--input" type="number" min="0.00" step="0.01" />
                             </div>                    
                         </div>
-                    </div>
-                    <div className='cadastro__form--btn'>
+                        <div className='cadastro__form--btn'>
                         <button>
                             Cadastrar produto
                         </button>
+                    </div>
                     </div>
                 </form>
             </fieldset>       

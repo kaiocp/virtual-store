@@ -78,6 +78,10 @@
     justify-content: center;
 }
 
+.caixa:hover {
+    cursor: pointer;
+}
+
 .cadastro__form--fields {
     display: flex;
     flex-direction: column;
@@ -151,4 +155,45 @@
 .cadastro__form--btn button:hover {
     background-color: var(--cadastro-green-text);
     cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+    .cadastro__header p {
+        font-size: 1.375rem;
+    }
+    .cadastro__form {
+        min-width: 710px;
+    }
+    .cadastro__form--img {
+        align-self: center;
+        max-width: 286px;
+    }
+    .cadastro__form--fields {
+        width: 100%;
+    }
+    #d {
+        order: 1;
+        margin-bottom: -18px;
+    }
+    #e {
+        order: 2;
+    }
+    #f {
+        order: 3;
+    }
+    .field--marca-cor {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .field-2 {
+        width: 55%;
+    }
+    .field-3 {
+        width: 35%;
+    }
+    .cadastro__form--btn {
+        margin-top: 4rem;
+        align-self: center;
+        width: 390px;
+    }
 }
