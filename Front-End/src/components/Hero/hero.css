@@ -78,7 +78,7 @@
         margin: 0 auto;
     }
     .hero__info {
-        text-align: justify;
+        text-align: start;
     }
     .hero__info h1 {
         font-size: 3rem;
@@ -99,7 +99,6 @@
         width: 550px;
     }
     .hero__info {
-        text-align: justify;
         max-width: 30%;
         row-gap: 1.5rem;
     }
