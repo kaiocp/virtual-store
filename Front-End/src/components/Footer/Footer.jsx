@@ -2,6 +2,7 @@ import iconeSacolaLojinha from './img/fluent_shopping-bag-20-filled.svg';
 import iconeFacebook from './img/facebook.svg';
 import iconeTwitter from './img/twitter.svg';
 import iconeInstagram from './img/instagram.svg';
+import '../../reset.css';
 import './footer.css';
 
 

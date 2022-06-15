@@ -1,4 +1,5 @@
 import iconeUploadImagem from './img/arcticons_gallery.svg';
+import '../../reset.css';
 import './cadastro.css';
 
 export default function Cadastro() {

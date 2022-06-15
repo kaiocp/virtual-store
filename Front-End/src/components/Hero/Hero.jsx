@@ -1,5 +1,6 @@
 import iconeSacolaCompras from './img/compras.svg';
 import iconeChevronDown from './img/chevron-down 1.svg';
+import '../../reset.css';
 import './hero.css';
 
 export default function Hero() {
