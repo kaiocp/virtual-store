@@ -37,10 +37,10 @@ const getProducts = (req, res) => {
       if (err) {
         return res.status(500).json({ err: err })
       } else {
+        pool.releaseConnection(connection)
         return res
           .status(200)
           .json({ message: 'Current products', content: response })
-        pool.releaseConnection(connection)
       }
     })
   })
@@ -64,8 +64,8 @@ const getProductByTitle = (req, res) => {
         if (err) {
           return res.status(500).json({ err: err })
         } else {
-          return res.status(200).json({ message: 'product', content: response })
           pool.releaseConnection(connection)
+          return res.status(200).json({ message: 'product', content: response })
         }
       }
     )
@@ -84,8 +84,8 @@ const deleteProducts = (req, res) => {
         if (err) {
           return res.status(500).json({ err: err })
         } else {
-          return res.status(201).json({ message: `Product ${id} deleted` })
           pool.releaseConnection(connection)
+          return res.status(201).json({ message: `Product ${id} deleted` })
         }
       }
     )
@@ -143,10 +143,10 @@ const postProducts = (req, res) => {
         if (err) {
           return res.status(500).json({ err: err })
         } else {
+          pool.releaseConnection(connection)
           return res
             .status(201)
             .json({ message: 'Product Created!', self: `products/${id}`, id })
-          pool.releaseConnection(connection)
         }
       }
     )
