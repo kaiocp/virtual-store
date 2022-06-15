@@ -6,10 +6,11 @@ const {
   deleteProducts,
   idExists,
   getProductById,
-  getProductByTitle
+  getProductByTitle,
+  isNull
 } = require('../service/productService')
 router.get('/', getProducts)
-router.post('/', postProducts)
+router.post('/', isNull, postProducts)
 router.delete('/:id', idExists, deleteProducts)
 router.get('/title/:title', getProductByTitle)
 router.get('/:id', idExists, getProductById)

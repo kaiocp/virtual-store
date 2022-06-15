@@ -27,6 +27,20 @@ const idExists = (req, res, next) => {
     )
   })
 }
+const isNull = (req, res, next) => {
+  const responseBody = req.body
+  if (!responseBody) {
+    return res.status(400).json({ err: 'Invalid:Your request body is NULL' })
+  }
+  for (const property in responseBody) {
+    if (!responseBody[property]) {
+      return res
+        .status(400)
+        .json({ err: `Invalid:The property ${property} of your body is NULL` })
+    }
+  }
+  next()
+}
 
 const getProducts = (req, res) => {
   pool.getConnection((err, connection) => {
@@ -159,5 +173,6 @@ module.exports = {
   deleteProducts,
   idExists,
   getProductById,
-  getProductByTitle
+  getProductByTitle,
+  isNull
 }
