@@ -81,7 +81,8 @@ export default function Cadastro() {
                                 type="text" 
                                 id="img"
                                 value={imgUrl}
-                                onChange={(e) => setImgUrl(e.target.value)} 
+                                onChange={(e) => setImgUrl(e.target.value)}
+                                required
                             />
                         </div>
                         <div className='field'>
@@ -90,7 +91,8 @@ export default function Cadastro() {
                                 className="field--input" 
                                 type="text" 
                                 value={titulo}
-                                onChange={(e) => setTitulo(e.target.value)} 
+                                onChange={(e) => setTitulo(e.target.value)}
+                                required 
                             />
                         </div>
                         <div className='field'>
@@ -101,7 +103,8 @@ export default function Cadastro() {
                                 id="f" 
                                 maxLength="300"
                                 value={descricao}
-                                onChange={(e) => setDescricao(e.target.value)} 
+                                onChange={(e) => setDescricao(e.target.value)}
+                                required 
                             />
                             <p className="field--maxchar" id="e">(max. 300 caracteres)</p>
                         </div>
@@ -113,7 +116,8 @@ export default function Cadastro() {
                                     className="field--input" 
                                     type="text"
                                     value={marca}
-                                    onChange={(e) => setMarca(e.target.value)}  
+                                    onChange={(e) => setMarca(e.target.value)}
+                                    required  
                                 />
                             </div>
                             <div className='field field-3'>
@@ -122,7 +126,8 @@ export default function Cadastro() {
                                     className="field--input" 
                                     type="text"
                                     value={cor}
-                                    onChange={(e) => setCor(e.target.value)} 
+                                    onChange={(e) => setCor(e.target.value)}
+                                    required 
                                 />
                             </div>
                         </div>
@@ -165,7 +170,8 @@ export default function Cadastro() {
                                     min="0.00" 
                                     step="0.01"
                                     value={preco}
-                                    onChange={(e) => setPreco(e.target.value)} 
+                                    onChange={(e) => setPreco(e.target.value)}
+                                    required 
                                 />
                             </div>                    
                         </div>
