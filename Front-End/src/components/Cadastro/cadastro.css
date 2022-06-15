@@ -197,3 +197,35 @@
         width: 390px;
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .cadastro {
+        padding-top: 10rem;
+        padding-bottom: 15rem;
+        max-width: 1920px;
+        margin: 0 auto;
+        row-gap: 10rem;
+    }
+    .cadastro fieldset {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cadastro__header h2 {
+        font-size: 4rem;
+    }
+    .cadastro__header p {
+        font-size: 2rem;
+    }
+    .cadastro__form {
+        min-width: 1024px;
+        width: 100%;
+        flex-direction: row;
+        margin: 0 0;
+        column-gap: 15rem;
+    }
+    .cadastro__form--img {
+        align-self: flex-start;
+    }
+}
