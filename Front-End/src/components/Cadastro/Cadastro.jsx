@@ -10,7 +10,7 @@ export default function Cadastro() {
     const [cor, setCor] = useState("");
     const [categoria, setCategoria] = useState("");
     const [subcategoria, setSubcategoria] = useState("");
-    const [preco, setPreco] = useState(0);
+    const [preco, setPreco] = useState("");
     const [message, setMessage] = useState("");
     const [messageClass, setMessageClass] = useState("");
 
@@ -44,8 +44,6 @@ export default function Cadastro() {
                 setPreco("");
                 setMessage("Produto cadastrado com sucesso!");
                 setMessageClass("sucesso");
-                console.log(body);
-                console.log(res.status);
             } else {
                 setMessage("Houve um erro ao cadastrar seu produto.");
                 setMessageClass("erro");
