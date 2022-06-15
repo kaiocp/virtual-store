@@ -76,6 +76,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(./img/arcticons_gallery.svg);
+}
+
+.caixa img {
+    width: 286px;
+    height: 286px;
 }
 
 .caixa:hover {
@@ -150,11 +158,24 @@
     font-weight: 700;
     padding: .813rem 0;
     transition: .3s;
+    margin-bottom: 1rem;
 }
 
 .cadastro__form--btn button:hover {
     background-color: var(--cadastro-green-text);
     cursor: pointer;
+}
+
+.message {
+    text-align: center;
+}
+
+.sucesso {
+    color: #36a936;
+}
+
+.erro {
+    color: rgb(239, 53, 53);
 }
 
 @media screen and (min-width: 768px) {
