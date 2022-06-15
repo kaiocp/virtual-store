@@ -20,18 +20,18 @@ export default function Cadastro() {
             let res = await fetch("https://sleepy-cliffs-93443.herokuapp.com/products", {
                 method: "POST",
                 body: JSON.stringify({
-                    "product_image_url": imgUrl,
-                    "product_title": titulo,
-                    "product_discription": descricao,
-                    "product_brand": marca,
-                    "product_color": cor,
-                    "product_category": categoria,
-                    "product_subcategory": subcategoria,
-                    "product_price": preco
+                    product_image_url: imgUrl,
+                    product_title: titulo,
+                    product_discription: descricao,
+                    product_brand: marca,
+                    product_color: cor,
+                    product_category: categoria,
+                    product_subcategory: subcategoria,
+                    product_price: preco
                     })
                 }
             );
-            if (res.status === 200) {
+            if (res.ok) {
                 setImgUrl("");
                 setTitulo("");
                 setDescricao("");
