@@ -121,6 +121,20 @@ const postProducts = (req, res) => {
       return res.status(500).json({ err: err })
     }
     const id = uuidv4()
+    var date = new Date()
+    var dateStr =
+      date.getFullYear() +
+      '-' +
+      ('00' + (date.getMonth() + 1)).slice(-2) +
+      '-' +
+      ('00' + date.getDate()).slice(-2) +
+      ' ' +
+      ('00' + date.getHours()).slice(-2) +
+      ':' +
+      ('00' + date.getMinutes()).slice(-2) +
+      ':' +
+      ('00' + date.getSeconds()).slice(-2)
+
     connection.query(
       `INSERT INTO products
     (id,
@@ -131,8 +145,10 @@ const postProducts = (req, res) => {
     product_color,
     product_category,
     product_subcategory,
-    product_price)
+    product_price,
+    register_time)
     VALUES (?,
+    ?,
     ?,
     ?,
     ?,
@@ -151,7 +167,8 @@ const postProducts = (req, res) => {
         product_color,
         product_category,
         product_subcategory,
-        product_price
+        product_price,
+        dateStr
       ],
       (err, response) => {
         if (err) {
