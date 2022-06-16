@@ -4,14 +4,14 @@ const pool = require('../db/mySQL')
 const { v4: uuidv4 } = require('uuid')
 
 const idExists = (req, res, next) => {
-  const { id } = req.params
+  const { prod_id } = req.params
   pool.getConnection((err, connection) => {
     if (err) {
       return res.status(500).json({ err: err })
     }
     connection.query(
-      'SELECT * FROM products where id = ?',
-      [id],
+      'SELECT * FROM products where prod_id = ?',
+      [prod_id],
       (err, response) => {
         if (err) {
           return res.status(500).json({ err: err })
@@ -19,7 +19,7 @@ const idExists = (req, res, next) => {
           if (response.length === 0) {
             return res.status(404).json({ err: "Product id doesn't exist" })
           }
-          req.id = id
+          req.prod_id = prod_id
           req.product = response
           next()
         }
@@ -86,20 +86,20 @@ const getProductByTitle = (req, res) => {
   })
 }
 const deleteProducts = (req, res) => {
-  const { id } = req
+  const { prod_id } = req
   pool.getConnection((err, connection) => {
     if (err) {
       return res.status(500).json({ err: err })
     }
     connection.query(
-      'DELETE FROM products where id = ?',
-      [id],
+      'DELETE FROM products where prod_id = ?',
+      [prod_id],
       (err, response) => {
         if (err) {
           return res.status(500).json({ err: err })
         } else {
           pool.releaseConnection(connection)
-          return res.status(201).json({ message: `Product ${id} deleted` })
+          return res.status(201).json({ message: `Product ${prod_id} deleted` })
         }
       }
     )
@@ -120,7 +120,7 @@ const postProducts = (req, res) => {
     if (err) {
       return res.status(500).json({ err: err })
     }
-    const id = uuidv4()
+    const prod_id = uuidv4()
     var date = new Date()
     var dateStr =
       date.getFullYear() +
@@ -137,7 +137,7 @@ const postProducts = (req, res) => {
 
     connection.query(
       `INSERT INTO products
-    (id,
+    (prod_id,
     product_image_url,
     product_title,
     product_discription,
@@ -159,7 +159,7 @@ const postProducts = (req, res) => {
     ?);
     `,
       [
-        id,
+        prod_id,
         product_image_url,
         product_title,
         product_discription,
@@ -175,9 +175,11 @@ const postProducts = (req, res) => {
           return res.status(500).json({ err: err })
         } else {
           pool.releaseConnection(connection)
-          return res
-            .status(201)
-            .json({ message: 'Product Created!', self: `products/${id}`, id })
+          return res.status(201).json({
+            message: 'Product Created!',
+            self: `products/${prod_id}`,
+            prod_id
+          })
         }
       }
     )

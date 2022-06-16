@@ -11,8 +11,8 @@ const {
 } = require('../service/productService')
 router.get('/', getProducts)
 router.post('/', isNull, postProducts)
-router.delete('/:id', idExists, deleteProducts)
+router.delete('/:prod_id', idExists, deleteProducts)
 router.get('/title/:title', getProductByTitle)
-router.get('/:id', idExists, getProductById)
+router.get('/:prod_id', idExists, getProductById)
 
 module.exports = router
