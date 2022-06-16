@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600&family=Poppins:wght@400;500&display=swap');
+
+/* CSS RESET*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+
+/* HTML5 display-role reset for older browsers */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+/* STYLES FROM HERE ON */
+
+:root {
+    --footer-poppins: 'Poppins';
+    --footer-josefin-sans: 'Josefin Sans';
+    --footer-bg-color: #F5F5DC;
+    --footer-black-text-color: #252822;
+    --footer-green-text-color: #275845;
+}
+
+.footer {
+    background-color: var(--footer-bg-color);
+    font-family: var(--footer-poppins);
+    padding-top: 1.875rem;
+    padding-bottom: 1.875rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2.2rem;
+}
+
+.footer__main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.2rem;
+}
+
+.footer__links>ul {
+    display: flex;
+    column-gap: 1.25rem;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.footer__lojinha {
+    display: flex;
+    column-gap: .5rem;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--footer-josefin-sans);
+    color: var(--footer-green-text-color);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.footer__social ul {
+    display: flex;
+    column-gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer__message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--footer-black-text-color);
+    font-size: .75rem;
+}
+
+.footer__message a {
+    color: var(--footer-black-text-color);
+}
+
+@media screen and (min-width: 1024px) {
+    .footer {
+        row-gap: 6.25rem;
+    }
+    .footer__main {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        max-width: 1920px;
+    }
+    #a {
+        order: 1;
+    }
+    #b {
+        order: 2;
+    }
+    #c {
+        order: 3;
+    }
+}
