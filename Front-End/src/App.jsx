@@ -11,9 +11,7 @@ function App() {
       <Header/>
       <Footer />
     </div>
+  )
+}
 
-<<<<<<< Front-End/src/App.jsx
 export default App
-=======
-export default App;
->>>>>>> Front-End/src/App.jsx
