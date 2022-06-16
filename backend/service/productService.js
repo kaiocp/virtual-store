@@ -265,7 +265,7 @@ const updateOneInfo = (req, res) => {
         if (err) {
           return res.status(500).json({ err: 'Connection failed' })
         }
-        console.log(property)
+
         connection.query(
           `UPDATE products SET ${property} = ? WHERE prod_id = ?`,
           [bodyValue, prod_id],
