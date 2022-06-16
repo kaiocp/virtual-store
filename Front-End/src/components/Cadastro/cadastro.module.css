@@ -49,7 +49,7 @@
     margin: 0 auto;
 }
 
-.cadastro__form--img {
+.cadastro__form_img {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,7 +62,7 @@
     font-size: .875rem;
 }
 
-.cadastro__form--img label {
+.cadastro__form_img label {
     align-self: flex-start;
     font-weight: 500;
     font-size: 1.25rem;
@@ -90,7 +90,7 @@
     cursor: pointer;
 }
 
-.cadastro__form--fields {
+.cadastro__form_fields {
     display: flex;
     flex-direction: column;
     row-gap: 1.563rem;
@@ -102,7 +102,7 @@
     row-gap: .313rem;
 }
 
-.field--input {
+.field__input {
     border: 1px solid var(--cadastro-border-field-grey);
     border-radius: 4px;
     height: 42px;
@@ -119,7 +119,7 @@
     resize: none;
 }
 
-.field--maxchar {
+.field__maxchar {
     color: var(--cadastro-light-green);
     font-size: .75rem;
     align-self: flex-end;
@@ -127,29 +127,29 @@
     margin-top: 2px;
 }
 
-.field--marca-cor {
+.field__marca_cor {
     display: flex;
     flex-direction: column;
     row-gap: 1.563rem;
 }
 
-.field--categorias {
+.field__categorias {
     display: flex;
     justify-content: space-between;
 }
 
-.field--categorias div {
+.field__categorias div {
     width: 40%;
 }
 
-.field--dropwdown {
+.field__dropwdown {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     background: url("./img/dropdown.svg") white no-repeat calc(100% - 10px) !important;
 }
 
-.cadastro__form--btn button {
+.cadastro__form_btn button {
     border-radius: 5px;
     width: 100%;
     border: none;
@@ -161,7 +161,7 @@
     margin-bottom: 1rem;
 }
 
-.cadastro__form--btn button:hover {
+.cadastro__form_btn button:hover {
     background-color: var(--cadastro-green-text);
     cursor: pointer;
 }
@@ -185,11 +185,11 @@
     .cadastro__form {
         min-width: 710px;
     }
-    .cadastro__form--img {
+    .cadastro__form_img {
         align-self: center;
         max-width: 286px;
     }
-    .cadastro__form--fields {
+    .cadastro__form_fields {
         width: 100%;
     }
     #d {
@@ -202,17 +202,17 @@
     #f {
         order: 3;
     }
-    .field--marca-cor {
+    .field__marca_cor {
         flex-direction: row;
         justify-content: space-between;
     }
-    .field-2 {
+    .field_2 {
         width: 55%;
     }
-    .field-3 {
+    .field_3 {
         width: 35%;
     }
-    .cadastro__form--btn {
+    .cadastro__form_btn {
         margin-top: 4rem;
         align-self: center;
         width: 390px;
@@ -246,7 +246,7 @@
         margin: 0 0;
         column-gap: 15rem;
     }
-    .cadastro__form--img {
+    .cadastro__form_img {
         align-self: flex-start;
     }
 }
