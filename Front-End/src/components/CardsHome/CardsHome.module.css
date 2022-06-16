@@ -2,15 +2,21 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
-    color: inherit;
-    border: none;
+    box-sizing: border-box;
 }
 
-.cardsHome {
+.sectionCards {
     width: 100%;
 }
 
-.produtosCards {
+.cardsImagens {
     display: flex;
     justify-content: space-around;
+    align-items: flex-end;
+    height: 500px;
+}
+
+.cardsImagens img {
+    width: 25%;
+    height: auto;
 }
