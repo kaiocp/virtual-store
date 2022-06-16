@@ -146,6 +146,10 @@ table {
     --footer-green-text-color: #275845;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 .footer {
     background-color: var(--footer-bg-color);
     font-family: var(--footer-poppins);
@@ -169,6 +173,11 @@ table {
     column-gap: 1.25rem;
     justify-content: center;
     font-weight: 500;
+}
+
+.footer__links>ul>li>a {
+    text-decoration: none;
+    color: var(--footer-black-text-color);
 }
 
 .footer__lojinha {
@@ -199,6 +208,18 @@ table {
 
 .footer__message a {
     color: var(--footer-black-text-color);
+}
+
+@media screen and (min-width: 768px) {
+    .footer__links {
+        font-size: 1.125rem;
+    }
+    .footer__lojinha {
+        font-size: 2rem;
+    }
+    .footer__social {
+        font-size: 1rem;
+    }
 }
 
 @media screen and (min-width: 1024px) {
