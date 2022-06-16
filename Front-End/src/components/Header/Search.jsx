@@ -1,4 +1,4 @@
-import './Search.css'
+import styles from './Search.module.css'
 import { useState } from 'react'
 import LupaPesquisa from './imagens/LupaPesquisa.png'
 export default function Search() {
@@ -8,9 +8,9 @@ export default function Search() {
   }
   const [produto, setProduto] = useState()
   return (
-    <div className='inputDiv' id='inputDiv'>
-      <img className='searchImg' id="searchImg" src={LupaPesquisa} onClick={pesquisaProduto}/>
-      <input className='inputSearch' id="inputSearch" placeholder='Pesquise por um produto'
+    <div className={styles.inputDiv} id={styles.inputDiv}>
+      <img className={styles.searchImg} id={styles.searchImg} src={LupaPesquisa} onClick={pesquisaProduto}/>
+      <input className={styles.inputSearch} id={styles.inputSearch} placeholder='Pesquise por um produto'
       onChange={(e) => setProduto(e.target.value)} type="text"></input>
     </div>
   )
