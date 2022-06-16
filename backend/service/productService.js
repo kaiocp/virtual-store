@@ -28,13 +28,31 @@ const idExists = (req, res, next) => {
     )
   })
 }
+const invalidProperty = requestBody => {
+  for (property in requestBody) {
+    if (
+      property !== 'product_image_url' &&
+      property !== 'product_title' &&
+      property !== 'product_discription' &&
+      property !== 'product_brand' &&
+      property !== 'product_color' &&
+      property !== 'product_category' &&
+      property !== 'product_subcategory' &&
+      property !== 'product_price'
+    ) {
+      return true
+    }
+    continue
+  }
+  return false
+}
 const isNull = (req, res, next) => {
   const responseBody = req.body
   if (!responseBody) {
     return res.status(400).json({ err: 'Invalid:Your request body is NULL' })
   }
   for (const property in responseBody) {
-    if (!responseBody[property]) {
+    if (property != 'product_price' && !responseBody[property]) {
       return res
         .status(400)
         .json({ err: `Invalid:The property ${property} of your body is NULL` })
@@ -226,6 +244,57 @@ const updateProduct = (req, res) => {
     )
   })
 }
+const updateOneInfo = (req, res) => {
+  const { prod_id } = req
+  const requestBody = req.body
+  if (invalidProperty(requestBody)) {
+    return res
+      .status(400)
+      .json({ err: "Your body has some invalides properties' names" })
+  }
+
+  for (bodyProperty in requestBody) {
+    const bodyValue = requestBody[bodyProperty]
+    const property = bodyProperty
+
+    pool.getConnection((err, connection) => {
+      if (err) {
+        return res.status(500).json({ err: 'Connection failed' })
+      }
+      pool.getConnection((err, connection) => {
+        if (err) {
+          return res.status(500).json({ err: 'Connection failed' })
+        }
+        console.log(property)
+        connection.query(
+          `UPDATE products SET ${property} = ? WHERE prod_id = ?`,
+          [bodyValue, prod_id],
+          (err, response) => {
+            //console.log(response)
+            if (err) {
+              res.status(500).json({ err: err })
+            }
+            pool.releaseConnection(connection)
+          }
+        )
+      })
+
+      connection.query(
+        `UPDATE products SET ${property} = ? WHERE prod_id = ?`,
+        [bodyValue, prod_id],
+        (err, response) => {
+          if (err) {
+            res.status(500).json({ err: err })
+          }
+          pool.releaseConnection(connection)
+        }
+      )
+    })
+  }
+  res.status(200).json({
+    message: `Product ${prod_id}  updated`
+  })
+}
 
 module.exports = {
   getProducts,
@@ -235,5 +304,6 @@ module.exports = {
   getProductById,
   getProductByTitle,
   isNull,
-  updateProduct
+  updateProduct,
+  updateOneInfo
 }
