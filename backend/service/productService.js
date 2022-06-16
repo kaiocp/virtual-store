@@ -2,6 +2,7 @@ const express = require('express')
 const mysql = require('mysql2')
 const pool = require('../db/mySQL')
 const { v4: uuidv4 } = require('uuid')
+const { json } = require('express')
 
 const idExists = (req, res, next) => {
   const { prod_id } = req.params
@@ -186,6 +187,46 @@ const postProducts = (req, res) => {
   })
 }
 
+const updateProduct = (req, res) => {
+  const { prod_id } = req
+  const {
+    product_image_url,
+    product_title,
+    product_discription,
+    product_brand,
+    product_color,
+    product_category,
+    product_subcategory,
+    product_price
+  } = req.body
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status.json({ err: 'Connection failed' })
+    }
+    connection.query(
+      'UPDATE products SET product_image_url = ?, product_title = ?,product_discription = ?,product_brand = ?,product_color = ?,product_category = ?,product_subcategory = ?,product_price = ? WHERE prod_id = ? ',
+      [
+        product_image_url,
+        product_title,
+        product_discription,
+        product_brand,
+        product_color,
+        product_category,
+        product_subcategory,
+        product_price,
+        prod_id
+      ],
+      (err, response) => {
+        if (err) {
+          res.status(500).json({ err: err })
+        }
+        pool.releaseConnection(connection)
+        res.status(200).json({ message: `Product ${prod_id} updated` })
+      }
+    )
+  })
+}
+
 module.exports = {
   getProducts,
   postProducts,
@@ -193,5 +234,6 @@ module.exports = {
   idExists,
   getProductById,
   getProductByTitle,
-  isNull
+  isNull,
+  updateProduct
 }
