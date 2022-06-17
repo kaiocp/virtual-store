@@ -11,7 +11,23 @@ const idExists = (req, res, next) => {
       return res.status(500).json({ err: err })
     }
     connection.query(
-      'SELECT * FROM products where prod_id = ?',
+      `SELECT
+      product.*,
+      product_brand.brand_name,
+      product_color.color_name,
+      category.category_name,
+      sub_category.subcategory_name,
+      product_total.prod_total
+    FROM
+      product_total
+      JOIN product ON product.prod_id = product_total.prod_id
+      JOIN product_brand ON product.prod_id = product_brand.prod_id
+      JOIN product_color ON product.prod_id = product_color.prod_id
+      JOIN category ON product.prod_id = category.prod_id
+      JOIN sub_category ON product.prod_id = sub_category.prod_id
+    WHERE
+      product_total.prod_total > 0
+      AND product.prod_id = ?;`,
       [prod_id],
       (err, response) => {
         if (err) {
