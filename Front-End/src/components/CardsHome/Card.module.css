@@ -1,0 +1,28 @@
+.imgRetangulo {
+    width: 70%;
+}
+
+.cardsImagens {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 50px;
+}
+
+.cardsImagens .imgProduto {
+    width: 30%;
+    margin: 0 auto;
+    position: absolute;
+}
+
+.cardsImagens .imgRetangulo {
+    margin: 0 auto;
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 15rem;
+    padding-top: 80px;
+}

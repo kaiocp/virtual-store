@@ -3,18 +3,19 @@ import Camisa from './imagens/Camisa.png'
 import Tenis from './imagens/Tenis.png'
 import Bolsa from './imagens/Bolsa.png'
 import styles from './CardsHome.module.css'
+import Card from './Card'
 export default function CardsHome() {
+  const produtos = {
+    camisa: 'Camisas',
+    tenis: 'Tenis',
+    bolsa: 'Bolsa'
+  }
   return (
     <section className={styles.sectionCards}>
-      <div className={styles.produtosImagens}>
-        <img src={Camisa}/>
-        <img src={Tenis}/>
-        <img src={Bolsa}/>
-      </div>
       <div className={styles.cardsImagens}>
-        <img src={RetanguloFundo}/>
-        <img src={RetanguloFundo}/>
-        <img src={RetanguloFundo}/>
+        <Card imagem={Camisa} texto={produtos.camisa}/>
+        <Card imagem={Tenis} texto={produtos.tenis}/>
+        <Card imagem={Bolsa} texto={produtos.bolsa}/>
       </div>
     </section>
   )
