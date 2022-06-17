@@ -126,22 +126,31 @@ const deleteProducts = (req, res) => {
 }
 const postProducts = (req, res) => {
   const {
-    product_image_url,
-    product_title,
-    product_discription,
-    product_brand,
-    product_color,
-    product_category,
-    product_subcategory,
-    product_price
+    prod_title,
+    prod_description,
+    prod_price,
+    prod_image_url,
+    prod_brand,
+    prod_color,
+    prod_category,
+    prod_subcategory
   } = req.body
+  console.log(req.body)
   pool.getConnection((err, connection) => {
     if (err) {
       return res.status(500).json({ err: err })
     }
+    const myquery =
+      'INSERT INTO product VALUES (?,?,?,?,?,?); ' +
+      'INSERT INTO product_brand VALUES (?, ?); ' +
+      'INSERT INTO product_color VALUES (?, ?); ' +
+      'INSERT INTO category VALUES (?,?); ' +
+      'INSERT INTO sub_category VALUES (?,?); ' +
+      'INSERT INTO product_total VALUES (?, 1);'
+    console.log(myquery)
     const prod_id = uuidv4()
     var date = new Date()
-    var dateStr =
+    var prod_register_time =
       date.getFullYear() +
       '-' +
       ('00' + (date.getMonth() + 1)).slice(-2) +
@@ -155,39 +164,23 @@ const postProducts = (req, res) => {
       ('00' + date.getSeconds()).slice(-2)
 
     connection.query(
-      `INSERT INTO products
-    (prod_id,
-    product_image_url,
-    product_title,
-    product_discription,
-    product_brand,
-    product_color,
-    product_category,
-    product_subcategory,
-    product_price,
-    register_time)
-    VALUES (?,
-    ?,
-    ?,
-    ?,
-    ?,
-    ?,
-    ?,
-    ?,
-    ?,
-    ?);
-    `,
+      myquery,
       [
         prod_id,
-        product_image_url,
-        product_title,
-        product_discription,
-        product_brand,
-        product_color,
-        product_category,
-        product_subcategory,
-        product_price,
-        dateStr
+        prod_title,
+        prod_description,
+        prod_price,
+        prod_image_url,
+        prod_register_time,
+        prod_id,
+        prod_brand,
+        prod_id,
+        prod_color,
+        prod_id,
+        prod_category,
+        prod_id,
+        prod_subcategory,
+        prod_id
       ],
       (err, response) => {
         if (err) {
@@ -222,7 +215,48 @@ const updateProduct = (req, res) => {
       return res.status.json({ err: 'Connection failed' })
     }
     connection.query(
-      'UPDATE products SET product_image_url = ?, product_title = ?,product_discription = ?,product_brand = ?,product_color = ?,product_category = ?,product_subcategory = ?,product_price = ? WHERE prod_id = ? ',
+      `INSERT INTO
+  product
+VALUES
+  (
+    '23d64c3f-cac6-4b98-b755-364b84a1db56',
+    'TITLE',
+    'description',
+    10.4,
+    'url',
+    '2022-06-17 15:57:03'
+  );
+
+INSERT INTO
+  product_brand
+VALUES
+('23d64c3f-cac6-4b98-b755-364b84a1db56', 'brand');
+
+INSERT INTO
+  product_color
+VALUES
+('23d64c3f-cac6-4b98-b755-364b84a1db56', 'color');
+
+INSERT INTO
+  category
+VALUES
+(
+    '23d64c3f-cac6-4b98-b755-364b84a1db56',
+    'category'
+  );
+
+INSERT INTO
+  sub_category
+VALUES
+(
+    '23d64c3f-cac6-4b98-b755-364b84a1db56',
+    'subcategory'
+  );
+
+INSERT INTO
+  product_total
+VALUES
+('23d64c3f-cac6-4b98-b755-364b84a1db56', 1);`,
       [
         product_image_url,
         product_title,
