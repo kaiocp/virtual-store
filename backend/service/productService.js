@@ -66,16 +66,36 @@ const getProducts = (req, res) => {
     if (err) {
       return res.status(500).json({ err: err })
     }
-    connection.query('SELECT * FROM products', (err, response) => {
-      if (err) {
-        return res.status(500).json({ err: err })
-      } else {
-        pool.releaseConnection(connection)
-        return res
-          .status(200)
-          .json({ message: 'Current products', content: response })
+    connection.query(
+      `SELECT product.*,
+    product_brand.brand_name,
+    product_color.color_name,
+    category.category_name,
+    sub_category.subcategory_name,
+    product_total.prod_total
+    FROM product_total
+    JOIN product
+    ON product.prod_id = product_total.prod_id
+    JOIN product_brand
+    ON product.prod_id = product_brand.prod_id
+    JOIN product_color
+    ON product.prod_id = product_color.prod_id
+    JOIN category
+    ON product.prod_id = category.prod_id
+    JOIN sub_category
+    ON product.prod_id = sub_category.prod_id 
+    WHERE product_total.prod_total > 0;`,
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({ err: err })
+        } else {
+          pool.releaseConnection(connection)
+          return res
+            .status(200)
+            .json({ message: 'Current products', content: response })
+        }
       }
-    })
+    )
   })
 }
 const getProductById = (req, res) => {
