@@ -101,7 +101,9 @@ const getProducts = (req, res) => {
     ON product.prod_id = category.prod_id
     JOIN sub_category
     ON product.prod_id = sub_category.prod_id 
-    WHERE product_total.prod_total > 0;`,
+    WHERE product_total.prod_total > 0
+    ORDER BY product.prod_register_time
+    ;`,
       (err, response) => {
         if (err) {
           return res.status(500).json({ err: 'Failed to get products' })
@@ -257,76 +259,76 @@ const postProducts = (req, res) => {
 const updateProduct = (req, res) => {
   const { prod_id } = req
   const {
-    product_image_url,
-    product_title,
-    product_discription,
-    product_brand,
-    product_color,
-    product_category,
-    product_subcategory,
-    product_price
+    prod_title,
+    prod_description,
+    prod_price,
+    prod_image_url,
+    prod_brand,
+    prod_color,
+    prod_category,
+    prod_subcategory
   } = req.body
   pool.getConnection((err, connection) => {
     if (err) {
       return res.status.json({ err: 'Connection failed' })
     }
     connection.query(
-      `INSERT INTO
-  product
-VALUES
-  (
-    '23d64c3f-cac6-4b98-b755-364b84a1db56',
-    'TITLE',
-    'description',
-    10.4,
-    'url',
-    '2022-06-17 15:57:03'
-  );
-
-INSERT INTO
-  product_brand
-VALUES
-('23d64c3f-cac6-4b98-b755-364b84a1db56', 'brand');
-
-INSERT INTO
-  product_color
-VALUES
-('23d64c3f-cac6-4b98-b755-364b84a1db56', 'color');
-
-INSERT INTO
-  category
-VALUES
-(
-    '23d64c3f-cac6-4b98-b755-364b84a1db56',
-    'category'
-  );
-
-INSERT INTO
-  sub_category
-VALUES
-(
-    '23d64c3f-cac6-4b98-b755-364b84a1db56',
-    'subcategory'
-  );
-
-INSERT INTO
-  product_total
-VALUES
-('23d64c3f-cac6-4b98-b755-364b84a1db56', 1);`,
+      `UPDATE
+      product
+    SET
+      product.prod_title = ?,
+      product.prod_description = ?,
+      product.prod_price = ?,
+      product.prod_image_url = ?
+    WHERE
+      product.prod_id = ?;
+    
+    UPDATE
+      product_brand
+    SET
+      product_brand.brand_name = ?
+    WHERE
+      product_brand.prod_id = ?;
+    
+    UPDATE
+      product_color
+    SET
+      product_color.color_name = ?
+    WHERE
+      product_color.prod_id = ?;
+      
+     UPDATE
+      category
+    SET
+      category.category_name = ?
+    WHERE
+      category.prod_id = ?;
+      
+      UPDATE
+      sub_category
+    SET
+      sub_category.subcategory_name = ?
+    WHERE
+      sub_category.prod_id = ?;`,
       [
-        product_image_url,
-        product_title,
-        product_discription,
-        product_brand,
-        product_color,
-        product_category,
-        product_subcategory,
-        product_price,
+        prod_title,
+        prod_description,
+        prod_price,
+        prod_image_url,
+        prod_id,
+        prod_brand,
+        prod_id,
+        prod_color,
+        prod_id,
+        prod_category,
+        prod_id,
+        prod_subcategory,
         prod_id
       ],
       (err, response) => {
+        console.log(err)
         if (err) {
-          res.status(500).json({ err: err })
+          res.status(500).json({ err: 'Product update failed' })
         }
         pool.releaseConnection(connection)
         res.status(200).json({ message: `Product ${prod_id} updated` })
