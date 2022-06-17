@@ -210,6 +210,16 @@
         align-self: center;
         width: 390px;
     }
+    #d {
+        order: 1;
+        margin-bottom: -18px;
+    }
+    #e {
+        order: 2;
+    }
+    #f {
+        order: 3;
+    }
 }
 
 @media screen and (min-width: 1024px) {

@@ -1,4 +1,3 @@
-import '../../reset.css';
 import styles from './Cadastro.module.css';
 import { useState } from 'react';
 
