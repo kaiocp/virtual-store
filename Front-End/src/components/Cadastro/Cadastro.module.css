@@ -19,6 +19,7 @@
     margin-top: 4.8rem;
     margin-bottom: 3.125rem;
     row-gap: 4.125rem;
+    align-items: stretch;
 }
 
 .cadastro__header {
@@ -45,24 +46,27 @@
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
-    max-width: 290px;
     margin: 0 auto;
+    max-width: 315px;
 }
 
-.cadastro__form--img {
+.cadastro__form_img {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     row-gap: .313rem;
+    max-width: 290px;
+    margin: 0 auto;
 }
 
 .label {
     font-weight: 500;
     font-size: .875rem;
+    text-align: start;
 }
 
-.cadastro__form--img label {
+.cadastro__form_img label {
     align-self: flex-start;
     font-weight: 500;
     font-size: 1.25rem;
@@ -81,16 +85,22 @@
     background-image: url(./img/arcticons_gallery.svg);
 }
 
-.caixa img {
-    width: 286px;
-    height: 286px;
+.caixa_img {
+    max-width: 286px;
+    max-height: 286px;
 }
 
 .caixa:hover {
     cursor: pointer;
 }
 
-.cadastro__form--fields {
+.cadastro__form_fields {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.563rem;
+}
+
+.cadastro__form_fields_subsection {
     display: flex;
     flex-direction: column;
     row-gap: 1.563rem;
@@ -102,7 +112,7 @@
     row-gap: .313rem;
 }
 
-.field--input {
+.field__input {
     border: 1px solid var(--cadastro-border-field-grey);
     border-radius: 4px;
     height: 42px;
@@ -119,7 +129,7 @@
     resize: none;
 }
 
-.field--maxchar {
+.field__maxchar {
     color: var(--cadastro-light-green);
     font-size: .75rem;
     align-self: flex-end;
@@ -127,29 +137,29 @@
     margin-top: 2px;
 }
 
-.field--marca-cor {
+.field__marca_cor {
     display: flex;
     flex-direction: column;
     row-gap: 1.563rem;
 }
 
-.field--categorias {
+.field__categorias {
     display: flex;
     justify-content: space-between;
 }
 
-.field--categorias div {
+.field__categorias div {
     width: 40%;
 }
 
-.field--dropwdown {
+.field__dropwdown {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     background: url("./img/dropdown.svg") white no-repeat calc(100% - 10px) !important;
 }
 
-.cadastro__form--btn button {
+.cadastro__form_btn button {
     border-radius: 5px;
     width: 100%;
     border: none;
@@ -161,7 +171,7 @@
     margin-bottom: 1rem;
 }
 
-.cadastro__form--btn button:hover {
+.cadastro__form_btn button:hover {
     background-color: var(--cadastro-green-text);
     cursor: pointer;
 }
@@ -179,18 +189,26 @@
 }
 
 @media screen and (min-width: 768px) {
+    .cadastro__form {
+        max-width: 710px;
+    }
     .cadastro__header p {
         font-size: 1.375rem;
     }
-    .cadastro__form {
-        min-width: 710px;
+    .field__marca_cor {
+        flex-direction: row;
+        justify-content: space-between;
     }
-    .cadastro__form--img {
+    .field_2 {
+        width: 55%;
+    }
+    .field_3 {
+        width: 35%;
+    }
+    .cadastro__form_btn {
+        margin-top: 4rem;
         align-self: center;
-        max-width: 286px;
-    }
-    .cadastro__form--fields {
-        width: 100%;
+        width: 390px;
     }
     #d {
         order: 1;
@@ -202,51 +220,28 @@
     #f {
         order: 3;
     }
-    .field--marca-cor {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .field-2 {
-        width: 55%;
-    }
-    .field-3 {
-        width: 35%;
-    }
-    .cadastro__form--btn {
-        margin-top: 4rem;
-        align-self: center;
-        width: 390px;
-    }
 }
 
 @media screen and (min-width: 1024px) {
     .cadastro {
-        padding-top: 10rem;
-        padding-bottom: 15rem;
-        max-width: 1920px;
-        margin: 0 auto;
         row-gap: 10rem;
     }
-    .cadastro fieldset {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .cadastro__form {
+        flex-direction: row;
+        max-width: 1105px;
+        margin: 0 auto;
+        column-gap: 10rem;
+    }
+    .cadastro__form_img {
+        align-self: flex-start;
+    }
+    .cadastro__form_fields {
+        width: 70%;
     }
     .cadastro__header h2 {
         font-size: 4rem;
     }
     .cadastro__header p {
         font-size: 2rem;
-    }
-    .cadastro__form {
-        min-width: 1024px;
-        width: 100%;
-        flex-direction: row;
-        margin: 0 0;
-        column-gap: 15rem;
-    }
-    .cadastro__form--img {
-        align-self: flex-start;
     }
 }
