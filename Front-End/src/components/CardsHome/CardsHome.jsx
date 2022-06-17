@@ -7,7 +7,7 @@ import Card from './Card'
 export default function CardsHome() {
   const produtos = {
     camisa: 'Camisas',
-    tenis: 'Tenis',
+    tenis: 'Tênis',
     bolsa: 'Bolsa'
   }
   return (
