@@ -8,3 +8,10 @@
 .sectionCards {
     width: 100%;
 }
+
+@media (min-width: 768px) {
+    .cardsDiv {
+        display: flex;
+        flex-direction: row;
+    }
+}

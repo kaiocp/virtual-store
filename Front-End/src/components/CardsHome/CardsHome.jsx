@@ -12,7 +12,7 @@ export default function CardsHome() {
   }
   return (
     <section className={styles.sectionCards}>
-      <div className={styles.cardsImagens}>
+      <div className={styles.cardsDiv}>
         <Card imagem={Camisa} texto={produtos.camisa}/>
         <Card imagem={Tenis} texto={produtos.tenis}/>
         <Card imagem={Bolsa} texto={produtos.bolsa}/>
