@@ -11,7 +11,7 @@ export default function Search() {
 
   const navigate = useNavigate(); 
 
-  const runQuery = (query) => { 
+  const runQuery = (query) => {
     navigate(`/pesquisa/${query}`)
     setQuery("");
   }
