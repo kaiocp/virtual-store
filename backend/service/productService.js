@@ -167,7 +167,7 @@ const deleteProducts = (req, res) => {
       return res.status(500).json({ err: err })
     }
     connection.query(
-      'DELETE FROM products where prod_id = ?',
+      'DELETE FROM product_total where product_total.prod_id = ?',
       [prod_id],
       (err, response) => {
         if (err) {
