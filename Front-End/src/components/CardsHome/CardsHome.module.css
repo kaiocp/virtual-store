@@ -5,13 +5,10 @@
     box-sizing: border-box;
 }
 
-.sectionCards {
-    width: 100%;
-}
-
 @media (min-width: 768px) {
     .cardsDiv {
         display: flex;
         flex-direction: row;
+        margin: 0 auto;
     }
 }

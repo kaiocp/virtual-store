@@ -1,22 +1,18 @@
-.imgRetangulo {
-    width: 100%;
-}
-
 .cardsImagens {
     display: flex;
     justify-content: center;
     width: 100%;
-    padding-top: 50px;
+    padding-top: 5rem;
 }
 
-.cardsImagens .imgProduto {
+.imgProduto {
     width: 30%;
     margin: 0 auto;
     position: absolute;
 }
 
-.cardsImagens .textoProduto {
-    width: 100%;
+.textoProduto {
+    width: 30%;
     margin: 0 auto;
     position: absolute;
     padding-top: 40%;
@@ -26,7 +22,7 @@
 }
 
 .verMais {
-    width: 100%;
+    width: 20%;
     margin: 0 auto;
     position: absolute;
     padding-top: 49.5%;
@@ -39,7 +35,7 @@
     color: #424242;
 }
 
-.cardsImagens .imgRetangulo {
+.imgRetangulo {
     margin: 0 auto;
     width: 80%;
     display: flex;
@@ -50,7 +46,7 @@
     padding-top: 25%;
 }
 
-.cardsImagens .imgRetanguloDesktop {
+.imgRetanguloDesktop {
     display: none;
     margin: 0 auto;
     width: 80%;
@@ -62,59 +58,61 @@
 }
 
 @media (min-width: 768px) {
+    .imgRetangulo {
+        display: flex;
+        padding-top: 5.5rem;
+        max-width: 500px;
+        height: 200px;
+    }
     .cardsImagens {
-        padding-top: 8%;
+        padding-top: 7rem;
     }
-    .cardsImagens .imgProduto {
-        width: 12.5%;
-        padding-top: 0.1%;
+    .imgProduto {
+        max-width: 100px;
     }
-    .cardsImagens .imgRetangulo {
-        height: 100%;
-        padding-top: 35%;
-    }
-    .cardsImagens .textoProduto {
+    .textoProduto {
         width: 30%;
-        font-size: 2.9vw;
-        padding-top: 16%;
+        font-size: 2rem;
+        padding-top: 8rem;
     }
     .verMais {
         display: flex;
+        width: 15%;
         align-items: center;
-        justify-content: flex-end;
-        width: 10%;
-        padding-top: 19%;
-        font-size: 2vw;
+        justify-content: center;
+        padding-top: 10.5rem;
+        font-size: 1rem;
         gap: 10%;
     }
 }
 
 @media (min-width: 1024px) {
-    .cardsImagens .imgRetangulo {
+    .imgRetangulo {
         display: none;
     }
-    .cardsImagens .imgRetanguloDesktop {
+    .imgRetanguloDesktop {
         display: flex;
-        padding-top: 35%;
+        padding-top: 8rem;
+        max-width: 450px;
     }
     .cardsImagens {
-        padding-top: 7%;
+        padding-top: 7rem;
     }
-    .cardsImagens .imgProduto {
-        width: 12.5%;
+    .imgProduto {
+        max-width: 150px;
     }
-    .cardsImagens .textoProduto {
+    .textoProduto {
         width: 30%;
-        font-size: 2.9vw;
-        padding-top: 16%;
+        font-size: 2rem;
+        padding-top: 12.2rem;
     }
     .verMais {
+        width: 10%;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        width: 10%;
-        padding-top: 19%;
-        font-size: 2vw;
+        justify-content: center;
+        padding-top: 14.5rem;
+        font-size: 1rem;
         gap: 10%;
     }
 }
