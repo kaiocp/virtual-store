@@ -68,7 +68,8 @@ const isNull = (req, res, next) => {
     return res.status(400).json({ err: 'Invalid:Your request body is NULL' })
   }
   for (const property in responseBody) {
-    if (property != 'product_price' && !responseBody[property]) {
+    if (property != 'prod_price' && !responseBody[property]) {
+      console.log('Entrou')
       return res
         .status(400)
         .json({ err: `Invalid:The property ${property} of your body is NULL` })
@@ -103,7 +104,7 @@ const getProducts = (req, res) => {
     WHERE product_total.prod_total > 0;`,
       (err, response) => {
         if (err) {
-          return res.status(500).json({ err: err })
+          return res.status(500).json({ err: 'Failed to get products' })
         } else {
           pool.releaseConnection(connection)
           return res
@@ -150,7 +151,7 @@ const getProductByTitle = (req, res) => {
 
       (err, response) => {
         if (err) {
-          return res.status(500).json({ err: err })
+          return res.status(500).json({ err: 'Failed to get products' })
         } else {
           pool.releaseConnection(connection)
           return res.status(200).json({ message: 'product', content: response })
@@ -190,7 +191,7 @@ const postProducts = (req, res) => {
     prod_category,
     prod_subcategory
   } = req.body
-  console.log(req.body)
+
   pool.getConnection((err, connection) => {
     if (err) {
       return res.status(500).json({ err: err })
@@ -202,7 +203,7 @@ const postProducts = (req, res) => {
       'INSERT INTO category VALUES (?,?); ' +
       'INSERT INTO sub_category VALUES (?,?); ' +
       'INSERT INTO product_total VALUES (?, 1);'
-    console.log(myquery)
+
     const prod_id = uuidv4()
     var date = new Date()
     var prod_register_time =
@@ -239,7 +240,7 @@ const postProducts = (req, res) => {
       ],
       (err, response) => {
         if (err) {
-          return res.status(500).json({ err: err })
+          return res.status(500).json({ err: 'Failed to post product' })
         } else {
           pool.releaseConnection(connection)
           return res.status(201).json({
@@ -359,7 +360,6 @@ const updateOneInfo = (req, res) => {
           `UPDATE products SET ${property} = ? WHERE prod_id = ?`,
           [bodyValue, prod_id],
           (err, response) => {
-            //console.log(response)
             if (err) {
               res.status(500).json({ err: err })
             }
