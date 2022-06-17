@@ -63,10 +63,10 @@ const hasValidProperty = (req, res, next) => {
     if (!isValid) {
       return res
         .status(400)
-        .json({ err: "Your body has some invalides properties' names" })
+        .json({ err: "Your body has some invalid properties' names" })
     }
   }
-  console.log('Se saiu')
+
   next()
 }
 const isNull = (req, res, next) => {
@@ -76,7 +76,6 @@ const isNull = (req, res, next) => {
   }
   for (const property in responseBody) {
     if (property != 'prod_price' && !responseBody[property]) {
-      console.log('Entrou')
       return res
         .status(400)
         .json({ err: `Invalid:The property ${property} of your body is NULL` })
@@ -333,7 +332,6 @@ const updateProduct = (req, res) => {
         prod_id
       ],
       (err, response) => {
-        console.log(err)
         if (err) {
           res.status(500).json({ err: 'Product update failed' })
         }
@@ -346,11 +344,7 @@ const updateProduct = (req, res) => {
 /*const updateOneInfo = (req, res) => {
   const { prod_id } = req
   const requestBody = req.body
-  if (invalidProperty(requestBody)) {
-    return res
-      .status(400)
-      .json({ err: "Your body has some invalides properties' names" })
-  }
+  
 
   for (bodyProperty in requestBody) {
     const bodyValue = requestBody[bodyProperty]
