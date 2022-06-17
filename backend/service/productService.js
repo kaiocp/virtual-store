@@ -44,23 +44,30 @@ const idExists = (req, res, next) => {
     )
   })
 }
-const invalidProperty = requestBody => {
+const hasValidProperty = (req, res, next) => {
+  const requestBody = req.body
+  const validProperty = [
+    'prod_title',
+    'prod_description',
+    'prod_price',
+    'prod_image_url',
+    'prod_brand',
+    'prod_color',
+    'prod_category',
+    'prod_subcategory'
+  ]
   for (property in requestBody) {
-    if (
-      property !== 'product_image_url' &&
-      property !== 'product_title' &&
-      property !== 'product_discription' &&
-      property !== 'product_brand' &&
-      property !== 'product_color' &&
-      property !== 'product_category' &&
-      property !== 'product_subcategory' &&
-      property !== 'product_price'
-    ) {
-      return true
+    const isValid = validProperty.some(element => {
+      return property === element
+    })
+    if (!isValid) {
+      return res
+        .status(400)
+        .json({ err: "Your body has some invalides properties' names" })
     }
-    continue
   }
-  return false
+  console.log('Se saiu')
+  next()
 }
 const isNull = (req, res, next) => {
   const responseBody = req.body
@@ -336,7 +343,7 @@ const updateProduct = (req, res) => {
     )
   })
 }
-const updateOneInfo = (req, res) => {
+/*const updateOneInfo = (req, res) => {
   const { prod_id } = req
   const requestBody = req.body
   if (invalidProperty(requestBody)) {
@@ -386,7 +393,7 @@ const updateOneInfo = (req, res) => {
     message: `Product ${prod_id}  updated`
   })
 }
-
+*/
 module.exports = {
   getProducts,
   postProducts,
@@ -396,5 +403,6 @@ module.exports = {
   getProductByTitle,
   isNull,
   updateProduct,
-  updateOneInfo
+  //updateOneInfo,
+  hasValidProperty
 }
