@@ -1,4 +1,5 @@
-import styles from './Search.module.css'
+import styles from './Search.module.css';
+import styles2 from './Header.module.css'
 import { useState } from 'react'
 import LupaPesquisa from './imagens/LupaPesquisa.png'
 export default function Search() {
@@ -10,7 +11,7 @@ export default function Search() {
   return (
     <div className={styles.inputDiv} id={styles.inputDiv}>
       <img className={styles.searchImg} id={styles.searchImg} src={LupaPesquisa} onClick={pesquisaProduto}/>
-      <input className={styles.inputSearch} id={styles.inputSearch} placeholder='Pesquise por um produto'
+      <input className={styles2.inputSearch} id={styles2.inputSearch} placeholder='Pesquise por um produto'
       onChange={(e) => setProduto(e.target.value)} type="text"></input>
     </div>
   )
