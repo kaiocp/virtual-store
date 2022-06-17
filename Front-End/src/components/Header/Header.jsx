@@ -3,6 +3,7 @@ import MenuHamburguer from './imagens/MenuHamburguer.png'
 import Navbar from './Navbar'
 import Search from './Search'
 import styles from './Header.module.css'
+
 export default function Header() {
   return (
     <header className={styles.headerDiv} id={styles.headerDiv}>

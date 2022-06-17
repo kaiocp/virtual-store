@@ -3,6 +3,7 @@ import iconeFacebook from './img/facebook.svg';
 import iconeTwitter from './img/twitter.svg';
 import iconeInstagram from './img/instagram.svg';
 import styles from  './Footer.module.css';
+import { Link } from 'react-router-dom';
 
 
 export default function Footer() {
@@ -11,10 +12,10 @@ export default function Footer() {
         <div className={styles.footer__main}>
             <div className={styles.footer__links} id={styles.b}>
                 <ul>
-                    <li><a href=''>Início</a></li>
-                    <li><a href=''>Produtos</a></li>
-                    <li><a href=''>Anunciar</a></li>
-                    <li><a href=''>Carrinho</a></li>
+                    <li><Link to='/'>Início</Link></li>
+                    <li><Link to='/produtos'>Produtos</Link></li>
+                    <li><Link to='/anunciar'>Anunciar</Link></li>
+                    <li><Link to='/carrinho'>Carrinho</Link></li>
                 </ul>
             </div>
             <div className={styles.footer__lojinha} id={styles.a}>
