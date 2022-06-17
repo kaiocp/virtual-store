@@ -223,6 +223,9 @@
 }
 
 @media screen and (min-width: 1024px) {
+    .cadastro {
+        row-gap: 10rem;
+    }
     .cadastro__form {
         flex-direction: row;
         max-width: 1105px;

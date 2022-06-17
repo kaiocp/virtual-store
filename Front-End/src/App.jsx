@@ -5,13 +5,12 @@ import Hero from './components/Hero/Hero';
 import Header from './components/Header/Header'
 
 function App() {
-  const [count, setCount] = useState(0)
   return (
     <div className="App">
-      {/* <Header /> */}
-      {/* <Hero /> */}
+      <Header />
+      <Hero />
       <Cadastro />
-      {/* <Footer /> */}
+      <Footer />
       
     </div>
   )

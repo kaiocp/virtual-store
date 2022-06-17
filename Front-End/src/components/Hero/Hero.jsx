@@ -1,6 +1,5 @@
 import iconeSacolaCompras from './img/compras.svg';
 import iconeChevronDown from './img/chevron-down 1.svg';
-// import '../../reset.css';
 import styles from './Hero.module.css';
 
 export default function Hero() {
