@@ -1,5 +1,5 @@
 import '../../reset.css';
-import styles from './cadastro.module.css';
+import styles from './Cadastro.module.css';
 import { useState } from 'react';
 
 export default function Cadastro() {
@@ -63,11 +63,11 @@ export default function Cadastro() {
             <fieldset>
                 <form onSubmit={handleSubmit} className={styles.cadastro__form}>
                     <div className={styles.cadastro__form_img}>
-                        <label htmlFor="imagemProduto">Preview da imagem</label>
+                        <label>Preview da imagem</label>
                         <div className={styles.caixa} onClick={(ev) => {
                                 ev.preventDefault();
                                 document.getElementById('img').focus()}} >
-                            <img src={imgUrl ? imgUrl : null} alt="" id="imagemProduto" />
+                            <img className={styles.caixa_img} src={imgUrl ? imgUrl : null} alt="" />
                         </div>                
                     </div>
 
@@ -75,7 +75,7 @@ export default function Cadastro() {
                         <div className={styles.field}>
                             <label className={styles.label} htmlFor="">Url da imagem</label>
                             <input 
-                                className={styles.field}
+                                className={styles.field__input}
                                 type="text" 
                                 id="img"
                                 value={imgUrl}
@@ -118,7 +118,7 @@ export default function Cadastro() {
                                     required  
                                 />
                             </div>
-                            <div className={`${styles.field} ${styles.field_2}`}>
+                            <div className={`${styles.field} ${styles.field_3}`}>
                                 <label className={styles.label} htmlFor="">Cor</label>
                                 <input 
                                     className={styles.field__input} 
@@ -130,8 +130,7 @@ export default function Cadastro() {
                             </div>
                         </div>
 
-                        <div className={styles.cadastro__form_fields}>
-
+                        <div className={styles.cadastro__form_fields_subsection}>
                             <div className={`${styles.field__categorias} ${styles.field_2}`}>
                                 <div className={styles.field}>
                                     <label className={styles.label} htmlFor="category">Categoria</label>
@@ -161,7 +160,7 @@ export default function Cadastro() {
                                     </select>
                                 </div>  
                             </div>
-                            <div className={`${styles.field} ${styles.field__dropwdown}`}>
+                            <div className={`${styles.field} ${styles.field_2}`}>
                                 <label className={styles.label} htmlFor="">Preço</label>
                                 <input 
                                     className={styles.field__input}
