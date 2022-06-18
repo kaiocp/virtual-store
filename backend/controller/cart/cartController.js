@@ -4,11 +4,18 @@ const {
   insertProduct,
   productBodyExists,
   productAlreadyInserted,
-  getCartInfo
+  getCartInfo,
+  hasValidProperty
 } = require('../../service/cart/cartService')
 const router = express.Router()
 
 router.get('/', getCartInfo)
-router.post('/', productBodyExists, productAlreadyInserted, insertProduct)
+router.post(
+  '/',
+  hasValidProperty,
+  productBodyExists,
+  productAlreadyInserted,
+  insertProduct
+)
 
 module.exports = router

@@ -38,7 +38,7 @@ const updateCartInfo = () => {
       SUM(contains_with.prod_total) as total_prod
       FROM contains_with
       JOIN product
-      ON contains_with.cart_id = product.prod_id;`,
+      ON contains_with.prod_id = product.prod_id;`,
       (err, res) => {
         const { sum, total_prod } = res[0]
 
@@ -125,6 +125,22 @@ const insertProduct = (req, res) => {
     )
   })
 }
+const hasValidProperty = (req, res, next) => {
+  const requestBody = req.body
+  const validProperty = ['prod_id', 'prod_total']
+  for (property in requestBody) {
+    const isValid = validProperty.some(element => {
+      return property === element
+    })
+    if (!isValid) {
+      return res
+        .status(400)
+        .json({ err: "Your body has some invalid properties' names" })
+    }
+  }
+
+  next()
+}
 const getCartInfo = (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
@@ -183,5 +199,6 @@ module.exports = {
   insertProduct,
   productBodyExists,
   productAlreadyInserted,
-  getCartInfo
+  getCartInfo,
+  hasValidProperty
 }
