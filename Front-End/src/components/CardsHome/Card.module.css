@@ -6,7 +6,7 @@
 }
 
 .cardsDiv {
-    padding-top: 10%;
+    padding-bottom: 20%;
 }
 
 .cardsImagens {
@@ -14,7 +14,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding-top: 8rem;
+    padding-top: 40%;
+    padding-bottom: 0%;
 }
 
 .imgRetangulo {
@@ -22,34 +23,36 @@
 }
 
 .imgProduto {
-    margin-top: -30rem;
-    padding-bottom: 30%;
+    margin-top: -40rem;
+    padding-bottom: 38%;
     width: 30vw;
 }
 
+.textoCards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: -30vw;
+}
+
 .textoProduto {
-    width: 30%;
-    padding-top: 40%;
+    margin: 0 auto;
     font-family: 'Josefin Sans', sans-serif;
     font-size: 7vw;
     color: #252822;
 }
 
-
-/*
 .verMais {
     width: 20%;
     margin: 0 auto;
-    padding-top: 49.5%;
     font-family: 'Josefin Sans', sans-serif;
     font-size: 4vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2%;
+    gap: 10%;
     color: #424242;
 }
-*/
 
 .imgRetanguloDesktop {
     display: none;

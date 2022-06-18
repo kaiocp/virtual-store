@@ -10,6 +10,13 @@ export default function Card(props) {
         <img className={styles.imgRetangulo} src={RetanguloFundo}/>
       </div>
       <img className={styles.imgProduto} src={props.imagem}/>
+      <div className={styles.textoCards}>
+        <h1 className={styles.textoProduto}>{props.texto}</h1>
+        <div className={styles.verMais}>
+          <p className={styles.textoVerMais}>Ver mais</p>
+          <img className={styles.setaVerMais} src={SetaVerMais}/>
+        </div>
+      </div>
     </div>
   )
 }
