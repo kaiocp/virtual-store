@@ -25,13 +25,13 @@
     width: 28px;
     height: 28px;
     background-color: #F8F8F8;
-    margin-top: -32px;
+    margin-top: -34px;
     border-radius: 2px;
     font-size: .75rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 2px;
+    margin-left: 6px;
 }
 
 .productCard__info {
