@@ -65,37 +65,50 @@
     padding-top: 25%;
 }
 
-
-/*
 @media (min-width: 768px) {
+    .cardsDiv {
+        width: 25rem;
+    }
     .imgRetangulo {
+        width: 14rem;
         display: flex;
         padding-top: 5.5rem;
-        max-width: 500px;
-        height: 200px;
-    }
-    .cardsImagens {
-        padding-top: 7rem;
     }
     .imgProduto {
-        max-width: 100px;
+        margin-top: -40rem;
+        padding-bottom: 7rem;
+        width: 7rem;
+    }
+    .textoCards {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: -6rem;
     }
     .textoProduto {
-        width: 30%;
-        font-size: 2rem;
-        padding-top: 8rem;
-    }
-    .verMais {
         display: flex;
-        width: 15%;
         align-items: center;
         justify-content: center;
-        padding-top: 10.5rem;
-        font-size: 1rem;
+        margin: 0 auto;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 2.5vw;
+        color: #252822;
+    }
+    .verMais {
+        width: 10rem;
+        margin: 0 auto;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 2vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         gap: 10%;
+        color: #424242;
     }
 }
 
+
+/*
 @media (min-width: 1024px) {
     .imgRetangulo {
         display: none;
@@ -125,4 +138,6 @@
         font-size: 1rem;
         gap: 10%;
     }
-}*/
+}
+
+*/

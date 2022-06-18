@@ -1,7 +1,7 @@
 import styles from './Card.module.css'
 import RetanguloFundo from './imagens/RetanguloFundo.png'
 import RetanguloFundoDesktop from './imagens/RetanguloFundoDesktop.png'
-import SetaVerMais from './imagens/SetaVerMais.png'
+import SetaVerMais from './imagens/SetaVerMais.svg'
 export default function Card(props) {
   return (
     <div className={styles.cardsDiv}>
