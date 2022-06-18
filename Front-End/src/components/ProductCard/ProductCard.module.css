@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+:root {
+    --product-card-montserrat: 'Montserrat', sans-serif;
+    --product-card-green: #53B38D;
+    --product-card-black: #252822;
+    --product-card-grey: #A6A39F;
+}
+
+.productCard {
+    display: flex;
+    max-width: 247px;
+    flex-direction: column;
+    font-family: var(--product-card-montserrat);
+}
+
+.productCard__img {
+    max-height: 244px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.productCard__subcategory {
+    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    background-color: #F8F8F8;
+    margin-top: -32px;
+    border-radius: 2px;
+    font-size: .75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2px;
+}
+
+.productCard__info {
+    display: flex;
+    flex-direction: column;
+    margin-top: .688rem;
+    row-gap: .563rem;
+}
+
+.productCard__info h3 {
+    color: var(--product-card-green);
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.productCard__info h4 {
+    color: var(--product-card-black);
+    font-weight: 400;
+    font-size: 1.125rem;
+}
+
+.productCard__info p {
+    color: var(--product-card-grey);
+    font-weight: 400;
+    font-size: 1.125rem;
+}

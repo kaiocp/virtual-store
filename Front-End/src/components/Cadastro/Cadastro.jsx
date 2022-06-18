@@ -149,7 +149,7 @@ export default function Cadastro() {
                                     <select 
                                         className={`${styles.field__input} ${styles.field__dropwdown}`}
                                         value={subcategoria}
-                                        onChange={(e) => setSubcategoria(e.target.value)}                                  
+                                        onChange={(e) => setSubcategoria(e.target.value)}                           
                                     >
                                         <option disabled />
                                         <option value="P">P</option>

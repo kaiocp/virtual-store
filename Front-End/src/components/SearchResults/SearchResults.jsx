@@ -26,7 +26,6 @@ export default function SearchResults () {
         fetchData();
     }, []);
 
-
     return (
         <section className={styles.pesquisa}>
             {loading && <div>Carregando...</div>}
