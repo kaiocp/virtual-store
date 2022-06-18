@@ -1,7 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from './SearchResults.module.css';
+import ProductCard from '../ProductCard/ProductCard';
+import ProductsGrid from "../ProductsGrid/ProductsGrid";
 
 export default function SearchResults () {
     let { query } = useParams();
@@ -9,15 +12,13 @@ export default function SearchResults () {
     const [queryData, setQueryData] = useState({});
     const [loading, setLoading] = useState(true);
 
-    let url = `https://sleepy-cliffs-93443.herokuapp.com/products/title/${query}`;
-
     useEffect(() => {
+        let url = `https://sleepy-cliffs-93443.herokuapp.com/products/title/${query}`;
         const fetchData = async () => {
         setLoading(true);
         try {
             const {data: response} = await axios.get(url);
             setQueryData(response);
-            console.log(queryData);
         } catch (error) {
             console.error(error.message);
         }
@@ -27,23 +28,30 @@ export default function SearchResults () {
     }, []);
 
     return (
-        <section className={styles.pesquisa}>
-            {loading && <div>Carregando...</div>}
+        <section>
+            {loading && <h2 className={styles.empty_query}>Carregando...</h2>}
             {!loading && (
-                (queryData.content.length > 0) ? 
-                queryData.content.map(el => (
-                    <div key={el.prod_id}>
-                        <p>{el.product_title}</p>
-                        <p>{el.product_discription}</p>
-                        <p>{el.product_brand}</p>
-                        <p>{el.product_color}</p>
-                        <p>{el.product_category}</p>
-                        <p>{el.product_price}</p>
-                        <p>-------------</p>
-                    </div>
-                ))
+                (queryData.content.length > 0) ?
+                <ProductsGrid
+                pageTitle={`Resultados de "${query}"`}
+                card={
+                    queryData.content.map(el => (
+                        <ProductCard
+                            key={el.prod_id}
+                            img={el.prod_image_url}
+                            subcategory={el.subcategory_name}
+                            price={el.prod_price}
+                            title={el.prod_title}
+                            category={el.category_name}
+                        />
+                    ))
+                 }
+                />
                 :
-                <p>Nao tem nada aqui nao fia</p>
+                <div className={styles.empty_query}>
+                    <h2>Ah não! Ainda não temos esse produto :(</h2>
+                    <h3>Que tal vir <Link to="/anunciar" className={styles.empty_query_link}>anunciar com a gente?</Link></h3>
+                </div>
             )}
         </section>
     )

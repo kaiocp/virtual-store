@@ -6,7 +6,7 @@ export default function ProductCard(props) {
             <img 
                 className={styles.productCard__img}
                 src={props.img} 
-                alt="" 
+                alt="Produto" 
             />
             <div className={styles.productCard__subcategory}>
                 <p>{props.subcategory}</p>
