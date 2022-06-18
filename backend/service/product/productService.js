@@ -1,6 +1,6 @@
 const express = require('express')
 const mysql = require('mysql2')
-const pool = require('../db/mySQL')
+const pool = require('../../db/mySQL')
 const { v4: uuidv4 } = require('uuid')
 
 const idExists = (req, res, next) => {

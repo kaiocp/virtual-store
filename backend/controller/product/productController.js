@@ -11,7 +11,7 @@ const {
   updateProduct,
   updateOneInfo,
   hasValidProperty
-} = require('../service/productService')
+} = require('../../service/product/productService')
 router.get('/title/:title', getProductByTitle)
 router.get('/:prod_id', idExists, getProductById)
 router.get('/', getProducts)
