@@ -125,9 +125,63 @@ const insertProduct = (req, res) => {
     )
   })
 }
+const getCartInfo = (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.status(500).json({ err: 'Failed to connect' })
+    }
+
+    connection.query(
+      `SELECT cart_subtotal, cart_prod_total
+      FROM cart WHERE cart_id = 4;`,
+      (err, data) => {
+        if (err) {
+          res.status(500).json({ err: 'Failed get itens from cart' })
+        }
+        const { cart_subtotal, cart_prod_total } = data[0]
+
+        pool.releaseConnection(connection)
+
+        pool.getConnection((err, conn) => {
+          console.log('Entrou aqui')
+          if (err) {
+            res.status(500).json({ err: 'Failed to connect' })
+          }
+          conn.query(
+            `SELECT
+          product.prod_id,
+          product.prod_title,
+          product.prod_description,
+          product.prod_price,
+          product.prod_image_url,
+          contains_with.prod_total
+        FROM
+          contains_with
+          JOIN product ON contains_with.prod_id = product.prod_id
+        WHERE
+          contains_with.cart_id = 4;`,
+            (error, response) => {
+              if (error) {
+                res.status(500).json({ err: 'Failed get itens from cart' })
+              }
+              return res.status(200).json({
+                content: {
+                  cart_subtotal,
+                  cart_prod_total,
+                  products: response
+                }
+              })
+            }
+          )
+        })
+      }
+    )
+  })
+}
 
 module.exports = {
   insertProduct,
   productBodyExists,
-  productAlreadyInserted
+  productAlreadyInserted,
+  getCartInfo
 }
