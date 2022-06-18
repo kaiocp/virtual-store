@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './Search.module.css';
 import styles2 from './Header.module.css'
-import LupaPesquisa from './imagens/LupaPesquisa.png';
+import LupaPesquisa from './imagens/LupaPesquisa.svg';
 
 
 export default function Search() {

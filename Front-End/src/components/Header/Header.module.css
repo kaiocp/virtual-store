@@ -26,9 +26,7 @@
     #headerDiv {
         flex-direction: row-reverse;
         justify-content: space-between;
-    }
-    #headerEsquerda {
-        width: 90%;
+        max-width: 1920px;
     }
     #navbarDiv {
         display: flex;
@@ -65,6 +63,10 @@
     font-size: 0.7rem;
     color: #275845;
     font-family: 'Josefin Sans', sans-serif;
+}
+
+.logoLojinha:hover {
+    cursor: pointer;
 }
 
 .headerEsquerda {
