@@ -8,9 +8,10 @@
 
 .productCard {
     display: flex;
-    max-width: 247px;
+    width: 315px;
     flex-direction: column;
     font-family: var(--product-card-montserrat);
+    text-align: start;
 }
 
 .productCard__img {

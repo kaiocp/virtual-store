@@ -1,10 +1,11 @@
 import Hero from "../components/Hero/Hero";
-import ProductCard from "../components/ProductCard/ProductCard";
+import ProductsGrid from "../components/ProductsGrid/ProductsGrid";
 
 export default function Home() {
     return (
         <>
             <Hero />
+            <ProductsGrid pageTitle="Produtos"/>
         </>
     )
 }

@@ -12,7 +12,7 @@ export default function ProductCard(props) {
                 <p>{props.subcategory}</p>
             </div>
             <div className={styles.productCard__info}>
-                <h3>R$ {props.price}</h3>
+                <h3>R$ {parseFloat((props.price)).toFixed(2)}</h3>
                 <h4>{props.title}</h4>
                 <p>{props.category}</p>
             </div>
