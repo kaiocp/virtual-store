@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
-const productController = require('./controller/productController')
+const productController = require('./controller/product/productController')
 app.use(morgan('dev'))
 
 app.use((req, res, next) => {
