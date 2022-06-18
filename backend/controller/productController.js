@@ -9,7 +9,7 @@ const {
   getProductByTitle,
   isNull,
   updateProduct,
-  //updateOneInfo,
+  updateOneInfo,
   hasValidProperty
 } = require('../service/productService')
 router.get('/title/:title', getProductByTitle)
@@ -18,6 +18,6 @@ router.get('/', getProducts)
 router.post('/', hasValidProperty, isNull, postProducts)
 router.delete('/:prod_id', idExists, deleteProducts)
 router.put('/:prod_id', hasValidProperty, isNull, idExists, updateProduct)
-//router.patch('/:prod_id', isNull, idExists, updateOneInfo)
+router.patch('/:prod_id', hasValidProperty, isNull, idExists, updateOneInfo)
 
 module.exports = router

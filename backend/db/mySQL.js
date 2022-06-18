@@ -7,7 +7,8 @@ const pool = mysql.createPool({
   host: process.env.DB_HOST,
   database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
-  multipleStatements: true
+  multipleStatements: true,
+  timezone: '+00:00'
 })
 
 module.exports = pool

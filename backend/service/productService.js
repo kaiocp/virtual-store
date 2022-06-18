@@ -2,7 +2,6 @@ const express = require('express')
 const mysql = require('mysql2')
 const pool = require('../db/mySQL')
 const { v4: uuidv4 } = require('uuid')
-const { json } = require('express')
 
 const idExists = (req, res, next) => {
   const { prod_id } = req.params
@@ -43,6 +42,49 @@ const idExists = (req, res, next) => {
       }
     )
   })
+}
+const tableIdentifier = property => {
+  const product = [
+    'prod_title',
+    'prod_description',
+    'prod_price',
+    'prod_image_url'
+  ]
+  const queryInfo = {}
+  const brand = 'prod_brand',
+    color = 'prod_color',
+    category = 'prod_category',
+    subcategory = 'prod_subcategory'
+  const isProduct = product.some(element => {
+    return element === property
+  })
+  if (isProduct) {
+    queryInfo['table'] = 'product'
+    queryInfo['column'] = property
+    return queryInfo
+  }
+  switch (property) {
+    case brand:
+      queryInfo['table'] = 'product_brand'
+      queryInfo['column'] = 'brand_name'
+      break
+
+    case color:
+      queryInfo['table'] = 'product_color'
+      queryInfo['column'] = 'color_name'
+      break
+
+    case category:
+      queryInfo['table'] = 'category'
+      queryInfo['column'] = 'category_name'
+      break
+
+    case subcategory:
+      queryInfo['table'] = 'sub_category'
+      queryInfo['column'] = 'subcategory_name'
+      break
+  }
+  return queryInfo
 }
 const hasValidProperty = (req, res, next) => {
   const requestBody = req.body
@@ -341,38 +383,22 @@ const updateProduct = (req, res) => {
     )
   })
 }
-/*const updateOneInfo = (req, res) => {
+const updateOneInfo = (req, res) => {
   const { prod_id } = req
   const requestBody = req.body
-  
 
   for (bodyProperty in requestBody) {
     const bodyValue = requestBody[bodyProperty]
     const property = bodyProperty
+    const queryInfo = tableIdentifier(property)
 
     pool.getConnection((err, connection) => {
       if (err) {
         return res.status(500).json({ err: 'Connection failed' })
       }
-      pool.getConnection((err, connection) => {
-        if (err) {
-          return res.status(500).json({ err: 'Connection failed' })
-        }
-
-        connection.query(
-          `UPDATE products SET ${property} = ? WHERE prod_id = ?`,
-          [bodyValue, prod_id],
-          (err, response) => {
-            if (err) {
-              res.status(500).json({ err: err })
-            }
-            pool.releaseConnection(connection)
-          }
-        )
-      })
 
       connection.query(
-        `UPDATE products SET ${property} = ? WHERE prod_id = ?`,
+        `UPDATE ${queryInfo.table} SET ${queryInfo.column} = ? WHERE prod_id = ?`,
         [bodyValue, prod_id],
         (err, response) => {
           if (err) {
@@ -387,7 +413,7 @@ const updateProduct = (req, res) => {
     message: `Product ${prod_id}  updated`
   })
 }
-*/
+
 module.exports = {
   getProducts,
   postProducts,
@@ -397,6 +423,6 @@ module.exports = {
   getProductByTitle,
   isNull,
   updateProduct,
-  //updateOneInfo,
+  updateOneInfo,
   hasValidProperty
 }
