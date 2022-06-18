@@ -3,7 +3,7 @@ const mysql = require('mysql2')
 const pool = require('../../db/mySQL')
 const { v4: uuidv4 } = require('uuid')
 
-const idExists = (req, res, next) => {
+const productExists = (req, res, next) => {
   const { prod_id } = req.params
   pool.getConnection((err, connection) => {
     if (err) {
@@ -418,7 +418,7 @@ module.exports = {
   getProducts,
   postProducts,
   deleteProducts,
-  idExists,
+  productExists,
   getProductById,
   getProductByTitle,
   isNull,

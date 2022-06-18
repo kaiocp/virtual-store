@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
 const productController = require('./controller/product/productController')
+const cartController = require('./controller/cart/cartController')
 app.use(morgan('dev'))
 
 app.use((req, res, next) => {
@@ -24,5 +25,5 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use('/products', productController)
-
+app.use('/cart', cartController)
 module.exports = app
