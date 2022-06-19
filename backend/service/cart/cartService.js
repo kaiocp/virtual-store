@@ -272,7 +272,7 @@ const insertCep = (req, res) => {
   let args = {
     sCepOrigem: '40170115',
     sCepDestino: cep_number,
-    nVlPeso: '1',
+    nVlPeso: '3',
     nCdFormato: '1',
     nVlComprimento: '20',
     nVlAltura: '20',
@@ -300,6 +300,32 @@ const insertCep = (req, res) => {
       res.status(400).json({ err: 'Cep inválido' })
     })
 }
+const deleteCart = (req, res) => {
+  const { prod_id } = req.params
+  pool.getConnection((err, connection) => {
+    const { prod_id } = req
+    const { prod_total } = req.body
+    if (err) {
+      res.status(500).json({ err: 'Failed to connect' })
+    }
+    connection.query(
+      `DELETE FROM contains_with
+      WHERE cart_id = 4 AND prod_id = ?
+      `,
+      [prod_id],
+      (error, queryResponse) => {
+        if (error) {
+          res.status(500).json({ err: 'Failed to update' })
+        }
+        pool.releaseConnection(connection)
+        updateCartInfo()
+        res
+          .status(201)
+          .json({ message: `Product ${prod_id} inside cart deleted` })
+      }
+    )
+  })
+}
 module.exports = {
   insertProduct,
   productBodyExists,
@@ -310,5 +336,6 @@ module.exports = {
   updateCart,
   hasBodyNullValue,
   productNotAlreadyInserted,
-  insertCep
+  insertCep,
+  deleteCart
 }
