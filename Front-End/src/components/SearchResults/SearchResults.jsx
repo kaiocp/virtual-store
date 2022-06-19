@@ -25,7 +25,7 @@ export default function SearchResults () {
         setLoading(false);
         }
         fetchData();
-    }, []);
+    }, [query]);
 
     return (
         <section>

@@ -76,7 +76,7 @@ export default function Cadastro() {
                             <label className={styles.label} htmlFor="">Url da imagem</label>
                             <input 
                                 className={styles.field__input}
-                                type="text" 
+                                type="url" 
                                 id="img"
                                 value={imgUrl}
                                 onChange={(e) => setImgUrl(e.target.value)}
