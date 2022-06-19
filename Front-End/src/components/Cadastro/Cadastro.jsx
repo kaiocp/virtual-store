@@ -1,5 +1,4 @@
-import '../../reset.css';
-import './cadastro.css';
+import styles from './Cadastro.module.css';
 import { useState } from 'react';
 
 export default function Cadastro() {
@@ -54,28 +53,28 @@ export default function Cadastro() {
     }    
 
     return (
-        <section className='cadastro'>
-            <div className='cadastro__header'>
+        <section className={styles.cadastro}>
+            <div className={styles.cadastro__header}>
                 <h2>Venha vender com a gente!</h2>
                 <p>Cadastre seu produto e venda na Lojinha</p>
             </div>
 
             <fieldset>
-                <form onSubmit={handleSubmit} className='cadastro__form'>
-                    <div className='cadastro__form--img'>
-                        <label htmlFor="imagemProduto">Preview da imagem</label>
-                        <div className='caixa' onClick={(ev) => {
+                <form onSubmit={handleSubmit} className={styles.cadastro__form}>
+                    <div className={styles.cadastro__form_img}>
+                        <label>Preview da imagem</label>
+                        <div className={styles.caixa} onClick={(ev) => {
                                 ev.preventDefault();
                                 document.getElementById('img').focus()}} >
-                            <img src={imgUrl ? imgUrl : null} alt="" id="imagemProduto" />
+                            <img className={styles.caixa_img} src={imgUrl ? imgUrl : null} alt="" />
                         </div>                
                     </div>
 
-                    <div className='cadastro__form--fields'>
-                        <div className='field'>
-                            <label className='label' htmlFor="">Url da imagem</label>
+                    <div className={styles.cadastro__form_fields}>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="">Url da imagem</label>
                             <input 
-                                className="field--input" 
+                                className={styles.field__input}
                                 type="text" 
                                 id="img"
                                 value={imgUrl}
@@ -83,45 +82,45 @@ export default function Cadastro() {
                                 required
                             />
                         </div>
-                        <div className='field'>
-                            <label className='label' htmlFor="">Título</label>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="">Título</label>
                             <input 
-                                className="field--input" 
+                                className={styles.field__input}
                                 type="text" 
                                 value={titulo}
                                 onChange={(e) => setTitulo(e.target.value)}
                                 required 
                             />
                         </div>
-                        <div className='field'>
-                            <label className='label' htmlFor="" id="d">Descrição do produto</label>
+                        <div className={styles.field}>
+                            <label className={styles.label} htmlFor="" id={styles.d}>Descrição do produto</label>
                             <textarea 
-                                className="field--input" 
+                                className={styles.field__input}
                                 type="text"
-                                id="f" 
+                                id={styles.f} 
                                 maxLength="300"
                                 value={descricao}
                                 onChange={(e) => setDescricao(e.target.value)}
                                 required 
                             />
-                            <p className="field--maxchar" id="e">(max. 300 caracteres)</p>
+                            <p className={styles.field__maxchar} id={styles.e}>(max. 300 caracteres)</p>
                         </div>
 
-                        <div className='field--marca-cor'>
-                            <div className='field field-2'>
-                                <label className='label' htmlFor="">Marca</label>
+                        <div className={styles.field__marca_cor}>
+                            <div className={`${styles.field} ${styles.field_2}`}>
+                                <label className={styles.label} htmlFor="">Marca</label>
                                 <input 
-                                    className="field--input" 
+                                    className={styles.field__input}
                                     type="text"
                                     value={marca}
                                     onChange={(e) => setMarca(e.target.value)}
                                     required  
                                 />
                             </div>
-                            <div className='field field-3'>
-                                <label className='label' htmlFor="">Cor</label>
+                            <div className={`${styles.field} ${styles.field_3}`}>
+                                <label className={styles.label} htmlFor="">Cor</label>
                                 <input 
-                                    className="field--input" 
+                                    className={styles.field__input} 
                                     type="text"
                                     value={cor}
                                     onChange={(e) => setCor(e.target.value)}
@@ -130,12 +129,12 @@ export default function Cadastro() {
                             </div>
                         </div>
 
-                        <div className='cadastro__form--fields'>
-                            <div className="field--categorias field-2">
-                                <div className='field'>
-                                    <label className='label' htmlFor="category">Categoria</label>
+                        <div className={styles.cadastro__form_fields_subsection}>
+                            <div className={`${styles.field__categorias} ${styles.field_2}`}>
+                                <div className={styles.field}>
+                                    <label className={styles.label} htmlFor="category">Categoria</label>
                                     <select 
-                                        className="field--input field--dropwdown"
+                                        className={`${styles.field__input} ${styles.field__dropwdown}`}
                                         value={categoria}
                                         onChange={(e) => setCategoria(e.target.value)}                                  
                                     >
@@ -145,10 +144,10 @@ export default function Cadastro() {
                                         <option value="Camisa">Camisa</option>
                                     </select>
                                 </div>
-                                <div className='field'>
-                                    <label className='label' htmlFor="subcategory">Subcategoria</label>
+                                <div className={styles.field}>
+                                    <label className={styles.label} htmlFor="subcategory">Subcategoria</label>
                                     <select 
-                                        className="field--input field--dropwdown" 
+                                        className={`${styles.field__input} ${styles.field__dropwdown}`}
                                         value={subcategoria}
                                         onChange={(e) => setSubcategoria(e.target.value)}                                  
                                     >
@@ -160,10 +159,10 @@ export default function Cadastro() {
                                     </select>
                                 </div>  
                             </div>
-                            <div className='field field-2'>
-                                <label className='label' htmlFor="">Preço</label>
+                            <div className={`${styles.field} ${styles.field_2}`}>
+                                <label className={styles.label} htmlFor="">Preço</label>
                                 <input 
-                                    className="field--input" 
+                                    className={styles.field__input}
                                     type="number" 
                                     min="0.00" 
                                     step="0.01"
@@ -173,11 +172,11 @@ export default function Cadastro() {
                                 />
                             </div>                    
                         </div>
-                        <div className='cadastro__form--btn'>
+                        <div className={styles.cadastro__form_btn}>
                             <button type="submit">
                                 Cadastrar produto
                             </button>
-                            <div className="message">
+                            <div className={styles.message}>
                                 {message ? <p className={messageClass}>{message}</p> : null}
                             </div>
                     </div>
