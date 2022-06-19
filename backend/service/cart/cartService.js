@@ -1,5 +1,7 @@
 const pool = require('../../db/mySQL')
 const express = require('express')
+
+const { calcularPrecoPrazo, consultarCep } = require('correios-brasil')
 const productBodyExists = (req, res, next) => {
   const { prod_id } = req.body
   pool.getConnection((err, connection) => {
@@ -264,6 +266,40 @@ const updateCart = (req, res) => {
     )
   })
 }
+const insertCep = (req, res) => {
+  const cep_number = req.params['cep_number']
+
+  let args = {
+    sCepOrigem: '40170115',
+    sCepDestino: cep_number,
+    nVlPeso: '1',
+    nCdFormato: '1',
+    nVlComprimento: '20',
+    nVlAltura: '20',
+    nVlLargura: '20',
+    nCdServico: ['04510'], //Array com os códigos de serviço
+    nVlDiametro: '0'
+  }
+  consultarCep(cep_number)
+    .then(response => {
+      calcularPrecoPrazo(args)
+        .then(response => {
+          const { Valor, PrazoEntrega } = response[0]
+          res.status(200).json({
+            content: {
+              Valor,
+              PrazoEntrega
+            }
+          })
+        })
+        .catch(err => {
+          res.status(400).json({ err: 'Erro' })
+        })
+    })
+    .catch(err => {
+      res.status(400).json({ err: 'Cep inválido' })
+    })
+}
 module.exports = {
   insertProduct,
   productBodyExists,
@@ -273,5 +309,6 @@ module.exports = {
   hasValidUpdate,
   updateCart,
   hasBodyNullValue,
-  productNotAlreadyInserted
+  productNotAlreadyInserted,
+  insertCep
 }

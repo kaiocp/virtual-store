@@ -9,10 +9,11 @@ const {
   hasBodyNullValue,
   hasValidUpdate,
   productNotAlreadyInserted,
-  updateCart
+  updateCart,
+  insertCep
 } = require('../../service/cart/cartService')
 const router = express.Router()
-
+router.get('/cep/:cep_number', insertCep)
 router.get('/', getCartInfo)
 router.post(
   '/',
