@@ -56,7 +56,6 @@
     justify-content: center;
     align-items: center;
     row-gap: .313rem;
-    max-width: 290px;
     margin: 0 auto;
 }
 
@@ -86,8 +85,9 @@
 }
 
 .caixa_img {
-    max-width: 286px;
-    max-height: 286px;
+    max-width: 280px;
+    max-height: 280px;
+    object-fit: cover;
 }
 
 .caixa:hover {
