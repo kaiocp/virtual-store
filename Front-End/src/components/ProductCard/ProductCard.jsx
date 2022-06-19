@@ -1,11 +1,12 @@
 import styles from './ProductCard.module.css';
+import noImage from './img/noImage.svg';
 
 export default function ProductCard(props) {
     return (
         <div className={styles.productCard}>
             <img 
                 className={styles.productCard__img}
-                src={props.img} 
+                src={props.img ? props.img : noImage} 
                 alt="Produto" 
             />
             <div className={styles.productCard__subcategory}>

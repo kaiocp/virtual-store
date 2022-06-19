@@ -1,3 +1,4 @@
+import CardsHome from "../components/CardsHome/CardsHome";
 import Hero from "../components/Hero/Hero";
 import { useRef } from 'react';
 import Products from "./Products";
