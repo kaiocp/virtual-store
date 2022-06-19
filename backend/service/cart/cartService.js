@@ -49,7 +49,6 @@ const updateCartInfo = () => {
         pool.releaseConnection(connection)
         pool.getConnection((err, conn) => {
           if (err) {
-            console.log(err)
             return
           }
           conn.query(
@@ -58,11 +57,10 @@ const updateCartInfo = () => {
             [sum, total_prod],
             (err, queryResponse) => {
               if (err) {
-                console.log(err)
                 return
               }
               pool.releaseConnection(conn)
-              console.log('Sucess!')
+
               return
             }
           )
@@ -99,6 +97,32 @@ const productAlreadyInserted = (req, res, next) => {
     )
   })
 }
+const productNotAlreadyInserted = (req, res, next) => {
+  const { prod_id } = req.params
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ err: err })
+    }
+    connection.query(
+      `SELECT COUNT(prod_id) from contains_with where prod_id = ? `,
+      [prod_id],
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({ err: err })
+        } else {
+          const responseExists = response[0]['COUNT(prod_id)']
+          if (!responseExists) {
+            pool.releaseConnection(connection)
+            return res.status(404).json({ err: "Product doesn't exist" })
+          }
+          pool.releaseConnection(connection)
+          req.prod_id = prod_id
+          next()
+        }
+      }
+    )
+  })
+}
 const insertProduct = (req, res) => {
   const { prod_id } = req
   const { prod_total } = req.body
@@ -111,7 +135,6 @@ const insertProduct = (req, res) => {
       'INSERT INTO contains_with VALUES (4,?,?) ;',
       [prod_id, prod_total],
       (err, data) => {
-        console.log(err)
         if (err) {
           res.status(500).json({ err: 'Failed to insert into cart' })
         }
@@ -249,5 +272,6 @@ module.exports = {
   hasValidProperty,
   hasValidUpdate,
   updateCart,
-  hasBodyNullValue
+  hasBodyNullValue,
+  productNotAlreadyInserted
 }
