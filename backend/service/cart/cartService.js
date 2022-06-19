@@ -34,7 +34,8 @@ const updateCartInfo = () => {
     }
     connection.query(
       `SELECT
-      SUM(product.prod_price) as sum ,
+      SUM(product.prod_price  *
+      contains_with.prod_total) AS sum,
       SUM(contains_with.prod_total) as total_prod
       FROM contains_with
       JOIN product
@@ -141,6 +142,19 @@ const hasValidProperty = (req, res, next) => {
 
   next()
 }
+const hasValidUpdate = (req, res, next) => {
+  const requestBody = req.body
+  const validProperty = 'prod_total'
+  for (property in requestBody) {
+    if (property != validProperty) {
+      return res
+        .status(400)
+        .json({ err: "Your body has some invalid properties' names" })
+    }
+  }
+  next()
+}
+
 const getCartInfo = (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
@@ -159,7 +173,6 @@ const getCartInfo = (req, res) => {
         pool.releaseConnection(connection)
 
         pool.getConnection((err, conn) => {
-          console.log('Entrou aqui')
           if (err) {
             res.status(500).json({ err: 'Failed to connect' })
           }
@@ -194,11 +207,47 @@ const getCartInfo = (req, res) => {
     )
   })
 }
-
+const hasBodyNullValue = (req, res, next) => {
+  const bodyRequest = req.body
+  for (property in bodyRequest) {
+    if (!bodyRequest[property]) {
+      return res
+        .status(400)
+        .json({ err: 'Your body has some invalid property' })
+    }
+  }
+  next()
+}
+const updateCart = (req, res) => {
+  pool.getConnection((err, connection) => {
+    const { prod_id } = req
+    const { prod_total } = req.body
+    if (err) {
+      res.status(500).json({ err: 'Failed to connect' })
+    }
+    connection.query(
+      `UPDATE contains_with SET prod_total = ? WHERE prod_id = ?`,
+      [prod_total, prod_id],
+      (error, queryResponse) => {
+        if (error) {
+          res.status(500).json({ err: 'Failed to update' })
+        }
+        pool.releaseConnection(connection)
+        updateCartInfo()
+        res
+          .status(201)
+          .json({ message: `Product ${prod_id} inside cart updated` })
+      }
+    )
+  })
+}
 module.exports = {
   insertProduct,
   productBodyExists,
   productAlreadyInserted,
   getCartInfo,
-  hasValidProperty
+  hasValidProperty,
+  hasValidUpdate,
+  updateCart,
+  hasBodyNullValue
 }

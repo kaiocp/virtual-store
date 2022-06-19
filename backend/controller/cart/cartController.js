@@ -5,13 +5,15 @@ const {
   productBodyExists,
   productAlreadyInserted,
   getCartInfo,
-  hasValidProperty
+  hasValidProperty,
+  hasBodyNullValue
 } = require('../../service/cart/cartService')
 const router = express.Router()
 
 router.get('/', getCartInfo)
 router.post(
   '/',
+  hasBodyNullValue,
   hasValidProperty,
   productBodyExists,
   productAlreadyInserted,
