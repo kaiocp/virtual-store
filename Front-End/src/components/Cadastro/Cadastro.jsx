@@ -63,11 +63,11 @@ export default function Cadastro() {
             <fieldset>
                 <form onSubmit={handleSubmit} className='cadastro__form'>
                     <div className='cadastro__form--img'>
-                        <label htmlFor="imagemProduto">Preview da imagem</label>
+                        <label htmlFor="imgProduto">Preview da imagem</label>
                         <div className='caixa' onClick={(ev) => {
                                 ev.preventDefault();
                                 document.getElementById('img').focus()}} >
-                            <img src={imgUrl ? imgUrl : null} alt="" id="imagemProduto" />
+                            <img src={imgUrl ? imgUrl : null} alt="" id="imgProduto" />
                         </div>                
                     </div>
 

@@ -4,7 +4,6 @@ import Footer from './components/Footer/Footer';
 import Hero from './components/Hero/Hero';
 import Header from './components/Header/Header'
 import CardsHome from './components/CardsHome/CardsHome';
-import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
