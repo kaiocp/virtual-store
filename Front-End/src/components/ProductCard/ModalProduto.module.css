@@ -40,6 +40,7 @@
 
 .headerProduto img {
     width: 100%;
+    max-width: 600px;
 }
 
 .quantidade {
@@ -73,22 +74,41 @@ footer {
     gap: 2.5rem
 }
 
+.preco {
+    color: #275845;
+    font-size: 1.3rem;
+}
+
 .editarDiv {
     display: flex;
     align-items: center;
     width: 100%;
-    gap: .5rem
+    gap: .5rem;
+    color: #53B38D;
 }
 
 .deletarDiv {
     display: flex;
     align-items: center;
     width: 100%;
-    gap: .5rem
+    gap: .5rem;
+    color: #F24E1E;
 }
 
 .footerDiv {
     display: flex;
     flex-direction: column;
     gap: 3rem
+}
+
+button {
+    background: #53B38D;
+    color: #FAFAFA;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
