@@ -1,6 +1,7 @@
 import CardsHome from "../components/CardsHome/CardsHome";
 import Hero from "../components/Hero/Hero";
-import ModalProduto from "../components/modalProduto/modalProduto";
+import { useRef } from 'react';
+import Products from "./Products";
 
 export default function Home() {
 
@@ -12,7 +13,10 @@ export default function Home() {
         <>
             <Hero func={executeScroll} />
             <CardsHome />
-            <ModalProduto/>
+                <div ref={myRef}>
+                    <Products />
+                </div>
+
         </>
     )
-}
+    }
