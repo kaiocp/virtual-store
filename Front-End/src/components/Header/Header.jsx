@@ -18,7 +18,7 @@ export default function Header() {
         <div className={styles.searchDivDesk}>
           <Search/>
         </div>
-        <img id={styles.menuHamburguer} onClick={() => setIsModalVisible(true)} src={MenuHamburguer}/>
+        <img className={styles.menuHamburguer} onClick={() => setIsModalVisible(true)} src={MenuHamburguer}/>
         {isModalVisible ? 
         <ModalMenu>
           <NavbarMobile onClose={() => setIsModalVisible(false)}/>

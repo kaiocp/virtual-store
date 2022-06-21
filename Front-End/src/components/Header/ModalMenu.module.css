@@ -20,7 +20,7 @@
     z-index: 6;
 }
 
-ul {
+.linksNav {
     display: flex;
     margin: 0 auto;
     flex-direction: column;
@@ -32,7 +32,7 @@ ul {
     color: #252822;
 }
 
-button {
+.linksNav button {
     background: #53B38D;
     color: #FAFAFA;
     border-radius: 5px;
