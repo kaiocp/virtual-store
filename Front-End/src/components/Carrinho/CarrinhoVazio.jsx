@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import ProductCard from "../ProductCard/ProductCard";
 import setaVetor from './img/setaVetor.svg';
-import styles from './Carrinho.module.css';
+import styles from './CarrinhoVazio.module.css';
 
 
-export default function Carrinho () {
+export default function CarrinhoVazio () {
 
     const [loading, setLoading] = useState(true);
     const [vistoRecentementeData, setVistoRecentementeData] = useState({
@@ -43,22 +43,22 @@ export default function Carrinho () {
 
     return (
         // Implementar regra para carrinho vazio ou cheio
-        <section className={styles.carrinho}>
-            <div className={styles.carrinho__desk}>
-                <div className={styles.carrinho__header}>
+        <section className={styles.carrinhovazio}>
+            <div className={styles.carrinhovazio__desk}>
+                <div className={styles.carrinhovazio__header}>
                     <img src={setaVetor}/>
                     <p>Carrinho</p>
                 </div>
                 
                 {/* começo carrinho vazio */}
-                <article className={styles.carrinho__article}>
+                <article className={styles.carrinhovazio__article}>
                     <h2>Seu carrinho está vazio :(</h2>
                     <h3><Link to="/" className={styles.underline}>Continue navegando</Link> pela Lojinha e encontre produtos incríveis!</h3>
                 </article>
                 {/* fim carrinho vazio */}
             </div>
 
-            <section className={styles.carrinho__vistoRecentemente}>
+            <section className={styles.carrinhovazio__vistoRecentemente}>
                 <p>Visto recentemente</p>
                 {loading && <h2 style={{
                     textAlign: 'center'}}>

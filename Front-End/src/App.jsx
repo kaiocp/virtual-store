@@ -6,7 +6,7 @@ import Anunciar from './pages/Anunciar';
 import SearchResults from './components/SearchResults/SearchResults';
 import Products from './pages/Products';
 import FormEdicao from './components/FormEdicao/FormEdicao';
-import Carrinho from './components/Carrinho/Carrinho';
+import Carrinho from './pages/Carrinho';
 
 function App() {
   return (
