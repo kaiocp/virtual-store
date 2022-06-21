@@ -91,3 +91,38 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+@media screen and (min-width: 768px) {
+    .cardCarrinho {
+        flex-direction: row;
+        max-width: 530px;
+        text-align: start;
+        height: 162px;
+        column-gap: .5rem;
+    }
+    .cardCarrinho__img {
+        max-width: 162px;
+    }
+    .cardCarrinho__sec1 {
+        height: 100%;
+        justify-content: space-between;
+        width: 150%;
+        padding: .4rem 0;
+    }
+    .cardCarrinho__sec1_sub {
+        flex-direction: column;
+        row-gap: .4rem;
+    }
+    .cardCarrinho__sec2 {
+        height: 100%;
+        padding: .4rem 0;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .cardCarrinho__sec1 h4 {
+        font-size: 1.125rem;
+    }
+    .cardCarrinho__sec1 p {
+        font-size: .625rem;
+    }
+}
