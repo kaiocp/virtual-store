@@ -20,6 +20,7 @@ export default function ProductCard(props) {
                 marca={props.brand}
                 preco={props.price}
                 cor={props.cor}
+                tamanho={props.subcategory}
                 >
                 </ModalProduto>: null}
 

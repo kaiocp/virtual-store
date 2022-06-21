@@ -5,10 +5,10 @@ import IconeRemover from './img/iconeremover.svg'
 import IconeAdicionar from './img/iconeadicionar.svg'
 import IconeEditar from './img/iconeeditar.svg'
 import IconeDeletar from './img/iconedeletar.svg'
-export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marca,preco,cor}) {
+export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marca,preco,cor,tamanho}) {
   return (
     <div className={styles.fundoModal}>
-      <section className={styles.sectionModalProduto}>
+      <section className={styles.sectionModalProduto} id="modal">
         <article className={styles.articleModal}>
           <div className={styles.iconeClose}>
             <img src={IconeClose} onClick={onClose}/>
@@ -17,6 +17,7 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
         <section className={styles.headerMain}>
           <header className={styles.headerProduto}>
             <h1 className={styles.titulo}>{titulo}</h1>
+            <h1 className={styles.tamanho}>{tamanho}</h1>
             <img src={imagem}/>
             <div className={styles.quantidade}>
               <img src={IconeRemover}/>
