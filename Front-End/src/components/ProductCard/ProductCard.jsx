@@ -1,6 +1,6 @@
 import styles from './ProductCard.module.css';
 import noImage from './img/noImage.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ModalProduto from './ModalProduto';
 export default function ProductCard(props) {
     const [isProdutoVisible, setIsProdutoVisible] = useState(false)
@@ -13,8 +13,10 @@ export default function ProductCard(props) {
                 onClick={() => setIsProdutoVisible(true)}
             />
             {isProdutoVisible ?
-                <ModalProduto onClose={() => setIsProdutoVisible(false)}>
-                    
+                <ModalProduto onClose={() => setIsProdutoVisible(false)} 
+                titulo={props.title}
+                imagem={props.img}
+                >
                 </ModalProduto>: null}
 
             <div className={styles.productCard__subcategory}>
