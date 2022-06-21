@@ -337,5 +337,6 @@ module.exports = {
   hasBodyNullValue,
   productNotAlreadyInserted,
   insertCep,
-  deleteCart
+  deleteCart,
+  updateCartInfo
 }
