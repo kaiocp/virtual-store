@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Search from './Search'
 import styles from './Header.module.css'
 import { useState } from 'react'
-import ModalMenu from './modalMenu'
+import ModalMenu from './ModalMenu'
 import NavbarMobile from './NavbarMobile'
 import { Link } from 'react-router-dom';
 export default function Header() {
