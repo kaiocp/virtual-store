@@ -140,9 +140,9 @@ export default function Cadastro() {
                                         onChange={(e) => setCategoria(e.target.value)}                                  
                                     >
                                         <option disabled />
-                                        <option value="Bolsa">Bolsa</option>  
-                                        <option value="Calça">Calça</option>
+                                        <option value="Bolsa">Bolsa</option>
                                         <option value="Camisa">Camisa</option>
+                                        <option value="Tênis">Tênis</option>
                                     </select>
                                 </div>
                                 <div className={styles.field}>
@@ -178,7 +178,12 @@ export default function Cadastro() {
                                 Cadastrar produto
                             </button>
                             <div className={styles.message}>
-                                {message ? <p className={messageClass}>{message}</p> : null}
+                                    {message ? 
+                                        messageClass === 'sucesso' ?
+                                            <p className={styles.sucesso}>{message}</p> 
+                                            :
+                                            <p className={styles.erro}>{message}</p>                                             
+                                        : null}
                             </div>
                     </div>
                     </div>
