@@ -1,0 +1,25 @@
+.sectionModalProduto {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    padding: 2rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 5;
+    background-color: white;
+    overflow: hidden;
+}
+
+.iconeClose {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.iconeClose img {
+    width: 8%;
+}
