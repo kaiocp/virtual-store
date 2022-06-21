@@ -17,14 +17,14 @@ export default function Cadastro() {
         e.preventDefault();
         try {
             let body = {
-                product_image_url: imgUrl,
-                product_title: titulo,
-                product_discription: descricao,
-                product_brand: marca,
-                product_color: cor,
-                product_category: categoria,
-                product_subcategory: subcategoria,
-                product_price: preco
+                prod_image_url: imgUrl,
+                prod_title: titulo,
+                prod_description: descricao,
+                prod_brand: marca,
+                prod_color: cor,
+                prod_category: categoria,
+                prod_subcategory: subcategoria,
+                prod_price: preco
             }
             let res = await fetch("https://sleepy-cliffs-93443.herokuapp.com/products", {
                 method: "POST",
@@ -46,6 +46,7 @@ export default function Cadastro() {
             } else {
                 setMessage("Houve um erro ao cadastrar seu produto.");
                 setMessageClass("erro");
+                console.log(res);
             }
         } catch (err) {
             console.log(err);
@@ -75,7 +76,7 @@ export default function Cadastro() {
                             <label className={styles.label} htmlFor="">Url da imagem</label>
                             <input 
                                 className={styles.field__input}
-                                type="text" 
+                                type="url" 
                                 id="img"
                                 value={imgUrl}
                                 onChange={(e) => setImgUrl(e.target.value)}
@@ -149,7 +150,7 @@ export default function Cadastro() {
                                     <select 
                                         className={`${styles.field__input} ${styles.field__dropwdown}`}
                                         value={subcategoria}
-                                        onChange={(e) => setSubcategoria(e.target.value)}                                  
+                                        onChange={(e) => setSubcategoria(e.target.value)}                           
                                     >
                                         <option disabled />
                                         <option value="P">P</option>
