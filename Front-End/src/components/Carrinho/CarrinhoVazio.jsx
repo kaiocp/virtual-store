@@ -49,13 +49,10 @@ export default function CarrinhoVazio () {
                     <img src={setaVetor}/>
                     <p>Carrinho</p>
                 </div>
-                
-                {/* começo carrinho vazio */}
                 <article className={styles.carrinhovazio__article}>
                     <h2>Seu carrinho está vazio :(</h2>
                     <h3><Link to="/" className={styles.underline}>Continue navegando</Link> pela Lojinha e encontre produtos incríveis!</h3>
                 </article>
-                {/* fim carrinho vazio */}
             </div>
 
             <section className={styles.carrinhovazio__vistoRecentemente}>
