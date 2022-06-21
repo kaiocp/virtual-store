@@ -21,6 +21,7 @@ export default function Products() {
         }
         fetchData();
     }, []);
+    console.log(products)
 
     return (
         <>
@@ -41,6 +42,8 @@ export default function Products() {
                                 price={el.prod_price}
                                 title={el.prod_title}
                                 category={el.category_name}
+                                brand={el.brand_name}
+                                desc={el.prod_description}
                             />
                         ))
                     }

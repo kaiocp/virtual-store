@@ -1,6 +1,6 @@
 import styles from './ProductCard.module.css';
 import noImage from './img/noImage.svg';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ModalProduto from './ModalProduto';
 export default function ProductCard(props) {
     const [isProdutoVisible, setIsProdutoVisible] = useState(false)
@@ -16,6 +16,9 @@ export default function ProductCard(props) {
                 <ModalProduto onClose={() => setIsProdutoVisible(false)} 
                 titulo={props.title}
                 imagem={props.img}
+                desc={props.desc}
+                marca={props.brand}
+                preco={props.price}
                 >
                 </ModalProduto>: null}
 
