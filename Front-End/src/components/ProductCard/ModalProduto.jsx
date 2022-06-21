@@ -7,59 +7,53 @@ import IconeEditar from './img/iconeeditar.svg'
 import IconeDeletar from './img/iconedeletar.svg'
 export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marca,preco}) {
   return (
-    <div className={styles.fundoModal}>
-      <section className={styles.sectionModalProduto}>
-        <article className={styles.articleModal}>
-          <div className={styles.iconeClose}>
-            <img src={IconeClose} onClick={onClose}/>
-            <h1 className={styles.tituloDesktop}>{titulo}</h1>
+    <section className={styles.sectionModalProduto}>
+      <article className={styles.articleModal}>
+        <div className={styles.iconeClose}>
+          <img src={IconeClose} onClick={onClose}/>
+        </div>
+        <header className={styles.headerProduto}>
+          <h1 className={styles.titulo}>{titulo}</h1>
+          <img src={imagem}/>
+          <div className={styles.quantidade}>
+            <img src={IconeRemover}/>
+            <h1>1</h1>
+            <img src={IconeAdicionar}/>
           </div>
-        <section className={styles.headerMain}>
-          <header className={styles.headerProduto}>
-            <h1 className={styles.titulo}>{titulo}</h1>
-            <img src={imagem}/>
-            <div className={styles.quantidade}>
-              <img src={IconeRemover}/>
-              <h1>1</h1>
-              <img src={IconeAdicionar}/>
-            </div>
-          </header>
-          <main>
-          <div className={styles.descDiv}>
-            <h1>Descrição</h1>
-            <p>{desc}</p>
-          </div>
-          <div className={styles.vendedor}>
-            <h1>Vendedor</h1>
-            <p>Lorem Ipsum</p>
-          </div>
-          <div className={styles.marca}>
-            <h1>Marca</h1>
-            <p>{marca}</p>
-          </div>
-          <div className={styles.preco}>
-           <h1>R$ {parseFloat((preco)).toFixed(2)}</h1>
-         </div>
-         </main>
-        </section>
-          <footer>
-            <div className={styles.footerDiv}>
-              <div className={styles.editar}>
-                <div className={styles.editarDiv}>
-                  <img src={IconeEditar}/>
-                  <h2>Editar</h2>
-                </div>
-                <div className={styles.deletarDiv}>
-                  <img src={IconeDeletar}/>
-                  <h2>Deletar</h2>
-                </div>
+        </header>
+        <main>
+        <div className={styles.descDiv}>
+          <h1>Descrição</h1>
+          <p>{desc}</p>
+        </div>
+        <div className={styles.vendedor}>
+          <h1>Vendedor</h1>
+          <p>Lorem Ipsum</p>
+        </div>
+        <div className={styles.marca}>
+          <h1>Marca</h1>
+          <p>{marca}</p>
+        </div>
+        <div className={styles.preco}>
+          <h1>R$ {parseFloat((preco)).toFixed(2)}</h1>
+        </div>
+        </main>
+        <footer>
+          <div className={styles.footerDiv}>
+            <div className={styles.editar}>
+              <div className={styles.editarDiv}>
+                <img src={IconeEditar}/>
+                <h2>Editar</h2>
               </div>
-              <button>Adicionar ao Carrinho</button>
+              <div className={styles.deletarDiv}>
+                <img src={IconeDeletar}/>
+                <h2>Deletar</h2>
+              </div>
             </div>
-          </footer>
-        </article>
-      </section>
-    </div>
+            <button>Adicionar ao Carrinho</button>
+          </div>
+        </footer>
+      </article>
+    </section>
   )
-
 }
