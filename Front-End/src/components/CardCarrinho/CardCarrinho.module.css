@@ -126,3 +126,13 @@
         font-size: .625rem;
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .cardCarrinho {
+        max-width: 700px;
+        height: 126px;
+    }
+    .cardCarrinho__img {
+        max-width: 126px;
+    }
+}
