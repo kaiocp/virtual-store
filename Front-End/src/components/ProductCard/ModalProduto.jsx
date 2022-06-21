@@ -29,11 +29,11 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
             <h1>Descrição</h1>
             <p>{desc}</p>
           </div>
-          <div className={styles.vendedor}>
+          <div className={styles.descDiv}>
             <h1>Vendedor</h1>
             <p>Lorem Ipsum</p>
           </div>
-          <div className={styles.marca}>
+          <div className={styles.descDiv}>
             <h1>Marca</h1>
             <p>{marca}</p>
           </div>

@@ -125,7 +125,7 @@ button {
         border-radius: 20px;
         display: flex;
         justify-content: space-between;
-        top: 20%;
+        top: 10%;
         left: 10%;
         overflow: hidden;
     }
@@ -181,18 +181,6 @@ button {
         font-weight: 600;
         font-size: 1.375rem;
     }
-    .vendedor h1 {
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 1.375rem;
-    }
-    .marca h1 {
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 1.375rem;
-    }
     footer {
         width: 100%;
     }
@@ -212,4 +200,96 @@ button {
     }
 }
 
-@media screen and (min-width: 1024px) {}
+@media screen and (min-width: 1024px) {
+    .sectionModalProduto {
+        width: 80%;
+        height: 80%;
+        max-width: 120rem;
+        min-width: 60rem;
+        margin: 0 auto;
+        border-radius: 20px;
+        display: flex;
+        overflow: hidden;
+        left: 0;
+    }
+    .articleModal {
+        width: 100%;
+        display: flex;
+    }
+    .titulo {
+        display: none
+    }
+    .tituloDesktop {
+        width: 100%;
+        display: flex;
+        font-size: 2.5rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+    }
+    .headerProduto {
+        width: 50%;
+        display: flex;
+        padding-top: 0%;
+    }
+    .headerProduto img {
+        margin: 0 auto;
+        display: flex;
+        padding-top: 0%;
+    }
+    .headerMain {
+        width: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+    .iconeClose {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+    .iconeClose img {
+        width: 3%;
+    }
+    main {
+        width: 50%;
+        height: 100%;
+        text-align: start;
+        padding-top: 1.2rem;
+    }
+    .descDiv h1 {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 2.25rem;
+    }
+    .descDiv p {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-size: 1.5rem
+    }
+    footer {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .footerDiv {
+        width: 96%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .botaoDiv {
+        display: flex;
+        min-width: 43%;
+        padding: 1.3rem 0.5rem;
+    }
+    .preco {
+        padding-top: 10%;
+    }
+    .editar {
+        width: 20%;
+    }
+}
