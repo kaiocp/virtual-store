@@ -2,6 +2,7 @@ const express = require('express')
 const mysql = require('mysql2')
 const pool = require('../../db/mySQL')
 const { v4: uuidv4 } = require('uuid')
+const { updateCartInfo } = require('../cart/cartService')
 
 const productExists = (req, res, next) => {
   const { prod_id } = req.params
@@ -210,6 +211,28 @@ const getProductByTitle = (req, res) => {
     )
   })
 }
+const triggerCart = prod_id => {
+  pool.getConnection((err, conn) => {
+    if (err) {
+      console.log(err)
+      return
+    }
+    conn.query(
+      `DELETE FROM contains_with
+    WHERE cart_id = 4 AND prod_id = ?`,
+      [prod_id],
+      (error, response) => {
+        if (error) {
+          return
+        }
+        if (response.affectedRows) {
+          updateCartInfo()
+        }
+        return
+      }
+    )
+  })
+}
 const deleteProducts = (req, res) => {
   const { prod_id } = req
   pool.getConnection((err, connection) => {
@@ -223,6 +246,7 @@ const deleteProducts = (req, res) => {
         if (err) {
           return res.status(500).json({ err: err })
         } else {
+          triggerCart(prod_id)
           pool.releaseConnection(connection)
           return res.status(201).json({ message: `Product ${prod_id} deleted` })
         }
