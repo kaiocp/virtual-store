@@ -1,16 +1,28 @@
-import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Footer from './components/Footer/Footer';
-import Hero from './components/Hero/Hero';
-import Header from './components/Header/Header'
-import './App.css'
+import Header from './components/Header/Header';
+import Home from './pages/Home';
+import Anunciar from './pages/Anunciar';
+import SearchResults from './components/SearchResults/SearchResults';
+import Products from './pages/Products';
+import FormEdicao from './components/FormEdicao/FormEdicao';
 
 function App() {
-  const [count, setCount] = useState(0)
   return (
     <div className="App">
-      <Header />
-      <Hero />
-      <Footer />
+      <Router>
+        <Header />
+
+        <Routes>
+          <Route exact path='/' element={<Home />}></Route>
+          <Route path='/anunciar' element={<Anunciar />}></Route>
+          <Route path='/produtos' element={<Products />}></Route>
+          <Route path='/atualizar-produto/:productId' element={<FormEdicao />}></Route>
+          <Route path='/pesquisa/:query' element={<SearchResults />}></Route>
+        </Routes>
+
+        <Footer />
+      </Router>
     </div>
   )
 }

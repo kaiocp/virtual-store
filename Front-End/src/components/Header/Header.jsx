@@ -1,25 +1,33 @@
-import LogoLojinha from './imagens/LogoLojinha.png'
-import MenuHamburguer from './imagens/MenuHamburguer.png'
+import LogoLojinha from './imagens/LogoLojinha.svg'
+import MenuHamburguer from './imagens/MenuHamburguer.svg'
 import Navbar from './Navbar'
 import Search from './Search'
-import './Header.css'
+import styles from './Header.module.css'
+import { useState } from 'react'
+import ModalMenu from './ModalMenu'
+import NavbarMobile from './NavbarMobile'
+import { Link } from 'react-router-dom';
 export default function Header() {
+  const [isModalVisible, setIsModalVisible] = useState(false)
   return (
-    <header className='headerDiv' id="headerDiv">
-      <div className='headerEsquerda' id="headerEsquerda">
-        <div className='logoLojinha' id="logoLojinha">
-          <img src={LogoLojinha}/>
-          <h1>Lojinha</h1>
+    <header className={styles.headerDiv}>
+      <div className={styles.headerEsquerda}>
+        <div className={styles.logoLojinha}>
+          <Link to="/"><img src={LogoLojinha}/></Link>
         </div>
-        <div className="searchDivDesk" id="searchDivDesk">
+        <div className={styles.searchDivDesk}>
           <Search/>
         </div>
-        <img id="menuHamburguer" src={MenuHamburguer}/>
-        <div className='navbarDiv' id="navbarDiv">
+        <img className={styles.menuHamburguer} onClick={() => setIsModalVisible(true)} src={MenuHamburguer}/>
+        {isModalVisible ? 
+        <ModalMenu>
+          <NavbarMobile onClose={() => setIsModalVisible(false)}/>
+        </ModalMenu>: null}
+        <div className={styles.navbarDiv} id={styles.navbarDiv}>
           <Navbar/>
         </div>
       </div>
-      <div className="searchDiv" id="searchDiv">
+      <div className={styles.searchDiv}>
         <Search/>
       </div>
     </header>

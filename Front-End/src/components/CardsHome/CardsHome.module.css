@@ -1,0 +1,50 @@
+* {
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.sectionCards {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 3.125rem 1.875rem;
+}
+
+.cardsDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.875rem;
+    max-width: 31.25rem;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .sectionCards {
+        padding: 4.688rem 3.75rem;
+    }
+    .cardsDiv {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        max-width: 1920px;
+        gap: 3.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sectionCards {
+        padding: 10rem;
+    }
+    .cardsDiv {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        max-width: 1920px;
+        gap: 5.625rem;
+    }
+}

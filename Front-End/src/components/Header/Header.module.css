@@ -1,0 +1,79 @@
+.headerDiv {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    gap: 1rem;
+}
+
+.logoLojinha {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    color: #275845;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.logoLojinha:hover {
+    cursor: pointer;
+}
+
+.headerEsquerda {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbarDiv {
+    display: none
+}
+
+.searchDiv {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.inputSearch {
+    width: 77vw;
+    height: 30px;
+    background: #FAFAFA;
+    border: 1px solid #A6A39F;
+    border-radius: 4px;
+    padding: 0.1px 0.5rem;
+}
+
+.searchDivDesk {
+    display: none;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+    .navbarDiv {
+        display: flex;
+    }
+    .menuHamburguer {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .headerDiv {
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+    .searchDiv {
+        display: none;
+    }
+    .searchDivDesk {
+        display: block;
+        min-width: 250px;
+        max-width: 600px;
+        margin: 0.75rem;
+    }
+}
