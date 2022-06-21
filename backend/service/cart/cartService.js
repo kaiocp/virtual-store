@@ -247,8 +247,9 @@ const updateCart = (req, res) => {
   pool.getConnection((err, connection) => {
     const { prod_id } = req
     const { prod_total } = req.body
+
     if (err) {
-      res.status(500).json({ err: 'Failed to connect' })
+      return res.status(500).json({ err: 'Failed to connect' })
     }
     connection.query(
       `UPDATE contains_with SET prod_total = ? WHERE prod_id = ?`,
@@ -287,8 +288,8 @@ const insertCep = (req, res) => {
           const { Valor, PrazoEntrega } = response[0]
           res.status(200).json({
             content: {
-              Valor,
-              PrazoEntrega
+              shipping_cost: Valor,
+              shipping_time: PrazoEntrega
             }
           })
         })
