@@ -8,10 +8,10 @@ export default function NavbarMobile({onClose= () => {}}) {
         <img className={styles.iconeFechar} src={IconeFechar} onClick={onClose}/>
       </div>
       <ul className={styles.linksNav}>
-        <li><Link to="/">Início</Link></li>
-        <li><Link to="/produtos">Produtos</Link></li>
-        <li><Link to="/anunciar">Anunciar</Link></li>
-        <li><Link to="/carrinho"><button>Carrinho</button></Link></li>
+        <li onClick={onClose}><Link to="/">Início</Link></li>
+        <li onClick={onClose}><Link to="/produtos">Produtos</Link></li>
+        <li onClick={onClose}><Link to="/anunciar">Anunciar</Link></li>
+        <li onClick={onClose}><Link to="/carrinho"><button>Carrinho</button></Link></li>
       </ul>
     </section>
   )

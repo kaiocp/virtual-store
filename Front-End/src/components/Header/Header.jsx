@@ -6,7 +6,7 @@ import styles from './Header.module.css'
 import { useState } from 'react'
 import ModalMenu from './modalMenu'
 import NavbarMobile from './NavbarMobile'
-
+import { Link } from 'react-router-dom';
 export default function Header() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   return (

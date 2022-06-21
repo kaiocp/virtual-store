@@ -1,5 +1,5 @@
 .sectionModal {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,8 +13,32 @@
     height: 100%;
     z-index: 5;
     background-color: white;
+    overflow: hidden;
 }
 
 .iconeFechar {
     z-index: 6;
+}
+
+ul {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 2rem;
+    font-size: 1.3rem;
+    color: #252822;
+}
+
+button {
+    background: #53B38D;
+    color: #FAFAFA;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3rem 1.8rem;
+    cursor: pointer;
 }
