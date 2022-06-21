@@ -22,7 +22,7 @@ export default function Header() {
         <img id={styles.menuHamburguer} onClick={() => setIsModalVisible(true)} src={MenuHamburguer}/>
         {isModalVisible ? 
         <ModalMenu>
-          <NavbarMobile/>
+          <NavbarMobile onClose={() => setIsModalVisible(false)}/>
         </ModalMenu>: null}
         <div className={styles.navbarDiv} id={styles.navbarDiv}>
           <Navbar/>

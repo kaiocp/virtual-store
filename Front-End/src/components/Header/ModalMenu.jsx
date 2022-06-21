@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-
+import styles from './ModalMenu.module.css'
 export default function ModalMenu({children}) {
   return (
-    <section className='modal'>
+    <div>
       <div>
         {children}
       </div>
-    </section>
+    </div>
   )
 }
