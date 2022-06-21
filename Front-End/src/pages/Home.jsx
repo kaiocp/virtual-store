@@ -12,7 +12,7 @@ export default function Home() {
     return (
         <>
             <Hero func={executeScroll} />
-
+            <CardsHome />
                 <div ref={myRef}>
                     <Products />
                 </div>
