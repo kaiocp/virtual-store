@@ -44,17 +44,20 @@ export default function Carrinho () {
     return (
         // Implementar regra para carrinho vazio ou cheio
         <section className={styles.carrinho}>
-            <div className={styles.carrinho__header}>
-                <img src={setaVetor}/>
-                <p>Carrinho</p>
+            <div className={styles.carrinho__desk}>
+                <div className={styles.carrinho__header}>
+                    <img src={setaVetor}/>
+                    <p>Carrinho</p>
+                </div>
+                
+                {/* começo carrinho vazio */}
+                <article className={styles.carrinho__article}>
+                    <h2>Seu carrinho está vazio :(</h2>
+                    <h3><Link to="/" className={styles.underline}>Continue navegando</Link> pela Lojinha e encontre produtos incríveis!</h3>
+                </article>
+                {/* fim carrinho vazio */}
             </div>
-            
-            {/* começo carrinho vazio */}
-            <article className={styles.carrinho__article}>
-                <h2>Seu carrinho está vazio :(</h2>
-                <h3><Link to="/" className={styles.underline}>Continue navegando</Link> pela Lojinha e encontre produtos incríveis!</h3>
-            </article>
-            {/* fim carrinho vazio */}
+
             <section className={styles.carrinho__vistoRecentemente}>
                 <p>Visto recentemente</p>
                 {loading && <h2 style={{

@@ -12,7 +12,14 @@
     row-gap: 4.375rem;
 }
 
+.carrinho__desk {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4.375rem;
+}
+
 .carrinho__header {
+    align-self: center;
     margin-top: 5.313rem;
     display: flex;
     column-gap: .375rem;
@@ -60,4 +67,26 @@
 
 .carrinho__vistoRecentemente {
     margin-bottom: 4.8rem;
+}
+
+@media screen and (min-width: 1024px) {
+    .carrinho {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 8.75rem;
+        max-width: 1820px;
+        margin-top: 6.25rem;
+    }
+    .carrinho__desk {
+        align-self: flex-start;
+    }
+    .carrinho__header {
+        margin-top: -0.25rem;
+        align-self: flex-start;
+    }
+    .carrinho__article {
+        text-align: start;
+        row-gap: 1.313rem;
+        line-height: 2.188rem;
+    }
 }
