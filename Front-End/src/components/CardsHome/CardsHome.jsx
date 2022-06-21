@@ -1,4 +1,4 @@
-import RetanguloFundo from './imagens/RetanguloFundo.png'
+
 import Camisa from './imagens/Camisa.png'
 import Tenis from './imagens/Tenis.png'
 import Bolsa from './imagens/Bolsa.png'

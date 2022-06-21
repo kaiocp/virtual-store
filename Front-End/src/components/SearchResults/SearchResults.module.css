@@ -1,0 +1,29 @@
+.empty_query {
+    margin: 10rem 0;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    row-gap: 2rem;
+}
+
+.empty_query_link {
+    text-decoration: underline;
+    font-size: 1.375rem;
+    line-height: 2.188rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.empty_query h2 {
+    font-size: 2rem;
+    line-height: 3rem;
+    color: #275845;
+}
+
+.empty_query h3 {
+    font-size: 1.375rem;
+    line-height: 2.188rem;
+    font-family: 'Montserrat', sans-serif;
+}

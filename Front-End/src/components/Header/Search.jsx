@@ -1,18 +1,39 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Search.module.css';
 import styles2 from './Header.module.css'
-import { useState } from 'react'
-import LupaPesquisa from './imagens/LupaPesquisa.png'
+import LupaPesquisa from './imagens/LupaPesquisa.svg';
+
+
 export default function Search() {
-  function pesquisaProduto(e){
-    e.preventDefault()
-    console.log(produto)
+
+  const [query, setQuery] = useState("");
+
+  const navigate = useNavigate(); 
+
+  const runQuery = (query) => {
+    navigate(`/pesquisa/${query}`)
+    setQuery("");
   }
-  const [produto, setProduto] = useState()
+
   return (
     <div className={styles.inputDiv} id={styles.inputDiv}>
-      <img className={styles.searchImg} id={styles.searchImg} src={LupaPesquisa} onClick={pesquisaProduto}/>
-      <input className={styles2.inputSearch} id={styles2.inputSearch} placeholder='Pesquise por um produto'
-      onChange={(e) => setProduto(e.target.value)} type="text"></input>
+      <img 
+      className={styles.searchImg} 
+      id={styles.searchImg} 
+      src={LupaPesquisa}
+      onClick={() => runQuery(query)}
+      />
+      <input 
+        className={styles2.inputSearch} 
+        id={styles2.inputSearch} 
+        placeholder='Pesquise por um produto' 
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(e) => {e.key === 'Enter' ? runQuery(query) : null}}
+        >        
+      </input>
     </div>
   )
 }
