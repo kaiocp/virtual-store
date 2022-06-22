@@ -203,17 +203,29 @@ const getCartInfo = (req, res) => {
           }
           conn.query(
             `SELECT
-          product.prod_id,
-          product.prod_title,
-          product.prod_description,
-          product.prod_price,
-          product.prod_image_url,
-          contains_with.prod_total
-        FROM
-          contains_with
-          JOIN product ON contains_with.prod_id = product.prod_id
-        WHERE
-          contains_with.cart_id = 4;`,
+            product.prod_id,
+            product.prod_title,
+            product.prod_description,
+            product.prod_price,
+            product.prod_image_url,
+            product_brand.brand_name,
+            category.category_name,
+            sub_category.subcategory_name,
+            product_color.color_name,
+  
+            
+            contains_with.prod_total
+          FROM
+            contains_with
+            JOIN product ON contains_with.prod_id = product.prod_id
+           JOIN product_brand ON contains_with.prod_id = product_brand.prod_id
+            JOIN category ON contains_with.prod_id = category.prod_id
+            JOIN sub_category ON contains_with.prod_id = sub_category.prod_id
+            JOIN product_color ON contains_with.prod_id = product_color.prod_id
+  
+  
+          WHERE
+            contains_with.cart_id = 4;`,
             (error, response) => {
               if (error) {
                 res.status(500).json({ err: 'Failed get itens from cart' })
