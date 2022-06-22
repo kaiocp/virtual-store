@@ -11,6 +11,9 @@ export default function CarrinhoCheio() {
 
     const [carrinhoData, setCarrinhoData] = useState();
     const [loading, setLoading] = useState(true);
+    
+    // to make useeffect rerender data
+    const [state, setState] = useState(false);
 
     useEffect(() => {
         let url = `https://sleepy-cliffs-93443.herokuapp.com/cart`;
@@ -25,8 +28,69 @@ export default function CarrinhoCheio() {
         setLoading(false);
         }
         fetchData();
-    }, []);
+    }, [state]);
 
+    // increase and decrease qtt
+    const handleIncrease = async (id, qtd) => {
+        try {
+            let res = await fetch(`https://sleepy-cliffs-93443.herokuapp.com/cart/${id}`, {
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(
+                    {
+                        prod_total: parseInt(qtd)+1
+                    })
+                }
+            );
+            if (res.ok) {
+                setState(!state);
+            } else {
+                console.log(res);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleDecrease = async (id, qtd) => {
+        if (parseInt(qtd) > 1) {
+            try {
+                let res = await fetch(`https://sleepy-cliffs-93443.herokuapp.com/cart/${id}`, {
+                    method: "PUT",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(
+                        {
+                            prod_total: parseInt(qtd)-1
+                        })
+                    }
+                );
+                if (res.ok) {
+                    setState(!state);
+                } else {
+                    console.log(res);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            let res = await fetch(`https://sleepy-cliffs-93443.herokuapp.com/cart/${id}`, {
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' }
+                }
+            );
+            if (res.ok) {
+                setState(!state);
+            } else {
+                console.log(res);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
 
     // cep
@@ -40,6 +104,8 @@ export default function CarrinhoCheio() {
         const data = await response.json();
         setCepData(data);
     }
+
+
 
     return (
         <section className={styles.carrinhoCheio}>
@@ -72,12 +138,12 @@ export default function CarrinhoCheio() {
                                     color={el.color_name}
                                     size={el.subcategory_name}
                                     brand={el.brand_name}
-                                    qtd={el.prod_total}
+                                    value={el.prod_total}
                                     onChange={(e) => setQtd(e.target.value)}
                                     price={el.prod_price}
-                                    // decreaseQt={chama o put na api e diminui 1 qtd}
-                                    // increaseQtd={el.}
-                                    delete={() => console.log('deletou')}
+                                    decreaseQt={() => handleDecrease(el.prod_id, el.prod_total)}
+                                    increaseQtd={() => handleIncrease(el.prod_id, el.prod_total)}
+                                    delete={() => handleDelete(el.prod_id)}
                                 />
                             ))}
                     </section>
@@ -97,7 +163,7 @@ export default function CarrinhoCheio() {
 
                     <div className={styles.resumo}>
                         <h4>Entrega</h4>
-                        <p>R$ {cepData ? cepData?.content?.shipping_cost : '00'}</p>
+                        <p>R$ {cepData ? cepData?.content?.shipping_cost : '0'}</p>
                     </div>
                     <hr className={styles.hr}/>
                     <div className={`${styles.resumo} ${styles.resumo_total}`}>

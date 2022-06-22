@@ -22,7 +22,7 @@ export default function CardCarrinho(props) {
             <div className={styles.cardCarrinho__sec2}>
                 <div className={styles.cardCarrinho__btnQtd}>
                     <button onClick={props.decreaseQt}>-</button>
-                    <input type="number" value={props.qtd} onChange={props.onChange} />
+                    <input type="number" value={props.value} onChange={props.onChange} />
                     <button onClick={props.increaseQtd}>+</button>
                 </div>
                 <p>R$ {props.price}</p>
