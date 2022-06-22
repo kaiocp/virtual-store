@@ -1,5 +1,7 @@
 const pool = require('../../db/mySQL')
 const express = require('express')
+
+const { calcularPrecoPrazo, consultarCep } = require('correios-brasil')
 const productBodyExists = (req, res, next) => {
   const { prod_id } = req.body
   pool.getConnection((err, connection) => {
@@ -49,7 +51,6 @@ const updateCartInfo = () => {
         pool.releaseConnection(connection)
         pool.getConnection((err, conn) => {
           if (err) {
-            console.log(err)
             return
           }
           conn.query(
@@ -58,11 +59,10 @@ const updateCartInfo = () => {
             [sum, total_prod],
             (err, queryResponse) => {
               if (err) {
-                console.log(err)
                 return
               }
               pool.releaseConnection(conn)
-              console.log('Sucess!')
+
               return
             }
           )
@@ -99,6 +99,32 @@ const productAlreadyInserted = (req, res, next) => {
     )
   })
 }
+const productNotAlreadyInserted = (req, res, next) => {
+  const { prod_id } = req.params
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ err: err })
+    }
+    connection.query(
+      `SELECT COUNT(prod_id) from contains_with where prod_id = ? `,
+      [prod_id],
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({ err: err })
+        } else {
+          const responseExists = response[0]['COUNT(prod_id)']
+          if (!responseExists) {
+            pool.releaseConnection(connection)
+            return res.status(404).json({ err: "Product doesn't exist" })
+          }
+          pool.releaseConnection(connection)
+          req.prod_id = prod_id
+          next()
+        }
+      }
+    )
+  })
+}
 const insertProduct = (req, res) => {
   const { prod_id } = req
   const { prod_total } = req.body
@@ -111,7 +137,6 @@ const insertProduct = (req, res) => {
       'INSERT INTO contains_with VALUES (4,?,?) ;',
       [prod_id, prod_total],
       (err, data) => {
-        console.log(err)
         if (err) {
           res.status(500).json({ err: 'Failed to insert into cart' })
         }
@@ -222,8 +247,9 @@ const updateCart = (req, res) => {
   pool.getConnection((err, connection) => {
     const { prod_id } = req
     const { prod_total } = req.body
+
     if (err) {
-      res.status(500).json({ err: 'Failed to connect' })
+      return res.status(500).json({ err: 'Failed to connect' })
     }
     connection.query(
       `UPDATE contains_with SET prod_total = ? WHERE prod_id = ?`,
@@ -241,6 +267,66 @@ const updateCart = (req, res) => {
     )
   })
 }
+const insertCep = (req, res) => {
+  const cep_number = req.params['cep_number']
+
+  let args = {
+    sCepOrigem: '40170115',
+    sCepDestino: cep_number,
+    nVlPeso: '3',
+    nCdFormato: '1',
+    nVlComprimento: '20',
+    nVlAltura: '20',
+    nVlLargura: '20',
+    nCdServico: ['04510'], //Array com os códigos de serviço
+    nVlDiametro: '0'
+  }
+  consultarCep(cep_number)
+    .then(response => {
+      calcularPrecoPrazo(args)
+        .then(response => {
+          const { Valor, PrazoEntrega } = response[0]
+          res.status(200).json({
+            content: {
+              shipping_cost: Valor,
+              shipping_time: PrazoEntrega
+            }
+          })
+        })
+        .catch(err => {
+          res.status(400).json({ err: 'Erro' })
+        })
+    })
+    .catch(err => {
+      res.status(400).json({ err: 'Cep inválido' })
+    })
+}
+const deleteCart = (req, res) => {
+  const { prod_id } = req.params
+  pool.getConnection((err, connection) => {
+    const { prod_id } = req
+    const { prod_total } = req.body
+    if (err) {
+      res.status(500).json({ err: 'Failed to connect' })
+    }
+    connection.query(
+      `DELETE FROM contains_with
+      WHERE cart_id = 4 AND prod_id = ?
+      `,
+      [prod_id],
+      (error, queryResponse) => {
+        if (error) {
+          res.status(500).json({ err: 'Failed to update' })
+        }
+        pool.releaseConnection(connection)
+        updateCartInfo()
+        res
+          .status(201)
+          .json({ message: `Product ${prod_id} inside cart deleted` })
+      }
+    )
+  })
+}
 module.exports = {
   insertProduct,
   productBodyExists,
@@ -249,5 +335,9 @@ module.exports = {
   hasValidProperty,
   hasValidUpdate,
   updateCart,
-  hasBodyNullValue
+  hasBodyNullValue,
+  productNotAlreadyInserted,
+  insertCep,
+  deleteCart,
+  updateCartInfo
 }

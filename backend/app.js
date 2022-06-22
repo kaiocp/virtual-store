@@ -26,4 +26,7 @@ app.use(express.json())
 
 app.use('/products', productController)
 app.use('/cart', cartController)
+app.use((req, res) => {
+  res.status(404).json({ err: "End point doesn't exist" })
+})
 module.exports = app
