@@ -1,4 +1,4 @@
-import styles from './CardCarrinho.module.css'
+import styles from './CardCarrinho.module.css';
 
 export default function CardCarrinho(props) {
     return (

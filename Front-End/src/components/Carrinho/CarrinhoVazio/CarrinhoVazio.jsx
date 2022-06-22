@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import ProductCard from "../ProductCard/ProductCard";
-import setaVetor from './img/setaVetor.svg';
+import ProductCard from "../../ProductCard/ProductCard";
 import styles from './CarrinhoVazio.module.css';
+import setaVetor from './img/setaVetor.svg';
 
 
 export default function CarrinhoVazio () {
@@ -42,7 +42,6 @@ export default function CarrinhoVazio () {
     }, []);
 
     return (
-        // Implementar regra para carrinho vazio ou cheio
         <section className={styles.carrinhovazio}>
             <div className={styles.carrinhovazio__desk}>
                 <div className={styles.carrinhovazio__header}>
@@ -58,7 +57,8 @@ export default function CarrinhoVazio () {
             <section className={styles.carrinhovazio__vistoRecentemente}>
                 <p>Visto recentemente</p>
                 {loading && <h2 style={{
-                    textAlign: 'center'}}>
+                    textAlign: 'center',
+                    fontSize: '20px'}}>
                     Carregando...</h2>}
                 {!loading &&
                     <div>
