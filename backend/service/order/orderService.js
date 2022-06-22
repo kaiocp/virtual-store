@@ -200,7 +200,7 @@ const getAllOrders = (req, res) => {
         const result = response.map(element => {
           return {
             order_id: element.order_id,
-            order: `http://localhost:3000/order/${element.order_id}`
+            order: `https://sleepy-cliffs-93443.herokuapp.com/order/${element.order_id}`
           }
         })
 
