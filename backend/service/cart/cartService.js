@@ -267,9 +267,7 @@ const updateCart = (req, res) => {
     )
   })
 }
-const insertCep = (req, res) => {
-  const cep_number = req.params['cep_number']
-
+const cepInfo = cep_number => {
   let args = {
     sCepOrigem: '40170115',
     sCepDestino: cep_number,
@@ -281,24 +279,33 @@ const insertCep = (req, res) => {
     nCdServico: ['04510'], //Array com os códigos de serviço
     nVlDiametro: '0'
   }
-  consultarCep(cep_number)
+  return new Promise((resolve, reject) => {
+    consultarCep(cep_number)
+      .then(response => {
+        return calcularPrecoPrazo(args)
+      })
+      .then(response => {
+        resolve(response[0])
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+const insertCep = (req, res) => {
+  const cep_number = req.params['cep_number']
+  cepInfo(cep_number)
     .then(response => {
-      calcularPrecoPrazo(args)
-        .then(response => {
-          const { Valor, PrazoEntrega } = response[0]
-          res.status(200).json({
-            content: {
-              shipping_cost: Valor,
-              shipping_time: PrazoEntrega
-            }
-          })
-        })
-        .catch(err => {
-          res.status(400).json({ err: 'Erro' })
-        })
+      const { Valor, PrazoEntrega } = response
+      res.status(200).json({
+        content: {
+          shipping_cost: Valor,
+          shipping_time: PrazoEntrega
+        }
+      })
     })
     .catch(err => {
-      res.status(400).json({ err: 'Cep inválido' })
+      res.status(400).json({ err: 'Invalid cep' })
     })
 }
 const deleteCart = (req, res) => {
