@@ -75,7 +75,7 @@ export default function CarrinhoCheio() {
                                     qtd={el.prod_total}
                                     onChange={(e) => setQtd(e.target.value)}
                                     price={el.prod_price}
-                                    // decreaseQt={el.}
+                                    // decreaseQt={chama o put na api e diminui 1 qtd}
                                     // increaseQtd={el.}
                                     delete={() => console.log('deletou')}
                                 />
@@ -97,13 +97,12 @@ export default function CarrinhoCheio() {
 
                     <div className={styles.resumo}>
                         <h4>Entrega</h4>
-                        <p>R$ {cepData ? cepData?.content?.shipping_cost : '--'}</p>
+                        <p>R$ {cepData ? cepData?.content?.shipping_cost : '00'}</p>
                     </div>
                     <hr className={styles.hr}/>
                     <div className={`${styles.resumo} ${styles.resumo_total}`}>
                         <h4>Total</h4>
-                        <p>R$ {carrinhoData.content.cart_subtotal}</p>
-                    {/* somar com entrega (?metodo pra atualizar tudo?) */}
+                        <p>R$ {parseFloat(carrinhoData.content.cart_subtotal) + (cepData ? parseFloat(cepData?.content?.shipping_cost) : 0) }</p>
                     </div>
                     <button className={styles.botaoFinalizar}>Finalizar compra</button>
                     </>
