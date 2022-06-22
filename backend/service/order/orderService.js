@@ -21,7 +21,6 @@ const hasBodyNullValue = (req, res, next) => {
               message: 'Body request cannot be null'
             })
             hasNullValue = true
-            return
           }
         }
       })
@@ -99,7 +98,6 @@ const insertAllProducts = (req, res) => {
           ],
           (err, response) => {
             if (err) {
-              console.log('quarto')
               res.status(500).json({ err: 'Insert Failed' })
             }
             const order_id = response.insertId
@@ -108,7 +106,6 @@ const insertAllProducts = (req, res) => {
               const { prod_id, prod_total } = element
               pool.getConnection((err, connection) => {
                 if (err) {
-                  console.log('quinto')
                   res.status(500).json({ error: 'Connection failed' })
                 }
                 pool.query(
@@ -118,7 +115,6 @@ const insertAllProducts = (req, res) => {
                   [order_id, prod_id, prod_total],
                   (error, response) => {
                     if (error) {
-                      console.log('sexto')
                       res.status(500).json({ error: 'Insert Failed' })
                     }
                     pool.releaseConnection(connection)
@@ -130,7 +126,7 @@ const insertAllProducts = (req, res) => {
               })
             })
             pool.releaseConnection(connection)
-            console.log('Foi aqui')
+
             res
               .status(200)
               .json({ message: `Order created with success`, order_id })
@@ -174,7 +170,6 @@ const updateInfoOrder = order_id => {
             [order_total, order_id],
             (err, response) => {
               if (err) {
-                console.log('fail')
               }
               pool.releaseConnection(connection)
               return 'ok'
@@ -186,9 +181,97 @@ const updateInfoOrder = order_id => {
     )
   })
 }
+const getAllOrders = (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ error: 'Connection failed' })
+    }
+    connection.query(
+      `SELECT order_id from order_final
 
+    `,
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({ error: 'Get Failed' })
+        }
+
+        pool.releaseConnection(connection)
+
+        const result = response.map(element => {
+          return {
+            order_id: element.order_id,
+            order: `http://localhost:3000/order/${element.order_id}`
+          }
+        })
+
+        console.log()
+        return res.status(200).json({ result })
+      }
+    )
+  })
+}
+const getOneOrder = (req, res) => {
+  const { order_id } = req.params
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ error: 'Connection failed' })
+    }
+    connection.query(
+      `SELECT
+      has_inside.prod_id,
+      product.prod_title,
+      product.prod_description,
+      product.prod_price,
+      product.prod_image_url,
+      product_brand.brand_name,
+      category.category_name,
+      sub_category.subcategory_name,
+      product_color.color_name,
+      has_inside.prod_total
+    from
+      has_inside
+     
+      JOIN product ON has_inside.prod_id = product.prod_id
+      JOIN product_brand ON has_inside.prod_id = product_brand.prod_id
+      JOIN category ON has_inside.prod_id = category.prod_id
+      JOIN sub_category ON has_inside.prod_id = sub_category.prod_id
+      JOIN product_color ON has_inside.prod_id = product_color.prod_id
+      
+     WHERE has_inside.order_id = ?
+     ORDER BY product.prod_register_time;`,
+      [order_id],
+      (err, products) => {
+        if (err) {
+          return res.status(500).json({ error: 'Get Failed' })
+        }
+        pool.releaseConnection(connection)
+        pool.getConnection((err, connection) => {
+          if (err) {
+            return res.status(500).json({ error: 'Connection failed' })
+          }
+          connection.query(
+            `SELECT * from order_final
+          WHERE
+          order_id = ?;`,
+            [order_id],
+            (err, response) => {
+              if (err) {
+                return res.status(500).json({ error: 'Get Failed' })
+              }
+              pool.releaseConnection(connection)
+              const orderInfo = response[0]
+              return res.status(200).json({ orderInfo, products })
+            }
+          )
+        })
+      }
+    )
+  })
+}
 module.exports = {
   insertAllProducts,
   hasBodyNullValue,
-  hasInvalidProperty
+  hasInvalidProperty,
+  getAllOrders,
+  getOneOrder
 }

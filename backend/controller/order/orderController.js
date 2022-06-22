@@ -3,9 +3,12 @@ const router = express.Router()
 const {
   insertAllProducts,
   hasBodyNullValue,
-  hasInvalidProperty
+  hasInvalidProperty,
+  getAllOrders,
+  getOneOrder
 } = require('../../service/order/orderService')
 
 router.post('/', hasInvalidProperty, hasBodyNullValue, insertAllProducts)
-
+router.get('/', getAllOrders)
+router.get('/:order_id', getOneOrder)
 module.exports = router
