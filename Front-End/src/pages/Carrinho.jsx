@@ -1,11 +1,11 @@
-import CardCarrinho from "../components/Carrinho/CardCarrinho/CardCarrinho";
 import CarrinhoVazio from "../components/Carrinho/CarrinhoVazio/CarrinhoVazio";
-import { useState } from "react";
-import styles from '../components/Carrinho/CardCarrinho/CardCarrinho.module.css'
 import CarrinhoCheio from "../components/Carrinho/CarrinhoCheio/CarrinhoCheio";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from 'axios';
 
 export default function Carrinho() {
-    
+
     // const [qtd, setQtd] = useState(1);
 
     // e esses metodos aqui ein
@@ -18,22 +18,33 @@ export default function Carrinho() {
     //     } 
     // }
 
+    const [qtdCarrinho, setQtdCarrinho] = useState();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        let url = "https://sleepy-cliffs-93443.herokuapp.com/cart";
+        const fetchData = async () => {
+        setLoading(true);
+        try {
+            const {data: response} = await axios.get(url);
+            setQtdCarrinho(response);
+        } catch (error) {
+            console.error(error.message);
+        }
+        setLoading(false);
+        }
+        fetchData();
+    }, []);
+
     return (
-        // <CarrinhoVazio />
-        // <CardCarrinho 
-        //     img="https://cdn.dooca.store/117/products/bolsa-feminina-rosa_640x640+fill_ffffff.jpg?v=1626967527&webp=0"
-        //     title="bolsa"
-        //     color="rosa"
-        //     size="M"
-        //     brand="Renner"
-        //     qtd={qtd}
-        //     onChange={(e) => setQtd(e.target.value)}
-        //     price="100,00"
-        //     decreaseQt={decreaseQtd}
-        //     increaseQtd={increaseQtd}
-        //     delete={() => console.log('deletou')}
-        // />
-        <CarrinhoCheio />
+        <>
+            {!loading &&(
+            (qtdCarrinho?.content?.cart_prod_total >= 1) ?
+                <CarrinhoCheio />
+                :
+                <CarrinhoVazio />
+            
+            )}
+        </>
 
     )
 }
