@@ -11,7 +11,7 @@ export default function CarrinhoCheio() {
 
     const [carrinhoData, setCarrinhoData] = useState();
     const [loading, setLoading] = useState(true);
-    
+
     // to make useeffect rerender data
     const [state, setState] = useState(false);
 
@@ -92,7 +92,6 @@ export default function CarrinhoCheio() {
         }
     }
 
-
     // cep
     const [cepData, setCepData] = useState();
     const [cep, setCep] = useState();
@@ -104,8 +103,6 @@ export default function CarrinhoCheio() {
         const data = await response.json();
         setCepData(data);
     }
-
-
 
     return (
         <section className={styles.carrinhoCheio}>
@@ -121,7 +118,7 @@ export default function CarrinhoCheio() {
                             <h1 className={styles.tituloCep}>Buscar CEP</h1>
                         </div>
                         <div className={styles.buscarDiv}>
-                            <input type="text" placeholder='Digite um CEP...' className={styles.inputCep} id="cep" onChange={(e) => setCep(e.target.value)}/>
+                            <input type="text" placeholder='Digite um CEP...' className={styles.inputCep} id="cep" onChange={(e) => setCep(e.target.value)} maxlength="9"/>
                             <p className={styles.aplicar} onClick={buscarCep}>Aplicar</p>
                         </div>
                     </article>
