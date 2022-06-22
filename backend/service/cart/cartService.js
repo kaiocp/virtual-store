@@ -158,10 +158,20 @@ const hasValidProperty = (req, res, next) => {
     const isValid = validProperty.some(element => {
       return property === element
     })
+
     if (!isValid) {
       return res
         .status(400)
         .json({ err: "Your body has some invalid properties' names" })
+    }
+    if (property === 'prod_total') {
+      if (isNaN(requestBody[property])) {
+        return res.status(400).json({ err: 'Invalid value' })
+      }
+    } else if (property === 'prod_id') {
+      if (typeof requestBody[property] !== 'string') {
+        return res.status(400).json({ err: 'Invalid value' })
+      }
     }
   }
 
