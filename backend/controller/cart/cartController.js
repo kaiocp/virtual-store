@@ -6,10 +6,15 @@ const {
   productAlreadyInserted,
   getCartInfo,
   hasValidProperty,
-  hasBodyNullValue
+  hasBodyNullValue,
+  hasValidUpdate,
+  productNotAlreadyInserted,
+  updateCart,
+  insertCep,
+  deleteCart
 } = require('../../service/cart/cartService')
 const router = express.Router()
-
+router.get('/cep/:cep_number', insertCep)
 router.get('/', getCartInfo)
 router.post(
   '/',
@@ -18,6 +23,14 @@ router.post(
   productBodyExists,
   productAlreadyInserted,
   insertProduct
+)
+router.delete('/:prod_id', productNotAlreadyInserted, deleteCart)
+router.put(
+  '/:prod_id',
+  hasBodyNullValue,
+  hasValidUpdate,
+  productNotAlreadyInserted,
+  updateCart
 )
 
 module.exports = router
