@@ -268,6 +268,7 @@ const updateCart = (req, res) => {
   })
 }
 const cepInfo = cep_number => {
+  let adressInfo
   let args = {
     sCepOrigem: '40170115',
     sCepDestino: cep_number,
@@ -282,13 +283,17 @@ const cepInfo = cep_number => {
   return new Promise((resolve, reject) => {
     consultarCep(cep_number)
       .then(response => {
+        adressInfo = response
         return calcularPrecoPrazo(args)
       })
       .then(response => {
-        resolve(response[0])
+        resolve({
+          shipping: response[0],
+          adressInfo
+        })
       })
       .catch(err => {
-        reject(err)
+        reject(err.message)
       })
   })
 }
@@ -296,7 +301,8 @@ const insertCep = (req, res) => {
   const cep_number = req.params['cep_number']
   cepInfo(cep_number)
     .then(response => {
-      const { Valor, PrazoEntrega } = response
+      console.log(response)
+      const { Valor, PrazoEntrega } = response.shipping
       res.status(200).json({
         content: {
           shipping_cost: Valor,
@@ -305,6 +311,7 @@ const insertCep = (req, res) => {
       })
     })
     .catch(err => {
+      console.log(err)
       res.status(400).json({ err: 'Invalid cep' })
     })
 }
@@ -346,5 +353,6 @@ module.exports = {
   productNotAlreadyInserted,
   insertCep,
   deleteCart,
-  updateCartInfo
+  updateCartInfo,
+  cepInfo
 }
