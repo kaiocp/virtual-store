@@ -107,6 +107,7 @@ export default function CarrinhoCheio() {
                 <p>R$ {carrinhoData.content.cart_subtotal}</p>
                 {/* somar com entrega (?metodo pra atualizar tudo?) */}
             </div>
+            <button class={styles.botaoFinalizar}>Finalizar compra</button>
             </>
             }
             </section>

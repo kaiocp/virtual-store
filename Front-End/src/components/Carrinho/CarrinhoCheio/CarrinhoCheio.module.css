@@ -113,4 +113,15 @@
     color: #53B38D;
 }
 
+.botaoFinalizar {
+    width: 100%;
+    max-width: 315px;
+    font-family: 'Poppins';
+    border: none;
+    background-color: #53B38D;
+    color: white;
+    padding: .75rem 0;
+    border-radius: 5px;
+}
+
 @media screen and(min-width: 1024px) {}
