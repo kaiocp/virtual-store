@@ -1,12 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { insertAllProducts } = require('../../service/order/orderService')
-
 const {
-  hasValidProperty,
+  insertAllProducts,
   hasBodyNullValue,
-  productBodyExists
-} = require('../../service/cart/cartService')
-router.post('/', insertAllProducts)
+  hasInvalidProperty
+} = require('../../service/order/orderService')
+
+router.post('/', hasInvalidProperty, hasBodyNullValue, insertAllProducts)
 
 module.exports = router
