@@ -26,6 +26,7 @@ export default function ProductCard(props) {
                 preco={props.price}
                 cor={props.cor}
                 tamanho={props.subcategory}
+                id={props.produtoid}
                 >
                 </ModalProduto>: null}
 

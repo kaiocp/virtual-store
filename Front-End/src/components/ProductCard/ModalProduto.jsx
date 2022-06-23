@@ -5,7 +5,15 @@ import IconeRemover from './img/iconeremover.svg'
 import IconeAdicionar from './img/iconeadicionar.svg'
 import IconeEditar from './img/iconeeditar.svg'
 import IconeDeletar from './img/iconedeletar.svg'
-export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marca,preco,cor,tamanho}) {
+import ProductsGrid from "../ProductsGrid/ProductsGrid"
+export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marca,preco,cor,tamanho,id}) {
+  async function deletarProduto() {
+    alert("O produto " + titulo + " foi excluido com sucesso")
+    let res = await fetch(`https://sleepy-cliffs-93443.herokuapp.com/products/${id}`, {
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' }
+        })
+  }
   return (
     <div className={styles.fundoModal}>
       <section className={styles.sectionModalProduto} id="modal">
@@ -55,8 +63,8 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
                   <h3>Editar</h3>
                 </div>
                 <div className={styles.deletarDiv}>
-                  <img src={IconeDeletar}/>
-                  <h3>Deletar</h3>
+                  <img src={IconeDeletar} onClick={deletarProduto}/>
+                  <h3 onClick={deletarProduto}>Deletar</h3>
                 </div>
               </div>
               <button className={styles.botaoDiv}>Adicionar ao Carrinho</button>

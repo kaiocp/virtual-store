@@ -20,7 +20,6 @@ export default function Products() {
         }
         fetchData();
     }, []);
-    console.log(products)
 
     return (
         <>
@@ -35,7 +34,7 @@ export default function Products() {
                     card={
                         products.content.map(el => (
                             <ProductCard
-                                key={el.prod_id}
+                                produtoid={el.prod_id}
                                 img={el.prod_image_url}
                                 subcategory={el.subcategory_name}
                                 price={el.prod_price}
