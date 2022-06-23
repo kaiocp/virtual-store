@@ -24,6 +24,9 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use((err, req, res, next) => {
+  res.status(500).json({ error: err.message })
+})
 
 app.use('/products', productController)
 app.use('/cart', cartController)
