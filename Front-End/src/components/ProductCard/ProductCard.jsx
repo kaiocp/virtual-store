@@ -4,6 +4,11 @@ import { useState } from 'react';
 import ModalProduto from './ModalProduto';
 export default function ProductCard(props) {
     const [isProdutoVisible, setIsProdutoVisible] = useState(false)
+    if (isProdutoVisible === true) {
+        document.body.style.overflow = "hidden";
+    }else{
+        document.body.style.overflow = "auto";
+    }
     return (
         <div className={styles.productCard}>
             <img 
