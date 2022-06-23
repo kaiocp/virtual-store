@@ -186,7 +186,12 @@ const hasValidUpdate = (req, res, next) => {
     if (property != validProperty) {
       return res
         .status(400)
-        .json({ err: "Your body has some invalid properties' names" })
+        .json({ error: 'Bad request', message: 'Invalid property name' })
+    }
+    if (isNaN(requestBody[property])) {
+      return res
+        .status(400)
+        .json({ error: 'Bad request', message: 'Invalid value' })
     }
   }
   next()
