@@ -21,6 +21,7 @@ const hasBodyNullValue = (req, res, next) => {
               message: 'Body request cannot be null'
             })
             hasNullValue = true
+            return
           }
         }
       })
@@ -42,37 +43,32 @@ const hasInvalidProperty = (req, res, next) => {
   const validProductProperty = ['prod_id', 'prod_total']
   let hasInvalidProperty = false
   for (property in bodyRequest) {
-    if (!validProperty.includes(property)) {
-      res
-        .status(400)
-        .json({ error: 'Bad Request', message: 'Invalid property' })
-      hasInvalidProperty = true
-      return
+    if (hasInvalidProperty) {
+      break
     }
-    if (property === 'cep') {
-      if (typeof bodyRequest[property] !== 'string') {
-        res
-          .status(400)
-          .json({ error: 'Bad Request', message: 'Invalid property' })
-        hasInvalidProperty = true
-        return
-      }
+    if (
+      !validProperty.includes(property) ||
+      (property === 'cep' && typeof bodyRequest[property] !== 'string')
+    ) {
+      hasInvalidProperty = true
     } else {
       if (!Array.isArray(bodyRequest[property])) {
-        res
+        return res
           .status(400)
           .json({ error: 'Bad Request', message: 'Invalid property' })
         hasInvalidProperty = true
-        return
       }
       bodyRequest[property].forEach(element => {
+        if (hasInvalidProperty) {
+          return
+        }
         for (elementProperty in element) {
           if (!validProductProperty.includes(elementProperty)) {
             res
               .status(400)
               .json({ error: 'Bad Request', message: 'Invalid property' })
             hasInvalidProperty = true
-            return
+            break
           }
           if (elementProperty === 'prod_id') {
             if (typeof element[elementProperty] !== 'string') {
@@ -80,7 +76,7 @@ const hasInvalidProperty = (req, res, next) => {
                 .status(400)
                 .json({ error: 'Bad Request', message: 'Invalid property' })
               hasInvalidProperty = true
-              return
+              break
             }
           } else {
             if (
@@ -91,7 +87,7 @@ const hasInvalidProperty = (req, res, next) => {
                 .status(400)
                 .json({ error: 'Bad Request', message: 'Invalid property' })
               hasInvalidProperty = true
-              return
+              break
             }
           }
         }
@@ -104,53 +100,159 @@ const hasInvalidProperty = (req, res, next) => {
 }
 const hasInvalidPropertyIntoAlreadyInserted = (req, res, next) => {
   const bodyRequest = req.body
-  const upperProperty = 'products'
-  const lowerProperties = ['prod_id', 'prod_total']
+
+  const upperValidProperty = 'products'
+  const lowerValidProperty = ['prod_id', 'prod_total']
   let hasInvalidProperty = false
   for (property in bodyRequest) {
-    if (property !== upperProperty || !Array.isArray(bodyRequest[property])) {
-      return res.status(400).json({
-        error: 'Bad Request',
-        message: 'Invalid property'
-      })
+    if (
+      property !== upperValidProperty ||
+      !Array.isArray(bodyRequest[property])
+    ) {
+      console.log(property)
       hasInvalidProperty = true
+      break
     }
-    bodyRequest[property].forEach(element => {
-      for (elementProperty in element) {
-        if (!lowerProperties.includes(elementProperty)) {
-          res
-            .status(400)
-            .json({ error: 'Bad Request', message: 'Invalid property' })
-          hasInvalidProperty = true
-          return
+    const products = bodyRequest[property]
+    hasInvalidProperty = products.some(product => {
+      if (typeof product !== 'object') {
+        console.log('1')
+        return true
+      }
+      for (property in product) {
+        if (!lowerValidProperty.includes(property)) {
+          console.log('2')
+          return true
         }
-        if (elementProperty === 'prod_id') {
-          if (typeof element[elementProperty] !== 'string') {
-            res
-              .status(400)
-              .json({ error: 'Bad Request', message: 'Invalid property' })
-            hasInvalidProperty = true
-            return
-          }
+        if (property === 'prod_id' && typeof product[property] !== 'string') {
+          console.log('3')
+          return true
         }
         if (
-          typeof element[elementProperty] !== 'number' ||
-          element[elementProperty] <= 0
+          property === 'prod_total' &&
+          (typeof product[property] !== 'number' || product[property] <= 0)
         ) {
-          res
-            .status(400)
-            .json({ error: 'Bad Request', message: 'Invalid property' })
-          hasInvalidProperty = true
-          return
+          console.log('4')
+          return true
         }
       }
     })
+    if (hasInvalidProperty) {
+      break
+    }
+  }
+  if (!hasInvalidProperty) {
+    next()
+  } else {
+    res.status(400).json({
+      error: 'Bad Request',
+      message: 'Invalid property'
+    })
+  }
+}
+const hasNullQueryParams = (req, res, next) => {
+  const queryParams = req.query
+  let hasNullValue = false
+  for (property in queryParams) {
+    if (queryParams[property] === null) {
+      res
+        .status(400)
+        .json({ error: 'Bad Request', message: 'Query params cannot be null' })
+      hasNullValue = true
+      return
+    }
+  }
+  if (!hasNullValue) {
+    next()
+  }
+}
+const hasValidDeleteQuery = (req, res, next) => {
+  const queryParams = req.query
+  const validProperty = ['order_id', 'prod_id']
+  let hasInvalidProperty = false
+  for (property in queryParams) {
+    if (!validProperty.includes(property)) {
+      res
+        .status(400)
+        .json({ error: 'Bad Request', message: 'Invalid property' })
+      hasInvalidProperty = true
+      return
+    }
+    if (property === 'order_id') {
+      if (typeof queryParams[property] !== 'number') {
+        res
+          .status(400)
+          .json({ error: 'Bad Request', message: 'Invalid property' })
+        hasInvalidProperty = true
+        return
+      }
+    } else {
+      if (typeof queryParams[property] !== 'string') {
+        res
+          .status(400)
+          .json({ error: 'Bad Request', message: 'Invalid property' })
+        hasInvalidProperty = true
+        return
+      }
+    }
   }
   if (!hasInvalidProperty) {
     next()
   }
 }
+const queryOrderIdExists = (req, res, next) => {
+  const { order_id } = req.query
 
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.status(500).json({
+        error: 'Internal Server Error',
+        message: 'Error connecting to database'
+      })
+      return
+    }
+    connection.query(
+      `SELECT * from has_inside WHERE order_id = ?`,
+      [order_id],
+      (err, result) => {
+        if (result.length === 0) {
+          return res.status(404).json({
+            error: 'Not Found',
+            message: 'Order not found'
+          })
+        }
+        next()
+      }
+    )
+  })
+}
+const queryProductIdExists = (req, res, next) => {
+  const { prod_id } = req.query
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.status(500).json({
+        error: 'Internal Server Error',
+        message: 'Error connecting to database'
+      })
+      return
+    }
+    connection.query(
+      `SELECT * from products WHERE prod_id = ?`,
+      [prod_id],
+      (err, result) => {
+        if (result.length === 0) {
+          return res.status(404).json({
+            error: 'Not Found',
+            message: 'Product not found'
+          })
+        }
+        connection.release()
+        next()
+      }
+    )
+  })
+}
 const productInBodyExists = (req, res, next) => {
   const products = req.body.products
   const productIds = products.map(element => element.prod_id)
@@ -247,7 +349,7 @@ const insertAllProducts = (req, res) => {
         )
       })
       .catch(err => {
-        res.status(400).json({ error: 'Invalid Cep' })
+        res.status(404).json({ error: 'Not found', message: 'Cep not found' })
       })
   })
 }
@@ -455,15 +557,19 @@ const orderIdIsValid = (req, res, next) => {
           return res.status(500).json({ error: 'Get Failed' })
         }
         if (response.length == 0) {
-          return res.status(400).json({
-            error: 'Bad request',
-            message: `Order ${order_id} doesn't exist`
+          return res.status(404).json({
+            error: 'Not Found',
+            message: 'Order not found'
           })
         }
         next()
       }
     )
   })
+}
+const deleteProductFromOrder = (req, res) => {
+  const { order_id, prod_id } = req.query
+  res.send(`Delete product ${prod_id} from order ${order_id}`)
 }
 module.exports = {
   insertAllProducts,
@@ -475,5 +581,6 @@ module.exports = {
   insertToAlreadyExistOrder,
   productIsAlreadyInOrder,
   hasInvalidPropertyIntoAlreadyInserted,
-  orderIdIsValid
+  orderIdIsValid,
+  deleteProductFromOrder
 }
