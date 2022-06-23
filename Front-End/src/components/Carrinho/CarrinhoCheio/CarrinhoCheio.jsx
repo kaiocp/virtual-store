@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CardCarrinho from '../CardCarrinho/CardCarrinho';
 import styles from './CarrinhoCheio.module.css'
 import iconeMapa from './img/mapaicone.svg'
@@ -8,6 +9,8 @@ import setaVetor from './img/setaVetor.svg';
 
 
 export default function CarrinhoCheio() {
+
+    const navigate = useNavigate();
 
     const [carrinhoData, setCarrinhoData] = useState();
     const [loading, setLoading] = useState(true);
@@ -84,6 +87,24 @@ export default function CarrinhoCheio() {
             );
             if (res.ok) {
                 setState(!state);
+            } else {
+                console.log(res);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleClosePurchase = async () => {
+        try {
+            let res = await fetch(`https://sleepy-cliffs-93443.herokuapp.com/cart/delete-all`, {
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' }
+                }
+            );
+            if (res.ok) {
+                alert('Compra concluída com sucesso!');
+                navigate('/');
             } else {
                 console.log(res);
             }
@@ -182,7 +203,7 @@ export default function CarrinhoCheio() {
                         <h4>Total</h4>
                         <p>R$ {parseFloat(carrinhoData.content.cart_subtotal) + (cepData ? parseFloat(cepData?.content?.shipping_cost) : 0) }</p>
                     </div>
-                    <button className={styles.botaoFinalizar}>Finalizar compra</button>
+                    <button onClick={handleClosePurchase} className={styles.botaoFinalizar}>Finalizar compra</button>
                     </>
                 }
                 </section>
