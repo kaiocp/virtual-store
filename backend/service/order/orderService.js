@@ -49,7 +49,22 @@ const hasInvalidProperty = (req, res, next) => {
       hasInvalidProperty = true
       return
     }
-    if (Array.isArray(bodyRequest[property])) {
+    if (property === 'cep') {
+      if (typeof bodyRequest[property] !== 'string') {
+        res
+          .status(400)
+          .json({ error: 'Bad Request', message: 'Invalid property' })
+        hasInvalidProperty = true
+        return
+      }
+    } else {
+      if (!Array.isArray(bodyRequest[property])) {
+        res
+          .status(400)
+          .json({ error: 'Bad Request', message: 'Invalid property' })
+        hasInvalidProperty = true
+        return
+      }
       bodyRequest[property].forEach(element => {
         for (elementProperty in element) {
           if (!validProductProperty.includes(elementProperty)) {
@@ -59,6 +74,23 @@ const hasInvalidProperty = (req, res, next) => {
             hasInvalidProperty = true
             return
           }
+          if (elementProperty === 'prod_id') {
+            if (typeof element[elementProperty] !== 'string') {
+              res
+                .status(400)
+                .json({ error: 'Bad Request', message: 'Invalid property' })
+              hasInvalidProperty = true
+              return
+            }
+          } else {
+            if (isNaN(element[elementProperty])) {
+              res
+                .status(400)
+                .json({ error: 'Bad Request', message: 'Invalid property' })
+              hasInvalidProperty = true
+              return
+            }
+          }
         }
       })
     }
@@ -67,6 +99,7 @@ const hasInvalidProperty = (req, res, next) => {
     next()
   }
 }
+
 const insertAllProducts = (req, res) => {
   const { cep, products } = req.body
   pool.getConnection((error, connection) => {
