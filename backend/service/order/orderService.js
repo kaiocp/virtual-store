@@ -102,6 +102,55 @@ const hasInvalidProperty = (req, res, next) => {
     next()
   }
 }
+const hasInvalidPropertyIntoAlreadyInserted = (req, res, next) => {
+  const bodyRequest = req.body
+  const upperProperty = 'products'
+  const lowerProperties = ['prod_id', 'prod_total']
+  let hasInvalidProperty = false
+  for (property in bodyRequest) {
+    if (property !== upperProperty || !Array.isArray(bodyRequest[property])) {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'Invalid property'
+      })
+      hasInvalidProperty = true
+    }
+    bodyRequest[property].forEach(element => {
+      for (elementProperty in element) {
+        if (!lowerProperties.includes(elementProperty)) {
+          res
+            .status(400)
+            .json({ error: 'Bad Request', message: 'Invalid property' })
+          hasInvalidProperty = true
+          return
+        }
+        if (elementProperty === 'prod_id') {
+          if (typeof element[elementProperty] !== 'string') {
+            res
+              .status(400)
+              .json({ error: 'Bad Request', message: 'Invalid property' })
+            hasInvalidProperty = true
+            return
+          }
+        }
+        if (
+          typeof element[elementProperty] !== 'number' ||
+          element[elementProperty] <= 0
+        ) {
+          res
+            .status(400)
+            .json({ error: 'Bad Request', message: 'Invalid property' })
+          hasInvalidProperty = true
+          return
+        }
+      }
+    })
+  }
+  if (!hasInvalidProperty) {
+    next()
+  }
+}
+
 const productInBodyExists = (req, res, next) => {
   const products = req.body.products
   const productIds = products.map(element => element.prod_id)
@@ -130,6 +179,7 @@ const productInBodyExists = (req, res, next) => {
 }
 const insertAllProducts = (req, res) => {
   const { cep, products } = req.body
+
   pool.getConnection((error, connection) => {
     if (error) {
       res.status(500).json({ err: 'Connection failed' })
@@ -208,7 +258,7 @@ const updateInfoOrder = order_id => {
     }
     connection.query(
       `SELECT SUM(product.prod_price * has_inside.prod_total) + order_final.order_shipping
-      as order_total
+      as order_total,SUM(has_inside.prod_total) as order_quantity
     from has_inside
     JOIN product
     ON has_inside.prod_id = product.prod_id
@@ -221,6 +271,7 @@ const updateInfoOrder = order_id => {
           return error
         }
         const { order_total } = response[0]
+        const { order_quantity } = response[0]
         pool.releaseConnection(connection)
         pool.getConnection((err, connection) => {
           if (err) {
@@ -229,8 +280,8 @@ const updateInfoOrder = order_id => {
           connection.query(
             `UPDATE order_final 
           SET order_total
-          = ? WHERE order_id = ?`,
-            [order_total, order_id],
+          = ?,order_quantity = ? WHERE order_id = ?`,
+            [order_total, order_quantity, order_id],
             (err, response) => {
               if (err) {
               }
@@ -331,12 +382,98 @@ const getOneOrder = (req, res) => {
     )
   })
 }
+const productIsAlreadyInOrder = (req, res, next) => {
+  const { order_id } = req.params
+  const { products } = req.body
+  const products_id = products.map(element => {
+    return element.prod_id
+  })
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ error: 'Connection failed' })
+    }
+    connection.query(
+      'SELECT * from has_inside WHERE order_id = ? and prod_id IN (?)',
+      [order_id, products_id],
+      (err, response) => {
+        console.log(response)
+        if (err) {
+          return res.status(500).json({ error: 'Get Failed' })
+        }
+        if (response.length > 0) {
+          return res.status(400).json({
+            error: 'Bad request',
+            message: 'Some of the products are already in order'
+          })
+        }
+        pool.releaseConnection(connection)
+        next()
+      }
+    )
+  })
+}
 
+const insertToAlreadyExistOrder = (req, res) => {
+  const { order_id } = req.params
+  const { products } = req.body
+  products.forEach((element, index, array) => {
+    const { prod_id, prod_total } = element
+    pool.getConnection((err, connection) => {
+      if (err) {
+        res.status(500).json({ error: 'Connection failed' })
+      }
+      pool.query(
+        `INSERT INTO has_inside (order_id,prod_id,prod_total) VALUES (?,?,?)`,
+        [order_id, prod_id, prod_total],
+        (error, response) => {
+          if (error) {
+            res.status(500).json({ error: 'Insert Failed' })
+          }
+          if (index == array.length - 1) {
+            pool.releaseConnection(connection)
+            const answer = updateInfoOrder(order_id)
+          }
+        }
+      )
+    })
+  })
+  res.status(201).json({ message: 'Products inserted' })
+}
+const orderIdIsValid = (req, res, next) => {
+  const { order_id } = req.params
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ error: 'Connection failed' })
+    }
+    connection.query(
+      `SELECT * from order_final WHERE order_id = ?`,
+      [order_id],
+      (err, response) => {
+        connection.release()
+        if (err) {
+          return res.status(500).json({ error: 'Get Failed' })
+        }
+        if (response.length == 0) {
+          return res.status(400).json({
+            error: 'Bad request',
+            message: `Order ${order_id} doesn't exist`
+          })
+        }
+        next()
+      }
+    )
+  })
+}
 module.exports = {
   insertAllProducts,
   hasBodyNullValue,
   hasInvalidProperty,
   getAllOrders,
   getOneOrder,
-  productInBodyExists
+  productInBodyExists,
+  insertToAlreadyExistOrder,
+  productIsAlreadyInOrder,
+  hasInvalidPropertyIntoAlreadyInserted,
+  orderIdIsValid
 }

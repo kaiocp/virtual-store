@@ -7,7 +7,11 @@ const {
   hasInvalidProperty,
   getAllOrders,
   getOneOrder,
-  productInBodyExists
+  productInBodyExists,
+  insertToAlreadyExistOrder,
+  productIsAlreadyInOrder,
+  hasInvalidPropertyIntoAlreadyInserted,
+  orderIdIsValid
 } = require('../../service/order/orderService')
 
 router.post(
@@ -17,6 +21,15 @@ router.post(
   productInBodyExists,
   insertAllProducts
 )
+router.post(
+  '/:order_id',
+  orderIdIsValid,
+  hasBodyNullValue,
+  hasInvalidPropertyIntoAlreadyInserted,
+  productInBodyExists,
+  productIsAlreadyInOrder,
+  insertToAlreadyExistOrder
+)
 router.get('/', getAllOrders)
-router.get('/:order_id', getOneOrder)
+router.get('/:order_id', orderIdIsValid, getOneOrder)
 module.exports = router
