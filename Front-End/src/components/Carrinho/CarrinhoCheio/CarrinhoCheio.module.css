@@ -10,6 +10,7 @@
 }
 
 .header {
+    margin-top: 5rem;
     align-self: center;
     display: flex;
     column-gap: .375rem;
@@ -136,6 +137,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
+    margin-bottom: 8rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -159,7 +161,7 @@
 @media screen and (min-width: 1024px) {
     .carrinhoCheioDesk {
         flex-direction: row;
-        column-gap: 10rem;
+        column-gap: 5rem;
         justify-content: space-between;
     }
     .hr {
@@ -168,13 +170,14 @@
     .buscarDiv {
         max-width: 600px;
     }
-    .cardsCarrinho {
-        margin-left: 30px;
+    .carrinhoCheio__sec2 {
+        justify-content: center;
+        align-items: center
     }
 }
 
 @media screen and (min-width: 1500px) {
     .carrinhoCheio__sec2 {
-        margin-right: 90px;
+        margin-right: 120px;
     }
 }
