@@ -240,6 +240,7 @@ const getCartInfo = (req, res) => {
               if (error) {
                 res.status(500).json({ err: 'Failed get itens from cart' })
               }
+              pool.releaseConnection(conn)
               return res.status(200).json({
                 content: {
                   cart_subtotal,
