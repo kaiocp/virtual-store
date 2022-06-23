@@ -95,7 +95,6 @@ export default function CarrinhoCheio() {
     // cep
     const [cepData, setCepData] = useState();
     const [cep, setCep] = useState();
-    const [invalidCep, setInvalidCep] = useState(false);
     
     async function buscarCep() {
         let cepFormat = cep.replace("-", "").replace(".", "");
@@ -170,7 +169,7 @@ export default function CarrinhoCheio() {
                     {!loading && 
                     <>
                     <div className={styles.resumo}>
-                        <h4>Subtotal ({carrinhoData.content.cart_prod_total} {carrinhoData.content.cart_prod_tota === 1 ? 'item' : 'itens'})</h4>
+                        <h4>Subtotal ({carrinhoData.content.cart_prod_total} {carrinhoData.content.cart_prod_tota === '1' ? 'item' : 'itens'})</h4>
                         <p>R$ {carrinhoData.content.cart_subtotal}</p>
                     </div>
 

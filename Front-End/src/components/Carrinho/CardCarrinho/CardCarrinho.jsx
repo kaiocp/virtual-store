@@ -3,8 +3,6 @@ import styles from './CardCarrinho.module.css';
 
 export default function CardCarrinho(props) {
 
-    // const [qtd, setQtd] = useState();
-
     return (
         <article className={styles.cardCarrinho}>
             <img src={props.img} alt="Produto" className={styles.cardCarrinho__img} />
