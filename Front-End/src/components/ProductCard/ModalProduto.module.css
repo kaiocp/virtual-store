@@ -1,3 +1,7 @@
+h3 {
+    font-size: 150%;
+}
+
 .sectionModalProduto {
     position: fixed;
     overflow: auto;
@@ -143,10 +147,11 @@ button {
         border-radius: 20px;
         display: flex;
         justify-content: space-between;
-        overflow: auto;
+        overflow: hidden;
     }
     .articleModal {
         display: flex;
+        padding-top: 10%;
         justify-content: space-around;
     }
     .titulo {
@@ -218,10 +223,12 @@ button {
 
 @media screen and (min-width: 1024px) {
     .sectionModalProduto {
-        width: 80%;
+        width: 60%;
         height: 90%;
-        max-width: 120rem;
-        min-width: 60rem;
+        max-width: 50rem;
+        min-width: 30rem;
+        min-height: 30rem;
+        max-height: 45rem;
         margin: 0 auto;
         border-radius: 20px;
         display: flex;
@@ -229,7 +236,6 @@ button {
         left: 0;
     }
     .articleModal {
-        width: 100%;
         display: flex;
     }
     .titulo {
@@ -238,7 +244,7 @@ button {
     .tituloDesktop {
         width: 100%;
         display: flex;
-        font-size: 2.5rem;
+        font-size: 2rem;
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -247,7 +253,6 @@ button {
     .headerProduto {
         width: 50%;
         display: flex;
-        padding-top: 0%;
     }
     .headerProduto img {
         margin: 0 auto;
@@ -256,12 +261,16 @@ button {
     }
     .headerMain {
         width: 100%;
+        height: 90%;
+        margin: 0 auto;
+        padding-top: 1rem;
         display: flex;
         flex-direction: row-reverse;
         align-items: flex-start;
         justify-content: space-between;
     }
     .iconeClose {
+        max-height: 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -272,20 +281,19 @@ button {
     }
     main {
         width: 50%;
-        height: 100%;
         text-align: start;
-        padding-top: 1.2rem;
+        padding-top: 0rem;
     }
     .descDiv h1 {
         font-family: 'Poppins';
         font-style: normal;
         font-weight: 600;
-        font-size: 2.25rem;
+        font-size: 150%;
     }
     .descDiv p {
         font-family: 'Montserrat';
         font-style: normal;
-        font-size: 1.5rem
+        font-size: 1.2rem
     }
     footer {
         width: 100%;
@@ -302,10 +310,12 @@ button {
         min-width: 43%;
         padding: 1.3rem 0.5rem;
     }
-    .preco {
-        padding-top: 10%;
-    }
     .editar {
         width: 20%;
+    }
+    .preco {
+        font-size: 1.1rem;
+        padding-top: 0px;
+        padding-bottom: 5%;
     }
 }

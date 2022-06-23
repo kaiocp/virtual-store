@@ -17,8 +17,8 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
         <section className={styles.headerMain}>
           <header className={styles.headerProduto}>
             <h1 className={styles.titulo}>{titulo}</h1>
-            <h1 className={styles.tamanho}>{tamanho}</h1>
             <img src={imagem}/>
+            <h1 className={styles.tamanho}>{tamanho}</h1>
             <div className={styles.quantidade}>
               <img src={IconeRemover}/>
               <h1>1</h1>
@@ -52,11 +52,11 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
               <div className={styles.editar}>
                 <div className={styles.editarDiv}>
                   <img src={IconeEditar}/>
-                  <h2>Editar</h2>
+                  <h3>Editar</h3>
                 </div>
                 <div className={styles.deletarDiv}>
                   <img src={IconeDeletar}/>
-                  <h2>Deletar</h2>
+                  <h3>Deletar</h3>
                 </div>
               </div>
               <button className={styles.botaoDiv}>Adicionar ao Carrinho</button>
