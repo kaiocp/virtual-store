@@ -28,4 +28,10 @@
     padding: 0.3rem 1.8rem;
     font-size: 1.1rem;
     cursor: pointer;
+    transition: .3s;
+}
+
+.navbar button:hover {
+    background-color: var(--cadastro-green-text);
+    cursor: pointer;
 }
