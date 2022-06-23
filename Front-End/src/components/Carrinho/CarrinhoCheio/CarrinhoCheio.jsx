@@ -95,6 +95,7 @@ export default function CarrinhoCheio() {
     // cep
     const [cepData, setCepData] = useState();
     const [cep, setCep] = useState();
+    const [invalidCep, setInvalidCep] = useState(false);
     
     async function buscarCep() {
         let cepFormat = cep.replace("-", "").replace(".", "");
@@ -118,9 +119,24 @@ export default function CarrinhoCheio() {
                             <h1 className={styles.tituloCep}>Buscar CEP</h1>
                         </div>
                         <div className={styles.buscarDiv}>
-                            <input type="text" placeholder='Digite um CEP...' className={styles.inputCep} id="cep" onChange={(e) => setCep(e.target.value)} maxlength="9"/>
+                            <input 
+                                type="text" 
+                                placeholder='Digite um CEP...' 
+                                className={styles.inputCep} 
+                                id="cep" 
+                                onChange={(e) => setCep(e.target.value)} 
+                                maxLength="9"
+                            />
                             <p className={styles.aplicar} onClick={buscarCep}>Aplicar</p>
                         </div>
+                        {cepData?.hasOwnProperty('err') ? (
+                            <>
+                                <br />
+                                <p style={{color: 'red'}}>CEP Inválido</p>
+                            </>
+                                )
+                            :
+                            null}
                     </article>
 
                     <hr className={styles.hr}/>
