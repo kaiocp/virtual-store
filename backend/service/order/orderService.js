@@ -102,7 +102,32 @@ const hasInvalidProperty = (req, res, next) => {
     next()
   }
 }
-
+const productInBodyExists = (req, res, next) => {
+  const products = req.body.products
+  const productIds = products.map(element => element.prod_id)
+  pool.getConnection((error, connection) => {
+    if (error) {
+      res.status(500).json({ error: 'Internal Server Error' })
+    }
+    connection.query(
+      `SELECT * FROM product WHERE prod_id IN (?)`,
+      [productIds],
+      (error, results) => {
+        connection.release()
+        if (error) {
+          console.log(error)
+          return res.status(500).json({ error: 'Internal Server Error' })
+        }
+        if (results.length !== productIds.length) {
+          return res
+            .status(400)
+            .json({ error: 'Bad Request', message: 'Invalid product' })
+        }
+        next()
+      }
+    )
+  })
+}
 const insertAllProducts = (req, res) => {
   const { cep, products } = req.body
   pool.getConnection((error, connection) => {
@@ -150,18 +175,20 @@ const insertAllProducts = (req, res) => {
                 (?,?,?)`,
                   [order_id, prod_id, prod_total],
                   (error, response) => {
+                    console.log(error)
                     if (error) {
                       res.status(500).json({ error: 'Insert Failed' })
                     }
-                    pool.releaseConnection(connection)
+
                     if (index == array.length - 1) {
+                      pool.releaseConnection(connection)
+
                       const answer = updateInfoOrder(order_id)
                     }
                   }
                 )
               })
             })
-            pool.releaseConnection(connection)
 
             res
               .status(200)
@@ -304,10 +331,12 @@ const getOneOrder = (req, res) => {
     )
   })
 }
+
 module.exports = {
   insertAllProducts,
   hasBodyNullValue,
   hasInvalidProperty,
   getAllOrders,
-  getOneOrder
+  getOneOrder,
+  productInBodyExists
 }

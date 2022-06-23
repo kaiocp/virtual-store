@@ -126,8 +126,6 @@ const productNotAlreadyInserted = (req, res, next) => {
   })
 }
 const insertProduct = (req, res) => {
-  //try to catch syntax error
-
   const { prod_id } = req
   const { prod_total } = req.body
   pool.getConnection((err, connection) => {
