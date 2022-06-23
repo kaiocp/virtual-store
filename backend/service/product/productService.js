@@ -109,7 +109,10 @@ const hasValidProperty = (req, res, next) => {
       })
     }
     if (property === 'prod_price') {
-      if (isNaN(requestBody[property])) {
+      if (
+        typeof requestBody[property] !== 'number' ||
+        requestBody[property] <= 0
+      ) {
         return res.status(400).json({
           error: `Invalid:The property ${property} of your body is invalid`
         })

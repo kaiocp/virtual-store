@@ -167,7 +167,10 @@ const hasValidProperty = (req, res, next) => {
         .json({ err: "Your body has some invalid properties' names" })
     }
     if (property === 'prod_total') {
-      if (isNaN(requestBody[property])) {
+      if (
+        typeof requestBody[property] !== 'number' ||
+        requestBody[property] <= 0
+      ) {
         return res.status(400).json({ err: 'Invalid value' })
       }
     } else if (property === 'prod_id') {
@@ -188,7 +191,10 @@ const hasValidUpdate = (req, res, next) => {
         .status(400)
         .json({ error: 'Bad request', message: 'Invalid property name' })
     }
-    if (isNaN(requestBody[property])) {
+    if (
+      typeof requestBody[property] !== 'number' ||
+      requestBody[property] <= 0
+    ) {
       return res
         .status(400)
         .json({ error: 'Bad request', message: 'Invalid value' })
@@ -371,6 +377,25 @@ const deleteCart = (req, res) => {
     )
   })
 }
+const deleteAllProducts = (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.status(500).json({ err: 'Failed to connect' })
+    }
+    connection.query(
+      `DELETE FROM contains_with WHERE cart_id = 4`,
+      (error, queryResponse) => {
+        if (error) {
+          res.status(500).json({ err: 'Failed to update' })
+        }
+        pool.releaseConnection(connection)
+        updateCartInfo()
+        res.status(201).json({ message: 'All products deleted' })
+      }
+    )
+  })
+}
+
 module.exports = {
   insertProduct,
   productBodyExists,
@@ -384,5 +409,6 @@ module.exports = {
   insertCep,
   deleteCart,
   updateCartInfo,
-  cepInfo
+  cepInfo,
+  deleteAllProducts
 }

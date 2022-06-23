@@ -83,7 +83,10 @@ const hasInvalidProperty = (req, res, next) => {
               return
             }
           } else {
-            if (isNaN(element[elementProperty])) {
+            if (
+              typeof element[elementProperty] !== 'number' ||
+              element[elementProperty] <= 0
+            ) {
               res
                 .status(400)
                 .json({ error: 'Bad Request', message: 'Invalid property' })
