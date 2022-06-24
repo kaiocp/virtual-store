@@ -59,7 +59,7 @@ export default function FormEdicao() {
                 prod_color: reqBody.cor,
                 prod_category: reqBody.categoria,
                 prod_subcategory: reqBody.subcategoria,
-                prod_price: reqBody.preco
+                prod_price: parseFloat(reqBody.preco)
             }
             let res = await fetch(`https://sleepy-cliffs-93443.herokuapp.com/products/${productId}`, {
                 method: "PUT",
