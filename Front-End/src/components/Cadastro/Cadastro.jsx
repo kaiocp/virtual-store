@@ -24,7 +24,7 @@ export default function Cadastro() {
                 prod_color: cor,
                 prod_category: categoria,
                 prod_subcategory: subcategoria,
-                prod_price: preco
+                prod_price: parseFloat(preco)
             }
             let res = await fetch("https://sleepy-cliffs-93443.herokuapp.com/products", {
                 method: "POST",
