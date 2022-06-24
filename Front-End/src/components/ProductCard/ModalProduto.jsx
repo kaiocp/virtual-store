@@ -15,6 +15,19 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
         headers: { 'Content-Type': 'application/json' }
         })
   }
+  async function postarProduto() {
+    onClose()
+    alert("Produto adicionado ao carrinho com sucesso")
+    let body = {
+      prod_id: id,
+      prod_total: parseInt(qtd)
+    }
+    let res = await fetch("https://sleepy-cliffs-93443.herokuapp.com/cart", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+                })
+  }
   function clickEditar() {
     document.body.style.overflow = "auto";
   }
@@ -79,7 +92,7 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
                   <h3 onClick={deletarProduto}>Deletar</h3>
                 </div>
               </div>
-              <button className={styles.botaoDiv}>Adicionar ao Carrinho</button>
+              <button className={styles.botaoDiv} onClick={postarProduto}>Adicionar ao Carrinho</button>
             </div>
           </footer>
         </article>
