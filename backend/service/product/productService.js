@@ -104,9 +104,25 @@ const hasValidProperty = (req, res, next) => {
       return property === element
     })
     if (!isValid) {
-      return res
-        .status(400)
-        .json({ err: "Your body has some invalid properties' names" })
+      return res.status(400).json({
+        error: `Invalid:The property ${property} of your body is invalid`
+      })
+    }
+    if (property === 'prod_price') {
+      if (
+        typeof requestBody[property] !== 'number' ||
+        requestBody[property] <= 0
+      ) {
+        return res.status(400).json({
+          error: `Invalid:The property ${property} of your body is invalid`
+        })
+      }
+    } else {
+      if (typeof requestBody[property] !== 'string') {
+        return res.status(400).json({
+          error: `Invalid:The property ${property} of your body is invalid`
+        })
+      }
     }
   }
 
@@ -115,13 +131,16 @@ const hasValidProperty = (req, res, next) => {
 const isNull = (req, res, next) => {
   const responseBody = req.body
   if (!responseBody) {
-    return res.status(400).json({ err: 'Invalid:Your request body is NULL' })
+    return res
+      .status(400)
+      .json({ error: 'Bad request', message: 'The request body is empty' })
   }
   for (const property in responseBody) {
     if (property != 'prod_price' && !responseBody[property]) {
-      return res
-        .status(400)
-        .json({ err: `Invalid:The property ${property} of your body is NULL` })
+      return res.status(400).json({
+        error: 'Bad request',
+        message: `The property ${property} is empty`
+      })
     }
   }
   next()

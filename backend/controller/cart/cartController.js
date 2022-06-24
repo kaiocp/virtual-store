@@ -11,9 +11,11 @@ const {
   productNotAlreadyInserted,
   updateCart,
   insertCep,
-  deleteCart
+  deleteCart,
+  deleteAllProducts
 } = require('../../service/cart/cartService')
 const router = express.Router()
+
 router.get('/cep/:cep_number', insertCep)
 router.get('/', getCartInfo)
 router.post(
@@ -25,6 +27,7 @@ router.post(
   insertProduct
 )
 router.delete('/:prod_id', productNotAlreadyInserted, deleteCart)
+router.delete('/delete/delete-all', deleteAllProducts)
 router.put(
   '/:prod_id',
   hasBodyNullValue,

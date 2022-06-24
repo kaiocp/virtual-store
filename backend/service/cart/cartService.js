@@ -158,10 +158,23 @@ const hasValidProperty = (req, res, next) => {
     const isValid = validProperty.some(element => {
       return property === element
     })
+
     if (!isValid) {
       return res
         .status(400)
         .json({ err: "Your body has some invalid properties' names" })
+    }
+    if (property === 'prod_total') {
+      if (
+        typeof requestBody[property] !== 'number' ||
+        requestBody[property] <= 0
+      ) {
+        return res.status(400).json({ err: 'Invalid value' })
+      }
+    } else if (property === 'prod_id') {
+      if (typeof requestBody[property] !== 'string') {
+        return res.status(400).json({ err: 'Invalid value' })
+      }
     }
   }
 
@@ -174,7 +187,15 @@ const hasValidUpdate = (req, res, next) => {
     if (property != validProperty) {
       return res
         .status(400)
-        .json({ err: "Your body has some invalid properties' names" })
+        .json({ error: 'Bad request', message: 'Invalid property name' })
+    }
+    if (
+      typeof requestBody[property] !== 'number' ||
+      requestBody[property] <= 0
+    ) {
+      return res
+        .status(400)
+        .json({ error: 'Bad request', message: 'Invalid value' })
     }
   }
   next()
@@ -203,21 +224,34 @@ const getCartInfo = (req, res) => {
           }
           conn.query(
             `SELECT
-          product.prod_id,
-          product.prod_title,
-          product.prod_description,
-          product.prod_price,
-          product.prod_image_url,
-          contains_with.prod_total
-        FROM
-          contains_with
-          JOIN product ON contains_with.prod_id = product.prod_id
-        WHERE
-          contains_with.cart_id = 4;`,
+            product.prod_id,
+            product.prod_title,
+            product.prod_description,
+            product.prod_price,
+            product.prod_image_url,
+            product_brand.brand_name,
+            category.category_name,
+            sub_category.subcategory_name,
+            product_color.color_name,
+  
+            
+            contains_with.prod_total
+          FROM
+            contains_with
+            JOIN product ON contains_with.prod_id = product.prod_id
+           JOIN product_brand ON contains_with.prod_id = product_brand.prod_id
+            JOIN category ON contains_with.prod_id = category.prod_id
+            JOIN sub_category ON contains_with.prod_id = sub_category.prod_id
+            JOIN product_color ON contains_with.prod_id = product_color.prod_id
+  
+  
+          WHERE
+            contains_with.cart_id = 4;`,
             (error, response) => {
               if (error) {
                 res.status(500).json({ err: 'Failed get itens from cart' })
               }
+              pool.releaseConnection(conn)
               return res.status(200).json({
                 content: {
                   cart_subtotal,
@@ -267,9 +301,8 @@ const updateCart = (req, res) => {
     )
   })
 }
-const insertCep = (req, res) => {
-  const cep_number = req.params['cep_number']
-
+const cepInfo = cep_number => {
+  let adressInfo
   let args = {
     sCepOrigem: '40170115',
     sCepDestino: cep_number,
@@ -281,24 +314,39 @@ const insertCep = (req, res) => {
     nCdServico: ['04510'], //Array com os códigos de serviço
     nVlDiametro: '0'
   }
-  consultarCep(cep_number)
+  return new Promise((resolve, reject) => {
+    consultarCep(cep_number)
+      .then(response => {
+        adressInfo = response
+        return calcularPrecoPrazo(args)
+      })
+      .then(response => {
+        resolve({
+          shipping: response[0],
+          adressInfo
+        })
+      })
+      .catch(err => {
+        reject(err.message)
+      })
+  })
+}
+const insertCep = (req, res) => {
+  const cep_number = req.params['cep_number']
+  cepInfo(cep_number)
     .then(response => {
-      calcularPrecoPrazo(args)
-        .then(response => {
-          const { Valor, PrazoEntrega } = response[0]
-          res.status(200).json({
-            content: {
-              shipping_cost: Valor,
-              shipping_time: PrazoEntrega
-            }
-          })
-        })
-        .catch(err => {
-          res.status(400).json({ err: 'Erro' })
-        })
+      console.log(response)
+      const { Valor, PrazoEntrega } = response.shipping
+      res.status(200).json({
+        content: {
+          shipping_cost: Valor,
+          shipping_time: PrazoEntrega
+        }
+      })
     })
     .catch(err => {
-      res.status(400).json({ err: 'Cep inválido' })
+      console.log(err)
+      res.status(400).json({ err: 'Invalid cep' })
     })
 }
 const deleteCart = (req, res) => {
@@ -327,6 +375,25 @@ const deleteCart = (req, res) => {
     )
   })
 }
+const deleteAllProducts = (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.status(500).json({ err: 'Failed to connect' })
+    }
+    connection.query(
+      `DELETE FROM contains_with WHERE cart_id = 4`,
+      (error, queryResponse) => {
+        if (error) {
+          res.status(500).json({ err: 'Failed to update' })
+        }
+        pool.releaseConnection(connection)
+        updateCartInfo()
+        res.status(201).json({ message: 'All products deleted' })
+      }
+    )
+  })
+}
+
 module.exports = {
   insertProduct,
   productBodyExists,
@@ -339,5 +406,7 @@ module.exports = {
   productNotAlreadyInserted,
   insertCep,
   deleteCart,
-  updateCartInfo
+  updateCartInfo,
+  cepInfo,
+  deleteAllProducts
 }
