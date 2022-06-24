@@ -58,7 +58,7 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
               <img src={IconeAdicionar} onClick={() => setQtd(qtd + 1)}/>
             </div>
           </header>
-          <main>
+          <main className={styles.main}>
           <div className={styles.descDiv}>
             <h1>Descrição</h1>
             <p>{desc}</p>
@@ -80,7 +80,7 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
          </div>
          </main>
         </section>
-          <footer>
+          <footer className={styles.footer}>
             <div className={styles.footerDiv}>
               <div className={styles.editar}>
                 <div className={styles.editarDiv}>

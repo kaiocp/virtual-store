@@ -76,7 +76,7 @@
     font-size: 85%;
 }
 
-main {
+.main {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,7 +84,7 @@ main {
     text-align: center;
 }
 
-footer {
+.footer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,7 +126,7 @@ footer {
     gap: 3rem
 }
 
-button {
+.botaoDiv {
     background: #53B38D;
     color: #FAFAFA;
     border-radius: 5px;
@@ -214,7 +214,7 @@ button {
         font-style: normal;
         font-size: 80%
     }
-    footer {
+    .footer {
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -331,7 +331,7 @@ button {
         font-style: normal;
         font-size: 1.2rem
     }
-    footer {
+    .footer {
         width: 100%;
         display: flex;
         justify-content: space-between;
