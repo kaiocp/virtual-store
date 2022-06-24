@@ -12,7 +12,12 @@ const {
   productIsAlreadyInOrder,
   hasInvalidPropertyIntoAlreadyInserted,
   orderIdIsValid,
-  deleteProductFromOrder
+  deleteProductFromOrder,
+  hasNullQueryParams,
+  hasValidDeleteQuery,
+  queryOrderIdExists,
+  queryProductIdExists,
+  queryProductIsInOrder
 } = require('../../service/order/orderService')
 
 router.post(
@@ -33,5 +38,13 @@ router.post(
 )
 router.get('/', getAllOrders)
 router.get('/:order_id', orderIdIsValid, getOneOrder)
-router.delete('/delete', deleteProductFromOrder)
+router.delete(
+  '/delete',
+  hasNullQueryParams,
+  hasValidDeleteQuery,
+  queryOrderIdExists,
+  queryProductIdExists,
+  queryProductIsInOrder,
+  deleteProductFromOrder
+)
 module.exports = router

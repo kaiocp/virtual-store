@@ -66,6 +66,9 @@ const hasInvalidProperty = (req, res, next) => {
       }
       isInvalidProperty = requestBody[property].some(product => {
         for (productProperty in product) {
+          if (typeof product !== 'object') {
+            return true
+          }
           invalidPropertyName = productProperty
           if (!lowerValidProperty.includes(productProperty)) {
             return true
@@ -110,30 +113,25 @@ const hasInvalidPropertyIntoAlreadyInserted = (req, res, next) => {
       property !== upperValidProperty ||
       !Array.isArray(bodyRequest[property])
     ) {
-      console.log(property)
       hasInvalidProperty = true
       break
     }
     const products = bodyRequest[property]
     hasInvalidProperty = products.some(product => {
       if (typeof product !== 'object') {
-        console.log('1')
         return true
       }
       for (property in product) {
         if (!lowerValidProperty.includes(property)) {
-          console.log('2')
           return true
         }
         if (property === 'prod_id' && typeof product[property] !== 'string') {
-          console.log('3')
           return true
         }
         if (
           property === 'prod_total' &&
           (typeof product[property] !== 'number' || product[property] <= 0)
         ) {
-          console.log('4')
           return true
         }
       }
@@ -156,11 +154,10 @@ const hasNullQueryParams = (req, res, next) => {
   let hasNullValue = false
   for (property in queryParams) {
     if (queryParams[property] === null) {
-      res
+      return res
         .status(400)
         .json({ error: 'Bad Request', message: 'Query params cannot be null' })
       hasNullValue = true
-      return
     }
   }
   if (!hasNullValue) {
@@ -169,35 +166,39 @@ const hasNullQueryParams = (req, res, next) => {
 }
 const hasValidDeleteQuery = (req, res, next) => {
   const queryParams = req.query
+  const queryLength = Object.keys(queryParams).length
   const validProperty = ['order_id', 'prod_id']
   let hasInvalidProperty = false
-  for (property in queryParams) {
-    if (!validProperty.includes(property)) {
-      res
-        .status(400)
-        .json({ error: 'Bad Request', message: 'Invalid property' })
-      hasInvalidProperty = true
-      return
-    }
-    if (property === 'order_id') {
-      if (typeof queryParams[property] !== 'number') {
-        res
-          .status(400)
-          .json({ error: 'Bad Request', message: 'Invalid property' })
+  if (queryLength !== 2) {
+    hasInvalidProperty = true
+  } else {
+    for (property in queryParams) {
+      if (!validProperty.includes(property)) {
         hasInvalidProperty = true
-        return
+        break
       }
-    } else {
-      if (typeof queryParams[property] !== 'string') {
-        res
-          .status(400)
-          .json({ error: 'Bad Request', message: 'Invalid property' })
-        hasInvalidProperty = true
-        return
+      if (property === 'order_id') {
+        const orderIdValue = Number(queryParams[property])
+
+        if (isNaN(orderIdValue)) {
+          hasInvalidProperty = true
+          break
+        }
+      } else {
+        if (typeof queryParams[property] !== 'string') {
+          hasInvalidProperty = true
+          break
+        }
       }
     }
   }
-  if (!hasInvalidProperty) {
+
+  if (hasInvalidProperty) {
+    return res.status(400).json({
+      error: 'Bad Request',
+      message: 'Invalid query params'
+    })
+  } else {
     next()
   }
 }
@@ -216,7 +217,14 @@ const queryOrderIdExists = (req, res, next) => {
       `SELECT * from has_inside WHERE order_id = ?`,
       [order_id],
       (err, result) => {
-        if (result.length === 0) {
+        if (err) {
+          res.status(500).json({
+            error: 'Internal Server Error',
+            message: 'Error connecting to database'
+          })
+          return
+        }
+        if (result.length == 0) {
           return res.status(404).json({
             error: 'Not Found',
             message: 'Order not found'
@@ -239,13 +247,46 @@ const queryProductIdExists = (req, res, next) => {
       return
     }
     connection.query(
-      `SELECT * from products WHERE prod_id = ?`,
+      `SELECT * from product WHERE prod_id = ?`,
       [prod_id],
       (err, result) => {
+        if (err) {
+          res.status(500).json({
+            error: 'Internal Server Error',
+            message: 'Error connecting to database'
+          })
+          return
+        }
         if (result.length === 0) {
           return res.status(404).json({
             error: 'Not Found',
             message: 'Product not found'
+          })
+        }
+        connection.release()
+        next()
+      }
+    )
+  })
+}
+const queryProductIsInOrder = (req, res, next) => {
+  const { order_id, prod_id } = req.query
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.status(500).json({
+        error: 'Internal Server Error',
+        message: 'Error connecting to database'
+      })
+      return
+    }
+    connection.query(
+      `SELECT * from has_inside WHERE order_id = ? AND prod_id = ?`,
+      [order_id, prod_id],
+      (err, result) => {
+        if (result.length === 0) {
+          return res.status(404).json({
+            error: 'Not Found',
+            message: 'Product not found in order'
           })
         }
         connection.release()
@@ -267,7 +308,6 @@ const productInBodyExists = (req, res, next) => {
       (error, results) => {
         connection.release()
         if (error) {
-          console.log(error)
           return res.status(500).json({ error: 'Internal Server Error' })
         }
         if (results.length !== productIds.length) {
@@ -329,7 +369,6 @@ const insertAllProducts = (req, res) => {
                 (?,?,?)`,
                     [order_id, prod_id, prod_total],
                     (error, response) => {
-                      console.log(error)
                       if (error) {
                         res.status(500).json({ error: 'Insert Failed' })
                       }
@@ -377,7 +416,6 @@ const insertAllProducts = (req, res) => {
             (?,?,?)`,
                 [order_id, prod_id, prod_total],
                 (error, response) => {
-                  console.log(error)
                   if (error) {
                     res.status(500).json({ error: 'Insert Failed' })
                   }
@@ -467,7 +505,6 @@ const getAllOrders = (req, res) => {
           }
         })
 
-        console.log()
         return res.status(200).json({ result })
       }
     )
@@ -545,7 +582,6 @@ const productIsAlreadyInOrder = (req, res, next) => {
       'SELECT * from has_inside WHERE order_id = ? and prod_id IN (?)',
       [order_id, products_id],
       (err, response) => {
-        console.log(response)
         if (err) {
           return res.status(500).json({ error: 'Get Failed' })
         }
@@ -616,8 +652,33 @@ const orderIdIsValid = (req, res, next) => {
 }
 const deleteProductFromOrder = (req, res) => {
   const { order_id, prod_id } = req.query
-  res.send(`Delete product ${prod_id} from order ${order_id}`)
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error',
+        message: 'Error connecting to database'
+      })
+    }
+    connection.query(
+      `DELETE FROM has_inside WHERE order_id = ? and prod_id = ?`,
+      [order_id, prod_id],
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({
+            error: 'Internal Server Error',
+            message: 'Delete failed'
+          })
+        }
+        pool.releaseConnection(connection)
+        updateInfoOrder(order_id)
+        return res.status(200).json({
+          message: `Product with id ${prod_id} deleted from order with id ${order_id}`
+        })
+      }
+    )
+  })
 }
+
 module.exports = {
   insertAllProducts,
   hasBodyNullValue,
@@ -629,5 +690,10 @@ module.exports = {
   productIsAlreadyInOrder,
   hasInvalidPropertyIntoAlreadyInserted,
   orderIdIsValid,
-  deleteProductFromOrder
+  deleteProductFromOrder,
+  hasNullQueryParams,
+  hasValidDeleteQuery,
+  queryOrderIdExists,
+  queryProductIdExists,
+  queryProductIsInOrder
 }
