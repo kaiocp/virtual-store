@@ -5,7 +5,7 @@ export default function Card(props) {
       <img className={styles.imgProduto} src={props.imagem} alt="" />
       <div className={styles.retanguloDiv}>
         <h1 className={styles.nomeProduto}>{props.texto}</h1>
-        <p className={styles.verMais}>Ver mais &gt;</p>
+        <a onClick={props.redirect} className={styles.verMais}>Ver mais &gt;</a>
       </div>
     </article> 
     )

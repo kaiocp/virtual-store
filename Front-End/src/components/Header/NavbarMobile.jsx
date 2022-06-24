@@ -7,7 +7,7 @@ export default function NavbarMobile({onClose= () => {}}) {
     <section className={styles.sectionModal}>
       <div className={styles.headerModal}>
         <div className={styles.logoLojinha}>
-          <Link to="/"><img src={LogoLojinha}/></Link>
+          <Link to="/"><img onClick={onClose} src={LogoLojinha}/></Link>
         </div>
         <img className={styles.iconeFechar} src={IconeFechar} onClick={onClose}/>
       </div>

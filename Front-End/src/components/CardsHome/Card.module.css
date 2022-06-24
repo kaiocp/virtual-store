@@ -13,7 +13,7 @@
     width: 100%;
     height: 100%;
 }
- 
+
 .imgProduto {
     width: 7.5rem;
     height: 7.5rem;
@@ -44,7 +44,13 @@
 .verMais {
     font-size: .75rem;
     font-weight: 600;
-    color: #424242
+    color: #424242;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.verMais:hover {
+    color: whitesmoke;
 }
 
 @media (min-width: 768px) {
@@ -74,27 +80,25 @@
         border-radius: .313rem .313rem 3.125rem 3.125rem;
         gap: 1rem;
     }
-} 
+}
 
-
-.card{
+.card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
-   
 }
 
-.imagemProduto{
+.imagemProduto {
     width: 120px;
     height: 120px;
     margin-bottom: -50px;
     z-index: 1;
 }
 
-.textDiv{
+.textDiv {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -107,31 +111,30 @@
     gap: 16px;
 }
 
-.produtoType{
-    font-size:20px;
+.produtoType {
+    font-size: 20px;
     font-weight: 500;
     color: #252822;
     ;
 }
 
-.vermais{
+.vermais {
     font-size: 12px;
     font-weight: 600;
     color: #424242
 }
 
-@media (min-width: 768px){
-    .card{
+@media (min-width: 768px) {
+    .card {
         max-width: 30%;
     }
 }
 
-@media (min-width: 1024px){
-    .produtoType{
-        font-size:  32px;
+@media (min-width: 1024px) {
+    .produtoType {
+        font-size: 32px;
     }
-    .vermais{
+    .vermais {
         font-size: 16px;
     }
-
 }

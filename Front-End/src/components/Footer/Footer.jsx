@@ -19,14 +19,14 @@ export default function Footer() {
                 </ul>
             </div>
             <div className={styles.footer__lojinha} id={styles.a}>
-                <img src={iconeSacolaLojinha} alt="Lojinha" />
-                <p>Lojinha</p>
+                <Link to='/'><img src={iconeSacolaLojinha} alt="Lojinha" /></Link>
+                <p><Link to='/'>Lojinha</Link></p>
             </div>
             <div className={styles.footer__social} id={styles.c}>
                 <ul>
-                    <li><a href="" target="_blank"><img src={iconeFacebook} alt='Facebook'/></a></li>
-                    <li><a href="" target="_blank"><img src={iconeTwitter} alt='Twitter'/></a></li>
-                    <li><a href="" target="_blank"><img src={iconeInstagram} alt='Instagram'/></a></li>
+                    <li><a href="https://www.facebook.com/infojrnews" target="_blank"><img src={iconeFacebook} alt='Facebook'/></a></li>
+                    <li><a href="https://twitter.com/infojrufba" target="_blank"><img src={iconeTwitter} alt='Twitter'/></a></li>
+                    <li><a href="https://www.instagram.com/infojrufba/" target="_blank"><img src={iconeInstagram} alt='Instagram'/></a></li>
                 </ul>
             </div>
         </div>
