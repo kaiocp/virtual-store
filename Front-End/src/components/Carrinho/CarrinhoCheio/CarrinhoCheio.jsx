@@ -212,7 +212,7 @@ export default function CarrinhoCheio() {
                     {!loading && 
                     <>
                     <div className={styles.resumo}>
-                        <h4>Subtotal ({carrinhoData.content.cart_prod_total} {carrinhoData.content.cart_prod_tota === '1' ? 'item' : 'itens'})</h4>
+                        <h4>Subtotal ({carrinhoData.content.cart_prod_total} {parseInt(carrinhoData.content.cart_prod_total) === 1 ? 'item' : 'itens'})</h4>
                         <p>R$ {carrinhoData.content.cart_subtotal}</p>
                     </div>
 
