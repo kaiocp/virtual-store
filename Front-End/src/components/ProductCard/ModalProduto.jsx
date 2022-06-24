@@ -63,7 +63,7 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
             <p>{cor}</p>
           </div>
           <div className={styles.preco}>
-           <h1>R$ {parseFloat((preco)).toFixed(2)}</h1>
+           <h1>R$ {parseFloat((preco * qtd)).toFixed(2)}</h1>
          </div>
          </main>
         </section>
