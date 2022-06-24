@@ -18,6 +18,12 @@
     max-height: 244px;
     object-fit: cover;
     border-radius: 2px;
+    cursor: pointer;
+    transition: .15s;
+}
+
+.productCard__img:hover {
+    transform: scale(1.08, 1.08);
 }
 
 .productCard__subcategory {
