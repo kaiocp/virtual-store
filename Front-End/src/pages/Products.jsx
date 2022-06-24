@@ -34,6 +34,7 @@ export default function Products() {
                     card={
                         products.content.map(el => (
                             <ProductCard
+                                key={el.prod_id}
                                 produtoid={el.prod_id}
                                 img={el.prod_image_url}
                                 subcategory={el.subcategory_name}
