@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 export default function Products() {
     const [products, setProducts] = useState({});
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         let url = "https://sleepy-cliffs-93443.herokuapp.com/products/";
         const fetchData = async () => {
@@ -35,12 +34,15 @@ export default function Products() {
                     card={
                         products.content.map(el => (
                             <ProductCard
-                                key={el.prod_id}
+                                produtoid={el.prod_id}
                                 img={el.prod_image_url}
                                 subcategory={el.subcategory_name}
                                 price={el.prod_price}
                                 title={el.prod_title}
                                 category={el.category_name}
+                                brand={el.brand_name}
+                                desc={el.prod_description}
+                                cor={el.color_name}
                             />
                         ))
                     }
