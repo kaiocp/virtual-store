@@ -24,7 +24,7 @@ export default function Cadastro() {
                 prod_color: cor,
                 prod_category: categoria,
                 prod_subcategory: subcategoria,
-                prod_price: preco
+                prod_price: parseFloat(preco)
             }
             let res = await fetch("https://sleepy-cliffs-93443.herokuapp.com/products", {
                 method: "POST",
@@ -47,6 +47,7 @@ export default function Cadastro() {
                 setMessage("Houve um erro ao cadastrar seu produto.");
                 setMessageClass("erro");
                 console.log(res);
+                console.log(res.body);
             }
         } catch (err) {
             console.log(err);
