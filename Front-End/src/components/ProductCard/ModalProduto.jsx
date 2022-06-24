@@ -5,7 +5,8 @@ import IconeRemover from './img/iconeremover.svg'
 import IconeAdicionar from './img/iconeadicionar.svg'
 import IconeEditar from './img/iconeeditar.svg'
 import IconeDeletar from './img/iconedeletar.svg'
-import ProductsGrid from "../ProductsGrid/ProductsGrid"
+import { Link } from 'react-router-dom';
+import FormEdicao from "../FormEdicao/FormEdicao"
 export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marca,preco,cor,tamanho,id}) {
   async function deletarProduto() {
     alert("O produto " + titulo + " foi excluido com sucesso")
@@ -13,6 +14,9 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
         method: "DELETE",
         headers: { 'Content-Type': 'application/json' }
         })
+  }
+  function clickEditar() {
+    document.body.style.overflow = "auto";
   }
   return (
     <div className={styles.fundoModal}>
@@ -60,7 +64,7 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
               <div className={styles.editar}>
                 <div className={styles.editarDiv}>
                   <img src={IconeEditar}/>
-                  <h3>Editar</h3>
+                  <Link to={`/atualizar-produto/${id}`} onClick={clickEditar} className={styles.h3}>Editar</Link>
                 </div>
                 <div className={styles.deletarDiv}>
                   <img src={IconeDeletar} onClick={deletarProduto}/>

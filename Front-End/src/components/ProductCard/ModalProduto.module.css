@@ -1,3 +1,7 @@
+.h3 {
+    font-size: 120%;
+}
+
 .sectionModalProduto {
     position: fixed;
     overflow: auto;
@@ -239,6 +243,9 @@ button {
     h3 {
         font-size: 80%;
     }
+    .h3 {
+        font-size: 80%;
+    }
     .button {
         height: 10%;
     }
@@ -246,6 +253,9 @@ button {
 
 @media screen and (min-width: 1024px) {
     h3 {
+        font-size: 150%;
+    }
+    .h3 {
         font-size: 150%;
     }
     .sectionModalProduto {
