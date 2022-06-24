@@ -47,7 +47,6 @@ export default function Cadastro() {
                 setMessage("Houve um erro ao cadastrar seu produto.");
                 setMessageClass("erro");
                 console.log(res);
-                console.log(res.body);
             }
         } catch (err) {
             console.log(err);
