@@ -113,7 +113,6 @@ export default function CarrinhoCheio() {
             body: JSON.stringify(orderBody)
             }
         );
-        console.log(res.body);
         if (res.ok) {
             try {
                 let res = await fetch("https://sleepy-cliffs-93443.herokuapp.com/cart/delete/delete-all", {
