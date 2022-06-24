@@ -95,19 +95,42 @@ export default function CarrinhoCheio() {
         }
     }
 
-    const handleClosePurchase = async () => {
+    const sendOrderAndClosePurchase = async () => {
+        let orderProducts = [];
+        carrinhoData?.content?.products.forEach(el => {
+            orderProducts.push({prod_id: el.prod_id, prod_total: el.prod_total});
+        })
+
+        let orderBody = {
+            cep: cep ? cep : null,
+            products: orderProducts
+        }
+
         try {
-            let res = await fetch(`https://sleepy-cliffs-93443.herokuapp.com/cart/delete-all`, {
-                method: "DELETE",
-                headers: { 'Content-Type': 'application/json' }
-                }
-            );
-            if (res.ok) {
-                alert('Compra concluída com sucesso!');
-                navigate('/');
-            } else {
-                console.log(res);
+            let res = await fetch('https://sleepy-cliffs-93443.herokuapp.com/order', {            
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderBody)
             }
+        );
+        console.log(res.body);
+        if (res.ok) {
+            try {
+                let res = await fetch("https://sleepy-cliffs-93443.herokuapp.com/cart/delete/delete-all", {
+                    method: "DELETE",
+                    headers: { 'Content-Type': 'application/json' }
+                    }
+                );
+                if (res.ok) {
+                    alert('Compra concluída com sucesso!');
+                    navigate('/');
+                } else {
+                    console.log(res);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
         } catch (err) {
             console.log(err);
         }
@@ -201,9 +224,9 @@ export default function CarrinhoCheio() {
                     <hr className={styles.hr}/>
                     <div className={`${styles.resumo} ${styles.resumo_total}`}>
                         <h4>Total</h4>
-                        <p>R$ {parseFloat(carrinhoData.content.cart_subtotal) + (cepData ? parseFloat(cepData?.content?.shipping_cost) : 0) }</p>
+                        <p>R$ {(parseFloat(carrinhoData.content.cart_subtotal) + (cepData ? parseFloat(cepData?.content?.shipping_cost) : 0)).toFixed(2) }</p>
                     </div>
-                    <button onClick={handleClosePurchase} className={styles.botaoFinalizar}>Finalizar compra</button>
+                    <button onClick={sendOrderAndClosePurchase} className={styles.botaoFinalizar}>Finalizar compra</button>
                     </>
                 }
                 </section>
