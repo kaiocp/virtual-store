@@ -38,64 +38,60 @@ const hasBodyNullValue = (req, res, next) => {
   }
 }
 const hasInvalidProperty = (req, res, next) => {
-  const bodyRequest = req.body
-  const validProperty = ['cep', 'products']
-  const validProductProperty = ['prod_id', 'prod_total']
-  let hasInvalidProperty = false
-  for (property in bodyRequest) {
-    if (hasInvalidProperty) {
+  const requestBody = req.body
+  const upperValidProperty = ['cep', 'products']
+  const lowerValidProperty = ['prod_id', 'prod_total']
+  let isInvalidProperty = false
+  let invalidPropertyName = ''
+  for (property in requestBody) {
+    if (!upperValidProperty.includes(property)) {
+      isInvalidProperty = true
+      invalidPropertyName = property
       break
     }
-    if (
-      !validProperty.includes(property) ||
-      (property === 'cep' && typeof bodyRequest[property] !== 'string')
-    ) {
-      hasInvalidProperty = true
-    } else {
-      if (!Array.isArray(bodyRequest[property])) {
-        return res
-          .status(400)
-          .json({ error: 'Bad Request', message: 'Invalid property' })
-        hasInvalidProperty = true
+    if (property === 'cep' && typeof requestBody[property] !== 'string') {
+      invalidPropertyName = property
+      isInvalidProperty = true
+      break
+    } else if (property === 'products') {
+      if (!Array.isArray(requestBody[property])) {
+        invalidPropertyName = property
+        isInvalidProperty = true
+        break
       }
-      bodyRequest[property].forEach(element => {
-        if (hasInvalidProperty) {
-          return
-        }
-        for (elementProperty in element) {
-          if (!validProductProperty.includes(elementProperty)) {
-            res
-              .status(400)
-              .json({ error: 'Bad Request', message: 'Invalid property' })
-            hasInvalidProperty = true
-            break
+      isInvalidProperty = requestBody[property].some(product => {
+        for (productProperty in product) {
+          invalidPropertyName = productProperty
+          if (!lowerValidProperty.includes(productProperty)) {
+            return true
           }
-          if (elementProperty === 'prod_id') {
-            if (typeof element[elementProperty] !== 'string') {
-              res
-                .status(400)
-                .json({ error: 'Bad Request', message: 'Invalid property' })
-              hasInvalidProperty = true
-              break
-            }
-          } else {
-            if (
-              typeof element[elementProperty] !== 'number' ||
-              element[elementProperty] <= 0
-            ) {
-              res
-                .status(400)
-                .json({ error: 'Bad Request', message: 'Invalid property' })
-              hasInvalidProperty = true
-              break
-            }
+          if (
+            productProperty === 'prod_id' &&
+            typeof product[productProperty] !== 'string'
+          ) {
+            invalidPropertyName = productProperty
+            return true
+          } else if (
+            productProperty === 'prod_total' &&
+            typeof product[productProperty] !== 'number'
+          ) {
+            invalidPropertyName = productProperty
+            return true
           }
         }
       })
+      if (isInvalidProperty) {
+        break
+      }
     }
   }
-  if (!hasInvalidProperty) {
+  if (!isInvalidProperty) {
     next()
+  } else {
+    res.status(400).json({
+      error: 'Bad Request',
+      message: `Invalid property: ${invalidPropertyName}`
+    })
   }
 }
 const hasInvalidPropertyIntoAlreadyInserted = (req, res, next) => {
