@@ -4,6 +4,9 @@ const hasBodyNullValue = (req, res, next) => {
   const bodyRequest = req.body
   let hasNullValue = false
   for (property in bodyRequest) {
+    if (property === 'cep') {
+      break
+    }
     if (Array.isArray(bodyRequest[property])) {
       bodyRequest[property].forEach(element => {
         if (element === null) {
@@ -49,11 +52,13 @@ const hasInvalidProperty = (req, res, next) => {
       invalidPropertyName = property
       break
     }
-    if (property === 'cep' && typeof requestBody[property] !== 'string') {
+    /*if (property === 'cep' && typeof requestBody[property] !== 'string') {
       invalidPropertyName = property
       isInvalidProperty = true
       break
-    } else if (property === 'products') {
+    } else 
+    */
+    if (property === 'products') {
       if (!Array.isArray(requestBody[property])) {
         invalidPropertyName = property
         isInvalidProperty = true
@@ -282,71 +287,117 @@ const insertAllProducts = (req, res) => {
     if (error) {
       res.status(500).json({ err: 'Connection failed' })
     }
-    cepInfo(cep)
-      .then(response => {
-        const { Valor, PrazoEntrega } = response.shipping
-        const {
-          localidade: order_city,
-          uf: order_state,
-          bairro: order_neighborhood,
-          logradouro: order_street
-        } = response.adressInfo
+    if (cep) {
+      cepInfo(cep)
+        .then(response => {
+          const { Valor, PrazoEntrega } = response.shipping
+          const {
+            localidade: order_city,
+            uf: order_state,
+            bairro: order_neighborhood,
+            logradouro: order_street
+          } = response.adressInfo
 
-        connection.query(
-          `INSERT INTO order_final
+          connection.query(
+            `INSERT INTO order_final
 
         (cep,order_shipping,order_shipping_time,order_city, order_state, order_neighborhood, order_street) VALUES (?,?,?,?,?,?,?)`,
-          [
-            cep,
-            Valor,
-            PrazoEntrega,
-            order_city,
-            order_state,
-            order_neighborhood,
-            order_street
-          ],
-          (err, response) => {
-            if (err) {
-              res.status(500).json({ err: 'Insert Failed' })
-            }
-            const order_id = response.insertId
-            pool.releaseConnection(connection)
-            products.forEach((element, index, array) => {
-              const { prod_id, prod_total } = element
-              pool.getConnection((err, connection) => {
-                if (err) {
-                  res.status(500).json({ error: 'Connection failed' })
-                }
-                pool.query(
-                  `INSERT INTO has_inside
+            [
+              cep,
+              Valor,
+              PrazoEntrega,
+              order_city,
+              order_state,
+              order_neighborhood,
+              order_street
+            ],
+            (err, response) => {
+              if (err) {
+                res.status(500).json({ err: 'Insert Failed' })
+              }
+              const order_id = response.insertId
+              pool.releaseConnection(connection)
+              products.forEach((element, index, array) => {
+                const { prod_id, prod_total } = element
+                pool.getConnection((err, connection) => {
+                  if (err) {
+                    res.status(500).json({ error: 'Connection failed' })
+                  }
+                  pool.query(
+                    `INSERT INTO has_inside
                 (order_id,prod_id,prod_total) VALUES
                 (?,?,?)`,
-                  [order_id, prod_id, prod_total],
-                  (error, response) => {
-                    console.log(error)
-                    if (error) {
-                      res.status(500).json({ error: 'Insert Failed' })
-                    }
+                    [order_id, prod_id, prod_total],
+                    (error, response) => {
+                      console.log(error)
+                      if (error) {
+                        res.status(500).json({ error: 'Insert Failed' })
+                      }
 
-                    if (index == array.length - 1) {
-                      pool.releaseConnection(connection)
+                      if (index == array.length - 1) {
+                        pool.releaseConnection(connection)
 
-                      const answer = updateInfoOrder(order_id)
+                        const answer = updateInfoOrder(order_id)
+                      }
                     }
-                  }
-                )
+                  )
+                })
               })
-            })
 
-            res
-              .status(200)
-              .json({ message: `Order created with success`, order_id })
+              res
+                .status(200)
+                .json({ message: `Order created with success`, order_id })
+            }
+          )
+        })
+        .catch(err => {
+          res.status(404).json({ error: 'Not found', message: 'Cep not found' })
+        })
+    } else {
+      connection.query(
+        `INSERT INTO order_final
+
+    (cep,order_shipping,order_shipping_time,order_city, order_state, order_neighborhood, order_street) VALUES (?,?,?,?,?,?,?)`,
+        [null, 0, 0, null, null, null, null],
+        (err, response) => {
+          if (err) {
+            res.status(500).json({ err: 'Insert Failed' })
           }
-        )
-      })
-      .catch(err => {
-        res.status(404).json({ error: 'Not found', message: 'Cep not found' })
-      })
+          const order_id = response.insertId
+          pool.releaseConnection(connection)
+          products.forEach((element, index, array) => {
+            const { prod_id, prod_total } = element
+            pool.getConnection((err, connection) => {
+              if (err) {
+                res.status(500).json({ error: 'Connection failed' })
+              }
+              pool.query(
+                `INSERT INTO has_inside
+            (order_id,prod_id,prod_total) VALUES
+            (?,?,?)`,
+                [order_id, prod_id, prod_total],
+                (error, response) => {
+                  console.log(error)
+                  if (error) {
+                    res.status(500).json({ error: 'Insert Failed' })
+                  }
+
+                  if (index == array.length - 1) {
+                    pool.releaseConnection(connection)
+
+                    const answer = updateInfoOrder(order_id)
+                  }
+                }
+              )
+            })
+          })
+
+          res
+            .status(200)
+            .json({ message: `Order created with success`, order_id })
+        }
+      )
+    }
   })
 }
 const updateInfoOrder = order_id => {
