@@ -40,6 +40,54 @@ const hasBodyNullValue = (req, res, next) => {
     next()
   }
 }
+const prodTotaIsValid = (req, res, next) => {
+  const requestBody = req.body
+  const bodyKeys = Object.keys(requestBody)
+  let hasInvalidProperty = false
+  if (bodyKeys.length !== 1) {
+    hasInvalidProperty = true
+  } else {
+    if (bodyKeys.includes('prod_total')) {
+      if (
+        requestBody.prod_total === null ||
+        typeof requestBody.prod_total !== 'number'
+      ) {
+        hasInvalidProperty = true
+      }
+    } else {
+      hasInvalidProperty = true
+    }
+  }
+  if (hasInvalidProperty) {
+    return res
+      .status(400)
+      .json({ error: 'Bad Request', message: 'Invalid body request' })
+  }
+  next()
+}
+const isCepValid = (req, res, next) => {
+  const bodyRequest = req.body
+  const bodyKeys = Object.keys(bodyRequest)
+  let hasInvalidValue = false
+  if (bodyKeys.length !== 1) {
+    hasInvalidValue = true
+  } else {
+    if (bodyKeys.includes('cep')) {
+      if (bodyRequest.cep === null || typeof bodyRequest.cep !== 'string') {
+        hasInvalidValue = true
+      }
+    } else {
+      hasInvalidValue = true
+    }
+  }
+  if (hasInvalidValue) {
+    return res
+      .status(400)
+      .json({ error: 'Bad Request', message: 'Invalid body request' })
+  } else {
+    next()
+  }
+}
 const hasInvalidProperty = (req, res, next) => {
   const requestBody = req.body
   const upperValidProperty = ['cep', 'products']
@@ -52,13 +100,15 @@ const hasInvalidProperty = (req, res, next) => {
       invalidPropertyName = property
       break
     }
-    /*if (property === 'cep' && typeof requestBody[property] !== 'string') {
+    if (
+      property === 'cep' &&
+      typeof requestBody[property] !== 'string' &&
+      requestBody['cep'] != null
+    ) {
       invalidPropertyName = property
       isInvalidProperty = true
       break
-    } else 
-    */
-    if (property === 'products') {
+    } else if (property === 'products') {
       if (!Array.isArray(requestBody[property])) {
         invalidPropertyName = property
         isInvalidProperty = true
@@ -384,7 +434,7 @@ const insertAllProducts = (req, res) => {
               })
 
               res
-                .status(200)
+                .status(201)
                 .json({ message: `Order created with success`, order_id })
             }
           )
@@ -431,7 +481,7 @@ const insertAllProducts = (req, res) => {
           })
 
           res
-            .status(200)
+            .status(201)
             .json({ message: `Order created with success`, order_id })
         }
       )
@@ -597,7 +647,68 @@ const productIsAlreadyInOrder = (req, res, next) => {
     )
   })
 }
-
+const updateOrderInfoProperties = (req, res) => {
+  const { order_id } = req.params
+  const { cep } = req.body
+  cepInfo(cep)
+    .then(response => {
+      const { Valor, PrazoEntrega } = response.shipping
+      const {
+        localidade: order_city,
+        uf: order_state,
+        bairro: order_neighborhood,
+        logradouro: order_street
+      } = response.adressInfo
+      pool.getConnection((err, connection) => {
+        if (err) {
+          return res.status(500).json({
+            error: 'Internal Server Error',
+            message: 'Connection failed'
+          })
+        }
+        connection.query(
+          `UPDATE order_final SET
+        cep = ?,
+        order_shipping = ?,
+        order_shipping_time = ?,
+        order_city = ?,
+        order_state = ?,
+        order_neighborhood = ?,
+        order_street = ?
+        WHERE order_id = ?`,
+          [
+            cep,
+            Valor,
+            PrazoEntrega,
+            order_city,
+            order_state,
+            order_neighborhood,
+            order_street,
+            order_id
+          ],
+          (err, response) => {
+            if (err) {
+              return res.status(500).json({
+                error: 'Internal Server Error',
+                message: 'Update failed'
+              })
+            }
+            updateInfoOrder(order_id)
+            connection.release()
+            return res.status(200).json({
+              message: 'Update successful'
+            })
+          }
+        )
+      })
+    })
+    .catch(err => {
+      return res.status(404).json({
+        error: 'Not Found',
+        message: 'Cep not found'
+      })
+    })
+}
 const insertToAlreadyExistOrder = (req, res) => {
   const { order_id } = req.params
   const { products } = req.body
@@ -678,6 +789,56 @@ const deleteProductFromOrder = (req, res) => {
     )
   })
 }
+const deleteOrder = (req, res) => {
+  const { order_id } = req.params
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({ error: 'Connection failed' })
+    }
+    connection.query(
+      `DELETE FROM order_final WHERE order_id = ?`,
+      [order_id],
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({ error: 'Delete Failed' })
+        }
+        pool.releaseConnection(connection)
+        return res.status(200).json({
+          message: `Order with id ${order_id} deleted`
+        })
+      }
+    )
+  })
+}
+const updateProdTotal = (req, res) => {
+  const { order_id, prod_id } = req.query
+  const { prod_total } = req.body
+  pool.getConnection((err, connection) => {
+    if (err) {
+      return res.status(500).json({
+        error: 'Internal Server Error',
+        message: 'Error connecting to database'
+      })
+    }
+    connection.query(
+      'UPDATE has_inside SET prod_total = ? WHERE order_id = ? and prod_id = ?',
+      [prod_total, order_id, prod_id],
+      (err, response) => {
+        if (err) {
+          return res.status(500).json({
+            error: 'Internal Server Error',
+            message: 'Update failed'
+          })
+        }
+        pool.releaseConnection(connection)
+        updateInfoOrder(order_id)
+        return res.status(200).json({
+          message: `Product with id ${prod_id} updated in order with id ${order_id}`
+        })
+      }
+    )
+  })
+}
 
 module.exports = {
   insertAllProducts,
@@ -695,5 +856,10 @@ module.exports = {
   hasValidDeleteQuery,
   queryOrderIdExists,
   queryProductIdExists,
-  queryProductIsInOrder
+  queryProductIsInOrder,
+  deleteOrder,
+  isCepValid,
+  updateOrderInfoProperties,
+  prodTotaIsValid,
+  updateProdTotal
 }

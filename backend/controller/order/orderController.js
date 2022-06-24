@@ -17,7 +17,12 @@ const {
   hasValidDeleteQuery,
   queryOrderIdExists,
   queryProductIdExists,
-  queryProductIsInOrder
+  queryProductIsInOrder,
+  deleteOrder,
+  isCepValid,
+  updateOrderInfoProperties,
+  prodTotaIsValid,
+  updateProdTotal
 } = require('../../service/order/orderService')
 
 router.post(
@@ -47,4 +52,21 @@ router.delete(
   queryProductIsInOrder,
   deleteProductFromOrder
 )
+router.patch(
+  '/info/:order_id',
+  isCepValid,
+  orderIdIsValid,
+  updateOrderInfoProperties
+)
+router.patch(
+  '/product',
+  hasNullQueryParams,
+  hasValidDeleteQuery,
+  queryOrderIdExists,
+  queryProductIdExists,
+  queryProductIsInOrder,
+  prodTotaIsValid,
+  updateProdTotal
+)
+router.delete('/delete/all/:order_id', orderIdIsValid, deleteOrder)
 module.exports = router
