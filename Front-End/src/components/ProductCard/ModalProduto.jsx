@@ -33,7 +33,7 @@ export default function ModalProduto({onClose = () => {},titulo,imagem,desc,marc
   }
   function removerProduto() {
     if (qtd == 1){
-      alert("O produto " + titulo + " já está com a quantidade mínima")
+      setQtd(qtd)
     }else{
       setQtd(qtd - 1)
     }
